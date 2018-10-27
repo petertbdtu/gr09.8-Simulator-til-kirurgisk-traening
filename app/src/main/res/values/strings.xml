@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">gr09.8 - Simulator til kirurgisk traening</string>
     <string name="afventerForbindelse">Afventer instruktør</string>
+    <string name="gasforsyningTitel">Gas Supply</string>
+    <string name="trykTitel">Pressure</string>
+    <string name="flowrateTitel">Flow Rate</string>
+    <string name="volumenTitel">Volume</string>
+    <string name="tubeblokeretTekst">Tube Obstructed</string>
+    <string name="overtrykTekst">Excessive Pressure</string>
 </resources>
