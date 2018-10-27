@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">gr09.8 - Simulator til kirurgisk traening</string>
+    <string name="afventerForbindelse">Afventer instruktør</string>
 </resources>
