@@ -18,7 +18,11 @@
         </activity>
         <activity android:name=".IntroActivity" />
         <activity android:name=".ElevAfventerActivity" />
-        <activity android:name=".ElevInsufflatorActivity"></activity>
+        <activity android:name=".ElevInsufflatorActivity" />
+        <activity android:name=".VaelgScenarieActivity">
+
+        </activity>
+        <activity android:name=".OpretScenarie"></activity>
     </application>
 
 </manifest>
