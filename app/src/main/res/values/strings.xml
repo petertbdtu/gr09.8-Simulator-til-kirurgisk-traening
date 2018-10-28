@@ -7,4 +7,6 @@
     <string name="volumenTitel">Volume</string>
     <string name="tubeblokeretTekst">Tube Obstructed</string>
     <string name="overtrykTekst">Excessive Pressure</string>
+    <string name="vaelg_scenarie_overskrift">Brugsscenarier</string>
+    <string name="vaelg_scenarie_knap_nyt_scenarie">Opret nyt</string>
 </resources>
