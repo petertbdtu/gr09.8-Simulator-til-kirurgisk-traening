@@ -9,4 +9,7 @@
     <string name="overtrykTekst">Excessive Pressure</string>
     <string name="vaelg_scenarie_overskrift">Brugsscenarier</string>
     <string name="vaelg_scenarie_knap_nyt_scenarie">Opret nyt</string>
+    <string name="scenarie_dummy_navn">Scenarienavn</string>
+    <string name="rediger">Rediger</string>
+    <string name="slet">Slet</string>
 </resources>
