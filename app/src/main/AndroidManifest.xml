@@ -9,20 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IntroActivity">
+        <activity android:name=".IntroActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ElevAfventerActivity" />
-        <activity android:name=".ElevInsufflatorActivity" />
-        <activity android:name=".VaelgRolleActivity" />
-        <activity android:name=".VaelgOpgaveActivity"/>
-        <activity android:name=".VaelgScenarieActivity"/>
-        <activity android:name=".OpretScenarie"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ElevAfventerActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ElevInsufflatorActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".VaelgRolleActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".VaelgOpgaveActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".VaelgScenarieActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".OpretScenarie"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
