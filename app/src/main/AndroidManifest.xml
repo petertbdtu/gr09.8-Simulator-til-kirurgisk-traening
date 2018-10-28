@@ -17,7 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".IntroActivity" />
-        <activity android:name=".Boellehat" />
         <activity android:name=".ElevAfventerActivity" />
         <activity android:name=".ElevInsufflatorActivity"></activity>
     </application>
