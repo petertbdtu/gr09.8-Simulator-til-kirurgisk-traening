@@ -22,7 +22,7 @@
         <activity android:name=".VaelgRolleActivity" />
         <activity android:name=".VaelgOpgaveActivity"/>
         <activity android:name=".VaelgScenarieActivity"/>
-        <activity android:name=".OpretScenarie"></>
+        <activity android:name=".OpretScenarie"/>
     </application>
 
 </manifest>
