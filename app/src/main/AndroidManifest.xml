@@ -9,20 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IntroActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".ElevAfventerActivity" />
         <activity android:name=".ElevInsufflatorActivity" />
-        <activity android:name=".VaelgScenarieActivity">
-
-        </activity>
-        <activity android:name=".OpretScenarie"></activity>
+        <activity android:name=".VaelgRolleActivity" />
+        <activity android:name=".VaelgOpgaveActivity"/>
+        <activity android:name=".VaelgScenarieActivity"/>
+        <activity android:name=".OpretScenarie"></>
     </application>
 
 </manifest>
