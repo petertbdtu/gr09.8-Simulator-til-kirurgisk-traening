@@ -25,4 +25,13 @@
     <string name="VaelgOpgave_ForbindTabletTitel">Forbind til tablet</string>
     <string name="VaelgOpgave_BrugsText">Opret eller rediger brugsscenarier</string>
     <string name="VaelgOpgave_forbindTabletText">Forbind til tablet og start simulering</string>
+    <string name="VaelgTablet_Titel">Vælg Tablet</string>
+    <string name="VealgTablet" />
+    <string name="VealgTablet_OpretNyTablet" />
+    <string name="VaelgTablet_OpretNyTabletKnap">Opret ny Tablet</string>
+    <string name="VaelgTablet_IndtastNavn">Tablet navn</string>
+    <string name="VaelgTablet_KnapForbind">Forbind</string>
+    <string name="VaelgTablet_HentResultater">Resultater</string>
+    <string name="VaelgTablet_KnapSlet">Slet</string>
+    <string name="VaelgTablet_KnapResultater">Resultater</string>
 </resources>
