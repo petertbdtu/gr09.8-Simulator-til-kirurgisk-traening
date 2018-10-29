@@ -25,7 +25,9 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="308dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="3dp">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clInstruktor"
@@ -42,9 +44,9 @@
                 android:id="@+id/tvInstruktorTitel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text="@string/VaelgRolle_InstruktørTitel"
                 android:textAlignment="center"
@@ -59,10 +61,10 @@
                 android:id="@+id/tvInstruktorText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:text="@string/VaelgRolle_InstruktørText"
                 android:textAlignment="center"
@@ -88,9 +90,9 @@
                 android:id="@+id/tvInsufflatorTitel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text="@string/VaelgRolle_InsufflatorTitel"
                 android:textAlignment="center"
@@ -105,10 +107,10 @@
                 android:id="@+id/tvInsufflatorText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:text="@string/VaelgRolle_InsufflatorText"
                 android:textAlignment="center"
