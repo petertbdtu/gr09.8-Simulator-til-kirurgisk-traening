@@ -6,120 +6,156 @@
     android:layout_height="match_parent"
     tools:context=".ElevInsufflatorActivity">
 
-    <ImageButton
-        android:id="@+id/trykudtagButton"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/clTopBar"
+        android:layout_width="381dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_gps_fixed_black_128dp" />
-
-    <ImageButton
-        android:id="@+id/powerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_power_settings_new_black_128dp" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="right"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/overtrykTekst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/overtrykTekst" />
+        <ImageView
+            android:id="@+id/tubeblokeretLed"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/tubeblokeretTekst"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/tubeblokeretTekst"
+            app:layout_constraintTop_toTopOf="@id/tubeblokeretTekst"
+            app:srcCompat="@drawable/led" />
 
         <TextView
             android:id="@+id/tubeblokeretTekst"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="@string/tubeblokeretTekst"
-            android:textAlignment="textStart" />
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:gravity="fill"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/trykudtagButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/powerButton"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clTopBar">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clGasforsyning"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/clFlowrate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-            <TextView
-                android:id="@+id/gasforsyningTitel"
-                android:layout_width="match_parent"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clGasforsyningTop"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gasforsyningTitel" />
-        </LinearLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/gasforsyningTitel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/gasforsyningTitel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/trykTitel"
-                android:layout_width="match_parent"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clGasforsyningBottom"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/trykTitel" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clFlowrate"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/clTryk"
+            app:layout_constraintStart_toEndOf="@+id/clGasforsyning"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/flowrateTitel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/flowrateTitel" />
-        </LinearLayout>
+                android:maxLines="1"
+                android:text="@string/flowrateTitel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clTryk"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/clVolumen"
+            app:layout_constraintStart_toEndOf="@+id/clFlowrate"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/trykTitel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="@string/trykTitel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clVolumen"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/clTryk"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/volumenTitel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/volumenTitel" />
-        </LinearLayout>
-    </LinearLayout>
+                android:maxLines="1"
+                android:text="@string/volumenTitel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
