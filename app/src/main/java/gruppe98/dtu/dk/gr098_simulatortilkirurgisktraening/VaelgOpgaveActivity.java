@@ -32,7 +32,7 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
                 startActivity(BrugssecenairerVisning);
                 break;
             case R.id.clForbinTTablet:
-                Intent ForbinTTabletVisning = new Intent(getApplicationContext(), VaelgOpgaveActivity.class);
+                Intent ForbinTTabletVisning = new Intent(getApplicationContext(), VaelgTablet.class);
                 startActivity(ForbinTTabletVisning);
                 break;
             default:
