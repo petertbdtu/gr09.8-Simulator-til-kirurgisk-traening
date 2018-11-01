@@ -28,7 +28,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="110"
+        android:layout_height="110dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -97,7 +97,6 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/constraint_border"
             android:elevation="2dp"
-            android:minHeight="@+id/clInstructor/Height"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/clInstruktor"
             app:layout_constraintStart_toStartOf="parent"
