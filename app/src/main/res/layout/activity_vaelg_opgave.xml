@@ -23,20 +23,21 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clBrugsscenairer"
-            android:layout_width="196dp"
+            android:layout_width="wrap_content"
             android:layout_height="105dp"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="64dp"
+            android:background="@drawable/constraint_border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/clForbinTTablet"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5">
 
             <TextView
                 android:id="@+id/tvBrugssenairerTitel"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/VaelgOpgave_BrugsTitel"
                 android:textAlignment="center"
                 android:textAllCaps="true"
@@ -48,11 +49,11 @@
 
             <TextView
                 android:id="@+id/tvBrugsscenairerText"
-                android:layout_width="192dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/VaelgOpgave_BrugsText"
                 android:textAlignment="textStart"
                 android:textSize="12sp"
@@ -64,25 +65,22 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clForbinTTablet"
-            android:layout_width="196dp"
+            android:layout_width="wrap_content"
             android:layout_height="105dp"
-            android:layout_marginEnd="90dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="60dp"
-            app:layout_constraintBottom_toBottomOf="@+id/clBrugsscenairer"
+            android:background="@drawable/constraint_border"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/clBrugsscenairer"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
 
             <TextView
                 android:id="@+id/tvForbindTTabletTitel"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="1dp"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="1dp"
                 android:text="@string/VaelgOpgave_ForbindTabletTitel"
                 android:textAlignment="center"
                 android:textAllCaps="true"
@@ -94,11 +92,11 @@
 
             <TextView
                 android:id="@+id/tvforbindTTabletText"
-                android:layout_width="192dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/VaelgOpgave_forbindTabletText"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
