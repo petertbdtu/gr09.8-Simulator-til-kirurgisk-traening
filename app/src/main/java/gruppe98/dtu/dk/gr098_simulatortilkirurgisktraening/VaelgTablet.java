@@ -3,7 +3,7 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class activity_vaelg_tablet extends AppCompatActivity {
+public class VaelgTablet extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
