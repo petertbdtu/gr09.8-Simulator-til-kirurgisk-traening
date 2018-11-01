@@ -39,7 +39,9 @@
         <activity
             android:name=".OpretScenarie"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity_vaelg_tablet"></activity>
+        <activity
+            android:name=".VaelgTablet"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
