@@ -1,6 +1,7 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -30,8 +31,19 @@ public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<Vaelg
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.scenarie_navn.setText(list_scenarie_navne.get(i));
+
+        viewHolder.rediger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent redigerAktivitet = new Intent(context, redigerAktivitetActivity.class);
+                //redigerAktivitet.putExtra("position", i);
+                redigerAktivitet.putExtra("scenarieID", i);
+
+                context.startActivity(redigerAktivitet);
+            }
+        });
     }
 
     @Override
