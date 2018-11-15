@@ -21,7 +21,7 @@
     <string name="rediger">Rediger</string>
     <string name="slet">Slet</string>
     <string name="VaelgOpgave_Titel">Vælg Opgave</string>
-    <string name="VaelgOpgave_BrugsTitel">Brugsscenairer</string>
+    <string name="VaelgOpgave_BrugsTitel">Brugsscenarier</string>
     <string name="VaelgOpgave_ForbindTabletTitel">Forbind til tablet</string>
     <string name="VaelgOpgave_BrugsText">Opret eller rediger brugsscenarier</string>
     <string name="VaelgOpgave_forbindTabletText">Forbind til tablet og start simulering</string>

@@ -13,8 +13,6 @@ import java.util.ArrayList;
 public class VaelgScenarieActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button opretScenarie;
-    Button redigerScenarie;
-    Button sletScenarie;
 
     private static ArrayList<String> liste_scenarie_navne = new ArrayList<String>();
 

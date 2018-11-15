@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<VaelgScenarieRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<String> list_scenarie_navne = new ArrayList<>();
+    private ArrayList<String> list_scenarie_navne;
     private Context context;
 
     public VaelgScenarieRecyclerViewAdapter(ArrayList<String> list_scenarie_navne, Context context){
@@ -26,8 +26,7 @@ public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<Vaelg
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.scenarie_liste_layout, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -68,7 +67,5 @@ public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<Vaelg
 
 
         }
-    } {
-
     }
 }
