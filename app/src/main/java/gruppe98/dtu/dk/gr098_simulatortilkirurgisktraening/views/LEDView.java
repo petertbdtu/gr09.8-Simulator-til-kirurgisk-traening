@@ -8,8 +8,8 @@ import android.view.View;
 
 public class LEDView extends View {
 
-    private boolean isOn;
-    private Paint onColor, offColor;
+    private boolean erTaendt;
+    private Paint taendtFarve, slukketFarve;
 
     public LEDView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -24,11 +24,11 @@ public class LEDView extends View {
     }
 
     private void setup() {
-        isOn = false;
-        offColor = new Paint();
-        offColor.setARGB(255, 0, 0, 0);
-        onColor = new Paint();
-        onColor.setARGB(255, 255, 0, 0);
+        erTaendt = false;
+        slukketFarve = new Paint();
+        slukketFarve.setARGB(255, 0, 0, 0);
+        taendtFarve = new Paint();
+        taendtFarve.setARGB(255, 255, 0, 0);
     }
 
     @Override
@@ -37,26 +37,38 @@ public class LEDView extends View {
 
         // Get the available space
         float radius = (getHeight() < getWidth() ? getHeight() : getWidth()) / 2;
-        if (isOn) {
-            canvas.drawCircle(radius, radius, radius, onColor);
+        if (erTaendt) {
+            canvas.drawCircle(radius, radius, radius, taendtFarve);
         } else {
-            canvas.drawCircle(radius, radius, radius, offColor);
+            canvas.drawCircle(radius, radius, radius, slukketFarve);
         }
     }
 
-    public boolean isOn() {
-        return isOn;
-    }
-    public void turnOn() {
-        this.isOn = true;
-    }
-    public void turnOff() {
-        this.isOn = false;
+    public boolean erTaendt() {
+        return erTaendt;
     }
 
-    public Paint getOnColor() { return onColor; }
-    public void setOnColor(Paint onColor) { this.onColor = onColor; }
+    public void taend() {
+        this.erTaendt = true;
+    }
 
-    public Paint getOffColor() { return offColor; }
-    public void setOffColor(Paint offColor) { this.offColor = offColor; }
+    public void sluk() {
+        this.erTaendt = false;
+    }
+
+    public Paint getTaendtFarve() {
+        return taendtFarve;
+    }
+
+    public void setTaendtFarve(Paint taendtFarve) {
+        this.taendtFarve = taendtFarve;
+    }
+
+    public Paint getSlukketFarve() {
+        return slukketFarve;
+    }
+
+    public void setSlukketFarve(Paint slukketFarve) {
+        this.slukketFarve = slukketFarve;
+    }
 }

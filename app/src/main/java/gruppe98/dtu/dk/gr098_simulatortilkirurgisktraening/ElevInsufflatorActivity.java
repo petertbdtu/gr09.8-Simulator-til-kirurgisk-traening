@@ -52,12 +52,12 @@ public class ElevInsufflatorActivity extends AppCompatActivity implements View.O
 
         resetVolumenKnap.setOnClickListener(this);
 
-        gasforsyningMeter.setValue(80);
-        trykMeter.setValue(25);
-        flowrateMeter.setValue(100/3);
-        volumenMeter.setValue(100);
+        gasforsyningMeter.setVaerdi(80);
+        trykMeter.setVaerdi(25);
+        flowrateMeter.setVaerdi(100/3);
+        volumenMeter.setVaerdi(100);
 
-        overtrykLed.turnOn();
+        overtrykLed.taend();
 
 
     }

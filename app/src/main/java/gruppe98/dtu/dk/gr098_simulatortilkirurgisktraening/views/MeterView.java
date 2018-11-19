@@ -8,8 +8,8 @@ import android.view.View;
 
 public class MeterView extends View {
 
-    private float interval, value;
-    private Paint emptyColor, filledColor;
+    private float interval, vaerdi;
+    private Paint tomFarve, fyldFarve;
 
     public MeterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -24,12 +24,12 @@ public class MeterView extends View {
     }
 
     private void setup() {
-        interval = 100;
-        value = 0;
-        emptyColor = new Paint();
-        emptyColor.setARGB(0,0,0,0);
-        filledColor = new Paint();
-        filledColor.setARGB(255,255,0,0);
+        this.interval = 100;
+        this.vaerdi = 0;
+        this.tomFarve = new Paint();
+        this.tomFarve.setARGB(0, 0, 0, 0);
+        this.fyldFarve = new Paint();
+        this.fyldFarve.setARGB(255, 255, 0, 0);
     }
 
     @Override
@@ -39,24 +39,42 @@ public class MeterView extends View {
         int height = getHeight();
         int width = getWidth();
 
-        float middle = height - (height * value / interval);
+        float middle = height - (height * vaerdi / interval);
 
-        canvas.drawRect(0,0, width, middle, emptyColor);
-        canvas.drawRect(0, middle, width, height, filledColor);
+        canvas.drawRect(0, 0, width, middle, tomFarve);
+        canvas.drawRect(0, middle, width, height, fyldFarve);
 
     }
 
-    public float getInterval() { return interval; }
-    public void setInterval(float interval) { this.interval = interval; }
-
-    public float getValue() { return value; }
-    public void setValue(float value) {
-        this.value = value;
+    public float getInterval() {
+        return interval;
     }
 
-    public Paint getEmptyColor() { return emptyColor; }
-    public void setEmptyColor(Paint emptyColor) { this.emptyColor = emptyColor; }
+    public void setInterval(float interval) {
+        this.interval = interval;
+    }
 
-    public Paint getFilledColor() { return filledColor; }
-    public void setFilledColor(Paint filledColor) { this.filledColor = filledColor; }
+    public float getVaerdi() {
+        return vaerdi;
+    }
+
+    public void setVaerdi(float vaerdi) {
+        this.vaerdi = vaerdi;
+    }
+
+    public Paint getTomFarve() {
+        return tomFarve;
+    }
+
+    public void setTomFarve(Paint tomFarve) {
+        this.tomFarve = tomFarve;
+    }
+
+    public Paint getFyldFarve() {
+        return fyldFarve;
+    }
+
+    public void setFyldFarve(Paint fyldFarve) {
+        this.fyldFarve = fyldFarve;
+    }
 }
