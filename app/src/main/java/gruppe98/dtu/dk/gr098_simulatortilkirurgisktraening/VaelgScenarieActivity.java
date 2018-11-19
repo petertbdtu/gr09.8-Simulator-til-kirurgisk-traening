@@ -10,11 +10,12 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
+
 public class VaelgScenarieActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button opretScenarie;
 
-    private static ArrayList<String> liste_scenarie_navne = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +26,23 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         opretScenarie.setOnClickListener(this);
 
         indlaesScenarier();
+        System.out.println("DEBUG: indleasScenarier has run");
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        indlaesScenarier();
     }
 
     private void indlaesScenarier() {
-        liste_scenarie_navne.add("ForhøjetVolumen");
+        ArrayList<String> liste_scenarie_navne = new ArrayList<>();
+        for(Scenario scenarie:Applikation.scenarieHaandtering.hentAlleScenarier()) {
+            liste_scenarie_navne.add(scenarie.getName());
+        }
+
+       /* liste_scenarie_navne.add("ForhøjetVolumen");
         liste_scenarie_navne.add("placeholder2");
         liste_scenarie_navne.add("placeholder3");
         liste_scenarie_navne.add("placeholder 4");
@@ -58,11 +71,11 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         liste_scenarie_navne.add("placeholder 27");
         liste_scenarie_navne.add("placeholder 28");
         liste_scenarie_navne.add("placeholder 29");
-        liste_scenarie_navne.add("placeholder 30");
+        liste_scenarie_navne.add("placeholder 30");*/
 
 
 
-        aktiverRecyclerView();
+        aktiverRecyclerView(liste_scenarie_navne);
     }
 
     @Override
@@ -70,15 +83,12 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         startActivity(new Intent(this, OpretScenarie.class));
     }
 
-    private void aktiverRecyclerView() {
+    private void aktiverRecyclerView(ArrayList<String> navne) {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        VaelgScenarieRecyclerViewAdapter adapter = new VaelgScenarieRecyclerViewAdapter(liste_scenarie_navne, this);
+        VaelgScenarieRecyclerViewAdapter adapter = new VaelgScenarieRecyclerViewAdapter(navne, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
-    public static String getScenarieNavn(int ID) {
-        return liste_scenarie_navne.get(ID);
-    }
 }

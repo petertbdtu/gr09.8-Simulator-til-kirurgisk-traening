@@ -15,12 +15,8 @@ public class RedigerAktivitetActivity extends AppCompatActivity {
 
         tekst = findViewById(R.id.textView2);
 
-        int scenarieID = getIntent().getIntExtra("scenarieID", 0);
 
-
-        String testString = VaelgScenarieActivity.getScenarieNavn(scenarieID);
-
-        tekst.setText(testString);
+        tekst.setText(getIntent().getStringExtra("scenarieNavn"));
 
     }
 }

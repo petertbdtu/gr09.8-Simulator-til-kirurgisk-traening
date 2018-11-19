@@ -38,7 +38,7 @@ public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<Vaelg
             public void onClick(View view) {
                 Intent redigerAktivitet = new Intent(context, RedigerAktivitetActivity.class);
                 //redigerAktivitet.putExtra("position", i);
-                redigerAktivitet.putExtra("scenarieID", i);
+                redigerAktivitet.putExtra("scenarieNavn", list_scenarie_navne.get(i));
 
                 context.startActivity(redigerAktivitet);
             }

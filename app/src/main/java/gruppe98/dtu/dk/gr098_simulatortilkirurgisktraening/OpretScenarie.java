@@ -9,20 +9,19 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
+
 public class OpretScenarie extends AppCompatActivity {
 
     Button saveScenario;
     TextView flowRate;
     TextView scenarioName;
     TextView infoText;
-    ArrayList<Scenario> availableScenarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opret_scenarie);
-
-        availableScenarios = getScenarios();
 
         flowRate = findViewById(R.id.flowrateDisplay);
         flowRate.setOnClickListener(new View.OnClickListener() {
@@ -44,24 +43,23 @@ public class OpretScenarie extends AppCompatActivity {
         saveScenario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Scenario newScenario = new Scenario();
                 newScenario.setName(scenarioName.getText().toString());
                 newScenario.setActualFlowRate(Integer.parseInt(flowRate.getText().toString()));
                 //TODO
                 //check for duplicates
-                availableScenarios.add(newScenario);
-                updateScenarios(availableScenarios);
+                Applikation.scenarieHaandtering.opretScenarie(newScenario);
+                updateScenarios();
             }
         });
 
         infoText = findViewById(R.id.new_scenario_info);
     }
 
-    private void updateScenarios(ArrayList<Scenario> availableScenarios) {
+    private void updateScenarios() {
         infoText.setText("Scenario updated");
-    }
 
-    private ArrayList<Scenario> getScenarios() {
-        return new ArrayList<Scenario>();
+        finish();
     }
 }

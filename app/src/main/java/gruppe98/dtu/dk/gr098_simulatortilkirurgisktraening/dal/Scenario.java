@@ -1,4 +1,4 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
 public class Scenario {
     private String name;
@@ -7,6 +7,15 @@ public class Scenario {
     private int actualFlowRate;
     private int targetFlowRate;
     private int volume;
+
+    public Scenario() {
+        this.name = "";
+        this.actualPressure = 0;
+        this.targetPressure = 0;
+        this.actualFlowRate = 0;
+        this.targetFlowRate = 0;
+        this.volume = 0;
+    }
 
     public String getName() {
         return name;
