@@ -43,11 +43,9 @@
             android:name=".VaelgTablet"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".redigerAktivitetActivity"
+            android:name=".RedigerAktivitetActivity"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".TabletAktiviteter"
-            android:screenOrientation="landscape" />
+
     </application>
 
 </manifest>
