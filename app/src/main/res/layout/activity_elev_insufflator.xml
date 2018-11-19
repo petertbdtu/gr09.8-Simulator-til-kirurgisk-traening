@@ -8,7 +8,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/clTopBar"
-        android:layout_width="381dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -76,42 +76,38 @@
             android:layout_height="0dp"
             android:background="@drawable/constraint_border"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/clFlowrate"
+            app:layout_constraintEnd_toStartOf="@+id/clTryk"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLayout2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
-
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/clGasforsyningTop"
+            <TextView
+                android:id="@+id/gasforsyningTitel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:maxLines="1"
+                android:text="@string/gasforsyningTitel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/gasforsyningTitel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@string/gasforsyningTitel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+            <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
+                android:id="@+id/gasforsyningMeter"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/clGasforsyningKnapper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gasforsyningTitel"
+                app:layout_constraintVertical_bias="0.0" />
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/clGasforsyningBottom"
+                android:id="@+id/clGasforsyningKnapper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/constraint_border"
@@ -154,6 +150,7 @@
 
             </android.support.constraint.ConstraintLayout>
 
+
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -162,8 +159,8 @@
             android:layout_height="0dp"
             android:background="@drawable/constraint_border"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/clTryk"
-            app:layout_constraintStart_toEndOf="@+id/clGasforsyning"
+            app:layout_constraintEnd_toStartOf="@+id/clVolumen"
+            app:layout_constraintStart_toEndOf="@+id/clTryk"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
@@ -171,6 +168,7 @@
                 android:id="@+id/flowrateTitel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:text="@string/flowrateTitel"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -178,18 +176,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/flowrateDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif"
                 android:text="00"
-                android:textAlignment="center"
                 android:textSize="36sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/flowrateTitel" />
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/clFlowrateKnapper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -231,6 +230,19 @@
                     app:srcCompat="@drawable/ic_expand_more_black_128dp" />
             </android.support.constraint.ConstraintLayout>
 
+            <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
+                android:id="@+id/flowrateMeter"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/clFlowrateKnapper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flowrateDisplay" />
+
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -239,8 +251,8 @@
             android:layout_height="0dp"
             android:background="@drawable/constraint_border"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/clVolumen"
-            app:layout_constraintStart_toEndOf="@+id/clFlowrate"
+            app:layout_constraintEnd_toStartOf="@+id/clFlowrate"
+            app:layout_constraintStart_toEndOf="@+id/clGasforsyning"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
@@ -248,6 +260,7 @@
                 android:id="@+id/trykTitel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:text="@string/trykTitel"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -255,7 +268,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/flowrateDisplay"
+                android:id="@+id/trykDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -266,7 +279,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trykTitel" />
 
+            <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
+                android:id="@+id/trykMeter"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/clTrykKnapper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trykDisplay" />
+
+
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/clTrykKnapper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -317,13 +345,14 @@
             android:background="@drawable/constraint_border"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/clTryk"
+            app:layout_constraintStart_toEndOf="@+id/clFlowrate"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/volumenTitel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:text="@string/volumenTitel"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -342,7 +371,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/volumenTitel" />
 
+
+            <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
+                android:id="@+id/volumenMeter"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/clVolumenKnapper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/volumenDisplay" />
+
+
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/clVolumenKnapper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -364,6 +409,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@mipmap/ic_reset_round" />
             </android.support.constraint.ConstraintLayout>
+
         </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
