@@ -27,7 +27,7 @@ public class MeterView extends View {
         interval = 100;
         value = 0;
         emptyColor = new Paint();
-        emptyColor.setARGB(255,255,255,255);
+        emptyColor.setARGB(0,0,0,0);
         filledColor = new Paint();
         filledColor.setARGB(255,255,0,0);
     }
@@ -39,7 +39,7 @@ public class MeterView extends View {
         int height = getHeight();
         int width = getWidth();
 
-        float middle = height * value / interval;
+        float middle = height - (height * value / interval);
 
         canvas.drawRect(0,0, width, middle, emptyColor);
         canvas.drawRect(0, middle, width, height, filledColor);
