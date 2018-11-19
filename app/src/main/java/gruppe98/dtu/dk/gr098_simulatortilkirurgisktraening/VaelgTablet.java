@@ -21,7 +21,7 @@ public class VaelgTablet extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-       // Intent tabletAktiviteter = new Intent(this, TabletAktiviteter.class);
-        //startActivity(tabletAktiviteter);
+       Intent tabletAktiviteter = new Intent(this, TabletAktiviteter.class);
+       startActivity(tabletAktiviteter);
     }
 }
