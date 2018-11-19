@@ -13,7 +13,7 @@ public class ElevInsufflatorActivity extends AppCompatActivity implements View.O
 
     MeterView gasforsyningMeter, trykMeter, flowrateMeter, volumenMeter;
     LEDView overtrykLed, tubeblokeretLed;
-    TextView trykDisplay, flowrateDisplay, volumenDisplay;
+    TextView trykDisplay, trykMaalDisplay, flowrateDisplay, flowrateMaalDisplay, volumenDisplay;
     ImageView startKnap, stopKnap, incTrykKnap, decTrykKnap, incFlowrateKnap, decFlowrateKnap, resetVolumenKnap;
 
     @Override
@@ -30,10 +30,12 @@ public class ElevInsufflatorActivity extends AppCompatActivity implements View.O
 
         // Tryk
         trykDisplay = findViewById(R.id.trykDisplay);
+        trykMaalDisplay = findViewById(R.id.trykMaalDisplay);
         trykMeter = findViewById(R.id.trykMeter);
 
         // Flowrate
         flowrateDisplay = findViewById(R.id.flowrateDisplay);
+        flowrateMaalDisplay = findViewById(R.id.flowrateMaalDisplay);
         flowrateMeter = findViewById(R.id.flowrateMeter);
 
         // Volumen

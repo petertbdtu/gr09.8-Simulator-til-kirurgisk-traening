@@ -6,4 +6,7 @@
     <color name="colorRed">#F15050</color>
     <color name="colorPrimaryDark">#330022</color>
     <color name="colorAccent">#331144</color>
+    <color name="colorDisplayBackground">#303030</color>
+    <color name="colorDisplayGreen">#11DD11</color>
+    <color name="colorDisplayRed">#DD1111</color>
 </resources>
