@@ -17,7 +17,7 @@ public class ScenarieHaandtering {
         dao = new DaoScenarier();
     }
 
-    public void hentScenarier() {
+    public void indlaesScenarier() {
         for (Object scenarie : dao.loadData()) {
             tilgaengeligeScenarier.add((Scenario) scenarie);
         }

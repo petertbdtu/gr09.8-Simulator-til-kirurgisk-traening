@@ -22,6 +22,8 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
 
         clForbindTablet = findViewById(R.id.clForbinTTablet);
         clForbindTablet.setOnClickListener(this);
+
+        Applikation.scenarieHaandtering.indlaesScenarier();
     }
 
 
