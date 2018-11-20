@@ -38,7 +38,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
 
     private void indlaesScenarier() {
         ArrayList<String> liste_scenarie_navne = new ArrayList<>();
-        for(Scenario scenarie:Applikation.scenarieHaandtering.hentAlleScenarier()) {
+        for(Scenario scenarie:InsufflatorSimApp.scenarieHaandtering.hentAlleScenarier()) {
             liste_scenarie_navne.add(scenarie.getName());
         }
 
@@ -80,7 +80,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(this, OpretScenarie.class));
+        startActivity(new Intent(this, OpretScenarieActivity.class));
     }
 
     private void aktiverRecyclerView(ArrayList<String> navne) {
