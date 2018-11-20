@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DaoScenarier implements DaoInterface {
     @Override
-    public ArrayList<Object> loadData() {
+    public ArrayList<Scenario> loadData() {
         ArrayList list = new ArrayList();
         Scenario testScenario = new Scenario();
         testScenario.setName("Test scenarie");
@@ -15,7 +15,7 @@ public class DaoScenarier implements DaoInterface {
     }
 
     @Override
-    public void saveData(ArrayList<Object> data) {
+    public void saveData(ArrayList data) {
 
     }
 }

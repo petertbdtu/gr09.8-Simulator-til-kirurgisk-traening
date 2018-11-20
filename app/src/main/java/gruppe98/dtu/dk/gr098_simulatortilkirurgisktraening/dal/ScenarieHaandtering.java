@@ -18,27 +18,17 @@ public class ScenarieHaandtering {
     }
 
     public void indlaesScenarier() {
-        for (Object scenarie : dao.loadData()) {
-            tilgaengeligeScenarier.add((Scenario) scenarie);
-        }
+        tilgaengeligeScenarier = dao.loadData();
     }
 
     public void opretScenarie(Scenario scenarie) {
-
-
         tilgaengeligeScenarier.add(scenarie);
         gemScenarier();
     }
 
     public void gemScenarier() {
 
-
-            ArrayList<Object> list = new ArrayList<>();
-
-        for(Scenario scenarie: tilgaengeligeScenarier) {
-            list.add(scenarie);
-        }
-        dao.saveData(list);
+        dao.saveData(tilgaengeligeScenarier);
     }
 
     public ArrayList<Scenario> hentAlleScenarier(){
