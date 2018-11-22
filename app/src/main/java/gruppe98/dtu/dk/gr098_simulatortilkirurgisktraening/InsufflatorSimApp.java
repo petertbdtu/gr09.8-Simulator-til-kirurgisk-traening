@@ -15,4 +15,5 @@ public class InsufflatorSimApp extends Application {
         scenarieHaandtering = ScenarieHaandtering.getInstance();
 
     }
+
 }

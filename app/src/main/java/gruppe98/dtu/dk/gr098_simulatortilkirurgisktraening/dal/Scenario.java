@@ -1,6 +1,8 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
-public class Scenario {
+import java.io.Serializable;
+
+public class Scenario implements Serializable {
     private String name;
     private int actualPressure;
     private int targetPressure;

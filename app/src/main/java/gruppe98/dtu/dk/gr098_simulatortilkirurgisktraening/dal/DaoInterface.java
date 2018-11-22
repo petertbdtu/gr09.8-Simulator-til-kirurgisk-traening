@@ -1,10 +1,10 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public interface DaoInterface {
-    public ArrayList loadData();
+public interface DaoInterface<E> {
+    public List loadData();
 
-    public void saveData(ArrayList data);
+    public void saveData(List data);
 
 }

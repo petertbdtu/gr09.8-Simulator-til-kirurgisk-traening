@@ -1,11 +1,14 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
+//import android.os.Environment;
+//import java.io.File;
 import java.util.ArrayList;
 
 public class ScenarieHaandtering {
     private static final ScenarieHaandtering instans = new ScenarieHaandtering();
     private static ArrayList<Scenario> tilgaengeligeScenarier;
     private static DaoScenarier dao;
+    //public static String PATH;
 
 
     public static ScenarieHaandtering getInstance() {
@@ -15,10 +18,17 @@ public class ScenarieHaandtering {
     private ScenarieHaandtering() {
         tilgaengeligeScenarier = new ArrayList<>();
         dao = new DaoScenarier();
+       /*PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/availableScenarios";
+        System.out.println("DEBUG"+PATH);
+        File dir = new File(PATH);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        */
     }
 
     public void indlaesScenarier() {
-        tilgaengeligeScenarier = dao.loadData();
+        tilgaengeligeScenarier = (ArrayList<Scenario>) dao.loadData();
     }
 
     public void opretScenarie(Scenario scenarie) {
@@ -27,7 +37,6 @@ public class ScenarieHaandtering {
     }
 
     public void gemScenarier() {
-
         dao.saveData(tilgaengeligeScenarier);
     }
 
