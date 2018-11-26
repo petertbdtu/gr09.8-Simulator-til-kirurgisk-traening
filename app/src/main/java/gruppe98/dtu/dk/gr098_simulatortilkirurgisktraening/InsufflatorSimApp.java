@@ -21,7 +21,12 @@ public class InsufflatorSimApp extends Application {
         if (!data.scenarieEksisterer("TestScenarie")){
             Scenario s1 = new Scenario();
             s1.setName("TestScenarie");
-
+            s1.setTargetFlowRate(20);
+            s1.setActualFlowRate(30);
+            s1.setTargetPressure(40);
+            s1.setActualPressure(50);
+            s1.setVolume(60);
+            data.opretScenarie(s1);
         }
     }
 

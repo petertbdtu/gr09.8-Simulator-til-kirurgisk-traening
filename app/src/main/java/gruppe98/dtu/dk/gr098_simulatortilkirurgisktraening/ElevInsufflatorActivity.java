@@ -2,10 +2,13 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.LEDView;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView;
 
@@ -54,18 +57,37 @@ public class ElevInsufflatorActivity extends AppCompatActivity implements View.O
 
         resetVolumenKnap.setOnClickListener(this);
 
-        gasforsyningMeter.setVaerdi(80);
-        trykMeter.setVaerdi(25);
-        flowrateMeter.setVaerdi(100/3);
-        volumenMeter.setVaerdi(100);
+//        gasforsyningMeter.setVaerdi(80);
+//        trykMeter.setVaerdi(25);
+//        flowrateMeter.setVaerdi(100/3);
+//        volumenMeter.setVaerdi(100);
 
-        overtrykLed.taend();
+//        overtrykLed.taend();
 
+        Scenario sc = DataHaandtering.getInstance().hentScenarie("TestScenarie");
+        Log.d("pt", "onCreate: "+sc.getName());
+        loadScenarie(sc);
 
     }
 
     @Override
     public void onClick(View v) {
 
+    }
+
+    public void loadScenarie(Scenario sc) {
+
+        flowrateMaalDisplay.setText(Integer.toString(sc.getTargetFlowRate()));
+        flowrateDisplay.setText(Integer.toString(sc.getActualFlowRate()));
+        flowrateMeter.setVaerdi(sc.getActualFlowRate());
+
+        trykMaalDisplay.setText(Integer.toString(sc.getTargetPressure()));
+        trykDisplay.setText(Integer.toString(sc.getActualPressure()));
+        trykMeter.setVaerdi(sc.getActualPressure());
+
+        volumenDisplay.setText(Integer.toString(sc.getVolume()));
+        volumenMeter.setVaerdi(sc.getVolume());
+
+        // sc.getName();
     }
 }
