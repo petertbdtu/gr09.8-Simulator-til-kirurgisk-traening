@@ -17,6 +17,9 @@ public class ElevAfventerActivity extends AppCompatActivity implements View.OnCl
 
         skip = findViewById(R.id.skipButton);
         skip.setOnClickListener(this);
+
+        //setup bluetooth her.
+        //kør BluetoothWrapper.start() for at sætte den i listen mode
     }
 
     @Override
