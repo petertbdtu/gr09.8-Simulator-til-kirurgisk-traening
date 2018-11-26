@@ -68,6 +68,6 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
         app:layout_constraintVertical_weight="4">
 
-        <include layout="@layout/activity_elev_insufflator" />
+        <include layout="@layout/fragment_insufflator" />
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
