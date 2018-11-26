@@ -10,12 +10,12 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 
 public class VaelgScenarieActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button opretScenarie;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
 
     private void indlaesScenarier() {
         ArrayList<String> liste_scenarie_navne = new ArrayList<>();
-        for(Scenario scenarie:InsufflatorSimApp.scenarieHaandtering.hentAlleScenarier()) {
+        for(Scenario scenarie:DataHaandtering.getInstance().hentAlleScenarier()) {
             liste_scenarie_navne.add(scenarie.getName());
         }
 

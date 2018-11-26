@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
+
 public class IntroActivity extends AppCompatActivity {
+
+    DataHaandtering data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

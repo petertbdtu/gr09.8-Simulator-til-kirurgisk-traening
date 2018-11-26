@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 
 public class OpretScenarieActivity extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class OpretScenarieActivity extends AppCompatActivity {
                 newScenario.setActualFlowRate(Integer.parseInt(flowRate.getText().toString()));
                 //TODO
                 //check for duplicates
-                InsufflatorSimApp.scenarieHaandtering.opretScenarie(newScenario);
+                DataHaandtering.getInstance().opretScenarie(newScenario);
                 updateScenarios();
             }
         });

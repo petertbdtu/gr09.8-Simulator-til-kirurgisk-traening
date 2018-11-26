@@ -22,10 +22,7 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
 
         clForbindTablet = findViewById(R.id.clForbinTTablet);
         clForbindTablet.setOnClickListener(this);
-
-        InsufflatorSimApp.scenarieHaandtering.indlaesScenarier();
     }
-
 
     public void onClick(View v) {
         switch (v.getId()) {

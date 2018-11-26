@@ -12,7 +12,7 @@ public class VaelgRolleActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vaelg_rolle);
-        System.out.println("something");
+
         View clTemp = findViewById(R.id.clInsufflator);
         clTemp.setOnClickListener(this);
 
