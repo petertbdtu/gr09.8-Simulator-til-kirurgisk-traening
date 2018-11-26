@@ -1,5 +1,6 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataHaandtering {
@@ -20,16 +21,23 @@ public class DataHaandtering {
 
     public void init(String filePath) {
         this.filePath = filePath;
+        try {
+            daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        } catch (java.lang.NullPointerException e) {
+            List<Scenario> tempList = new ArrayList<>();
+            daoScenarier.saveData(tempList, filePath + "/" + scenarierFileName);
+        }
+
     }
 
     public void opretScenarie(Scenario scenarie) {
-        List<Scenario> tempScenarier = daoScenarier.loadData(scenarierFileName);
+        List<Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
         tempScenarier.add(scenarie);
-        daoScenarier.saveData(tempScenarier, scenarierFileName);
+        daoScenarier.saveData(tempScenarier, filePath + "/" + scenarierFileName);
     }
 
     public List<Scenario> hentAlleScenarier(){
-        return daoScenarier.loadData(scenarierFileName);
+        return daoScenarier.loadData(filePath + "/" + scenarierFileName);
     }
 
     public Scenario hentScenarie(String navn) {

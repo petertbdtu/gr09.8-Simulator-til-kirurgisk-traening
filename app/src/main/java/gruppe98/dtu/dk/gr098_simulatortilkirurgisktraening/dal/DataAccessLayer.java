@@ -30,7 +30,7 @@ public class DataAccessLayer<E> {
 
     public void saveData(List<E> data, String fileName) {
         try{
-            FileOutputStream fos = new FileOutputStream("");
+            FileOutputStream fos = new FileOutputStream(fileName);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(data);
             os.close();

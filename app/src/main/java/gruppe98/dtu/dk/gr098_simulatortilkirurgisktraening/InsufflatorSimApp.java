@@ -11,8 +11,8 @@ public class InsufflatorSimApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        System.out.println("DEBUG InsufflatorSimApp");
-        DataHaandtering.getInstance().init(getFilesDir().toString());
+        System.out.println("---------------> DEBUG InsufflatorSimApp" + this.getFilesDir().getPath());
+        DataHaandtering.getInstance().init(this.getFilesDir().getPath());
         TestingDataLayer();
     }
 

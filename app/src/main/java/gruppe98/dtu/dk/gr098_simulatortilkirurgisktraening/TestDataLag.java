@@ -6,6 +6,7 @@ import android.os.Bundle;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataAccessLayer;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 
 public class TestDataLag extends AppCompatActivity {
@@ -18,6 +19,10 @@ public class TestDataLag extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_data_lag);
+
+        DataHaandtering data = DataHaandtering.getInstance();
+        data.hentAlleScenarier();
+
 
         lScenarier = dataAccessLayer.loadData(fileName);
         for(Scenario s : lScenarier) {
