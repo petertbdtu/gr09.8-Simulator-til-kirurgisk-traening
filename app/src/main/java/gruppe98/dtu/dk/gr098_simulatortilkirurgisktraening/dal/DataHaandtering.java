@@ -41,7 +41,7 @@ public class DataHaandtering {
     }
 
     public Scenario hentScenarie(String navn) {
-        List<Scenario> tempScenarier = daoScenarier.loadData(scenarierFileName);
+        List<Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
         for(Scenario scenarie: tempScenarier) {
             if(scenarie.getName().equals(navn)) {
                 return scenarie;
@@ -51,7 +51,7 @@ public class DataHaandtering {
     }
 
     public boolean scenarieEksisterer(String navn) {
-        List<Scenario> tempScenarier = daoScenarier.loadData(scenarierFileName);
+        List<Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
         for(Scenario scenarie: tempScenarier) {
             if(scenarie.getName().equals(navn)) {
                 return true;
