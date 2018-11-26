@@ -20,6 +20,7 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
     View view;
     boolean erInstruktor;
+    VALGT_ELEMENT ve = VALGT_ELEMENT.trykAktuel;
 
     MeterView gasforsyningMeter, trykMeter, flowrateMeter, volumenMeter;
     LEDView overtrykLed, tubeblokeretLed;
@@ -96,6 +97,13 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     }
 
     public void bindInstruktorKnapper() {
+
+        trykMaalDisplay.setOnClickListener(this);
+        trykDisplay.setOnClickListener(this);
+        flowrateMaalDisplay.setOnClickListener(this);
+        flowrateDisplay.setOnClickListener(this);
+        volumenDisplay.setOnClickListener(this);
+
         startKnap.setOnClickListener(this);
         stopKnap.setOnClickListener(this);
         incTrykKnap.setOnClickListener(this);
@@ -105,21 +113,74 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         resetVolumenKnap.setOnClickListener(this);
     }
 
+    private enum VALGT_ELEMENT{
+        trykTarget, trykAktuel,
+        flowrateTarget, flowrateAktuel,
+        volumen
+    }
+
     @Override
     public void onClick(View v) {
-        // TODO opsæt instruktør funktionalitet.
+        Scenario as = InsufflatorSimApp.aktivtScenarie;
         switch (v.getId())
         {
+            case R.id.flowrateMaalDisplay:
+                ve = VALGT_ELEMENT.flowrateTarget;
+                break;
+            case R.id.flowrateDisplay:
+                ve = VALGT_ELEMENT.flowrateAktuel;
+                break;
+            case R.id.trykMaalDisplay:
+                ve = VALGT_ELEMENT.trykTarget;
+                break;
+            case R.id.trykDisplay:
+                ve = VALGT_ELEMENT.trykAktuel;
+                break;
+            case R.id.volumenDisplay:
+                ve = VALGT_ELEMENT.volumen;
+                break;
             case R.id.incTrykKnap:
+            case R.id.incFlowrateKnap:
+                switch (ve) {
+                    case trykTarget:
+                        as.setTargetPressure(as.getTargetPressure()+1);
+                        break;
+                    case trykAktuel:
+                        as.setActualPressure(as.getActualPressure()+1);
+                        break;
+                    case flowrateTarget:
+                        as.setTargetFlowRate(as.getTargetFlowRate()+1);
+                        break;
+                    case flowrateAktuel:
+                        as.setActualFlowRate(as.getActualFlowRate()+1);
+                        break;
+                    case volumen:
+                        as.setVolume(as.getVolume()+1);
+                        break;
+                }
                 break;
             case R.id.decTrykKnap:
-                break;
-            case R.id.incFlowrateKnap:
-                break;
             case R.id.decFlowrateKnap:
-                break;
-            case R.id.resetVolumenKnap:
+                switch (ve) {
+                    case trykTarget:
+                        as.setTargetPressure(as.getTargetPressure()-1);
+                        break;
+                    case trykAktuel:
+                        as.setActualPressure(as.getActualPressure()-1);
+                        break;
+                    case flowrateTarget:
+                        as.setTargetFlowRate(as.getTargetFlowRate()-1);
+                        break;
+                    case flowrateAktuel:
+                        as.setActualFlowRate(as.getActualFlowRate()-1);
+                        break;
+                    case volumen:
+                        as.setVolume(as.getVolume()-1);
+                        break;
+                }
                 break;
         }
+        InsufflatorSimApp.aktivtScenarie = as;
+        loadScenarie(as);
     }
 }
