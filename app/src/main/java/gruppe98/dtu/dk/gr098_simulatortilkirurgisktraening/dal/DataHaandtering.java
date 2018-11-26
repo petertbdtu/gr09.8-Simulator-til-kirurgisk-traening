@@ -1,7 +1,9 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DataHaandtering {
     private static DataHaandtering instans = new DataHaandtering();
@@ -24,39 +26,35 @@ public class DataHaandtering {
         try {
             daoScenarier.loadData(filePath + "/" + scenarierFileName);
         } catch (java.lang.NullPointerException e) {
-            List<Scenario> tempList = new ArrayList<>();
+            Map<String,Scenario> tempList = new HashMap<>();
             daoScenarier.saveData(tempList, filePath + "/" + scenarierFileName);
         }
-
     }
 
     public void opretScenarie(Scenario scenarie) {
-        List<Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
-        tempScenarier.add(scenarie);
+        Map<String,Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        tempScenarier.put(scenarie.getName(), scenarie);
         daoScenarier.saveData(tempScenarier, filePath + "/" + scenarierFileName);
     }
 
     public List<Scenario> hentAlleScenarier(){
-        return daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        List<Scenario> tempScenarier = new ArrayList<Scenario>(daoScenarier.loadData(filePath + "/" + scenarierFileName).values());
+        return tempScenarier;
     }
 
     public Scenario hentScenarie(String navn) {
-        List<Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
-        for(Scenario scenarie: tempScenarier) {
-            if(scenarie.getName().equals(navn)) {
-                return scenarie;
-            }
-        }
-        return null;
+        Map<String,Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        return tempScenarier.get(navn);
     }
 
     public boolean scenarieEksisterer(String navn) {
-        List<Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
-        for(Scenario scenarie: tempScenarier) {
-            if(scenarie.getName().equals(navn)) {
-                return true;
-            }
-        }
-        return false;
+        Map<String,Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        return tempScenarier.containsKey(navn);
+    }
+
+    public void fjernScenarie(String s) {
+        Map<String,Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        tempScenarier.remove(s);
+        daoScenarier.saveData(tempScenarier, filePath + "/" + scenarierFileName);
     }
 }

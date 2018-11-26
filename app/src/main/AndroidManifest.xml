@@ -35,13 +35,7 @@
             android:name=".VaelgScenarieActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".OpretScenarieActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".VaelgTablet"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".RedigerAktivitetActivity"
             android:screenOrientation="landscape" />
         <!--<activity android:name=".TestDataLag"></activity>-->
     </application>

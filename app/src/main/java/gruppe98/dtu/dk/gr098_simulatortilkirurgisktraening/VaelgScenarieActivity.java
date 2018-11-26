@@ -2,6 +2,7 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
 
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,7 +79,6 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragmentScenarieContainer, fragment)
                 .commit();
-
         scenarieKnap.setText(getString(R.string.vaelg_scenarie_knap_nyt_scenarie));
         scenarieKnapTilstand = 0;
     }
@@ -95,5 +95,15 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
 
         scenarieKnap.setText("gem scenarie");
         scenarieKnapTilstand = 1;
+    }
+
+    public void skiftTilRedigerScenarie(String scenarieNavn) {
+        InsufflatorSimApp.aktivtScenarie = DataHaandtering.getInstance().hentScenarie(scenarieNavn);
+        skiftTilInsufflator();
+    }
+
+    public void sletScenarie(String s) {
+        DataHaandtering.getInstance().fjernScenarie(s);
+        skiftTilScenarieListe();
     }
 }

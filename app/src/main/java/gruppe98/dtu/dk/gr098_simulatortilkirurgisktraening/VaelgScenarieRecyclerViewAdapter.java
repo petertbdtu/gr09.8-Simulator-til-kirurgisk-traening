@@ -1,7 +1,5 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +14,9 @@ import java.util.ArrayList;
 public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<VaelgScenarieRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<String> list_scenarie_navne;
-    private Context context;
+    private VaelgScenarieActivity context;
 
-    public VaelgScenarieRecyclerViewAdapter(ArrayList<String> list_scenarie_navne, Context context){
+    public VaelgScenarieRecyclerViewAdapter(ArrayList<String> list_scenarie_navne, VaelgScenarieActivity context){
         this.list_scenarie_navne = list_scenarie_navne;
         this.context = context;
     }
@@ -30,19 +28,24 @@ public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<Vaelg
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         viewHolder.scenarie_navn.setText(list_scenarie_navne.get(i));
-
-        viewHolder.rediger.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent redigerAktivitet = new Intent(context, RedigerAktivitetActivity.class);
-                //redigerAktivitet.putExtra("position", i);
-                redigerAktivitet.putExtra("scenarieNavn", list_scenarie_navne.get(i));
-
-                context.startActivity(redigerAktivitet);
+        viewHolder.rediger.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.skiftTilRedigerScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                }
             }
-        });
+        );
+        viewHolder.slet.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        context.sletScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                    }
+                }
+        );
     }
 
     @Override

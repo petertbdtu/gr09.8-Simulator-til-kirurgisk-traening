@@ -53,7 +53,7 @@ public class ScenarieListFragment extends Fragment implements View.OnClickListen
 
     private void aktiverRecyclerView(ArrayList<String> navne) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        VaelgScenarieRecyclerViewAdapter adapter = new VaelgScenarieRecyclerViewAdapter(navne, getActivity());
+        VaelgScenarieRecyclerViewAdapter adapter = new VaelgScenarieRecyclerViewAdapter(navne, (VaelgScenarieActivity) getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
