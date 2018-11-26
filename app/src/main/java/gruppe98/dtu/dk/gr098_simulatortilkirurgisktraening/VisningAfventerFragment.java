@@ -30,7 +30,6 @@ public class VisningAfventerFragment extends Fragment implements View.OnClickLis
         FragmentTransaction ft = fm.beginTransaction();
 
         ft.replace(R.id.fragmentContainer, fragment)
-                .addToBackStack(null)
                 .commit();
     }
 }
