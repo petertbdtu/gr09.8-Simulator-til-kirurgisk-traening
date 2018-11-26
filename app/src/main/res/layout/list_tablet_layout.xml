@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/list_tablet_element"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button">
+
+        <Button
+            android:id="@+id/m_button_connect"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/VaelgTablet_KnapForbind"
+            app:layout_constraintBottom_toBottomOf="@+id/m_button_activity"
+            app:layout_constraintEnd_toStartOf="@+id/m_button_activity"
+            app:layout_constraintStart_toEndOf="@+id/tabletNavn"
+            app:layout_constraintTop_toTopOf="@+id/m_button_activity"
+            app:layout_constraintVertical_bias="0.472" />
+
+        <Button
+            android:id="@+id/m_button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/VaelgTablet_KnapSlet"
+            app:layout_constraintBottom_toBottomOf="@+id/m_button_activity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/m_button_activity" />
+
+        <Button
+            android:id="@+id/m_button_activity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Tabletaktiviteter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/m_button_delete"
+            app:layout_constraintStart_toEndOf="@+id/m_button_connect"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tabletNavn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Tablet1"
+            app:layout_constraintBottom_toBottomOf="@+id/m_button_connect"
+            app:layout_constraintEnd_toStartOf="@+id/m_button_connect"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/m_button_connect" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
