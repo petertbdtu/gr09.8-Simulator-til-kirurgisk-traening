@@ -1,9 +1,9 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +18,37 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView;
 
 public class InsufflatorFragment extends Fragment implements View.OnClickListener {
 
+    View view;
+    boolean erInstruktor;
+
     MeterView gasforsyningMeter, trykMeter, flowrateMeter, volumenMeter;
     LEDView overtrykLed, tubeblokeretLed;
     TextView trykDisplay, trykMaalDisplay, flowrateDisplay, flowrateMaalDisplay, volumenDisplay;
+
     ImageView startKnap, stopKnap, incTrykKnap, decTrykKnap, incFlowrateKnap, decFlowrateKnap, resetVolumenKnap;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        view = inflater.inflate(R.layout.fragment_insufflator, container, false);
+        erInstruktor = this.getArguments().getBoolean("erInstruktor");
 
-        View view = inflater.inflate(R.layout.fragment_insufflator, container, false);
+        initialiserViews();
 
+        if(erInstruktor)
+        {
+            bindInstruktorKnapper();
+        }
+
+        // TODO hent aktivt scenarie fra InsufflatorSimApp
+        Scenario sc = DataHaandtering.getInstance().hentScenarie("TestScenarie");
+        loadScenarie(sc);
+
+        return view;
+    }
+
+    private void initialiserViews() {
         // LED'er
         overtrykLed = view.findViewById(R.id.overtrykLed);
         tubeblokeretLed = view.findViewById(R.id.tubeblokeretLed);
@@ -51,7 +70,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         volumenDisplay = view.findViewById(R.id.volumenDisplay);
         volumenMeter = view.findViewById(R.id.volumenMeter);
 
-        // Elevens knapper (Ikke nødvendigvis relevant for instruktør)
         // OBS AT DE INDTIL VIDERE ER IMAGEVIEWS
         startKnap = view.findViewById(R.id.startKnap);
         stopKnap = view.findViewById(R.id.stopKnap);
@@ -60,30 +78,9 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         incFlowrateKnap = view.findViewById(R.id.incFlowrateKnap);
         decFlowrateKnap = view.findViewById(R.id.decFlowrateKnap);
         resetVolumenKnap = view.findViewById(R.id.resetVolumenKnap);
-
-        startKnap.setOnClickListener(this);
-        stopKnap.setOnClickListener(this);
-        incTrykKnap.setOnClickListener(this);
-        decTrykKnap.setOnClickListener(this);
-        incFlowrateKnap.setOnClickListener(this);
-        decFlowrateKnap.setOnClickListener(this);
-        resetVolumenKnap.setOnClickListener(this);
-
-
-        Scenario sc = DataHaandtering.getInstance().hentScenarie("TestScenarie");
-        Log.d("pt", "onCreate: "+sc.getName());
-        loadScenarie(sc);
-
-        return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     public void loadScenarie(Scenario sc) {
-
         flowrateMaalDisplay.setText(Integer.toString(sc.getTargetFlowRate()));
         flowrateDisplay.setText(Integer.toString(sc.getActualFlowRate()));
         flowrateMeter.setVaerdi(sc.getActualFlowRate());
@@ -94,7 +91,20 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
         volumenDisplay.setText(Integer.toString(sc.getVolume()));
         volumenMeter.setVaerdi(sc.getVolume());
+    }
 
-        // sc.getName();
+    public void bindInstruktorKnapper() {
+        startKnap.setOnClickListener(this);
+        stopKnap.setOnClickListener(this);
+        incTrykKnap.setOnClickListener(this);
+        decTrykKnap.setOnClickListener(this);
+        incFlowrateKnap.setOnClickListener(this);
+        decFlowrateKnap.setOnClickListener(this);
+        resetVolumenKnap.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        // TODO opsæt instruktør funktionalitet.
     }
 }

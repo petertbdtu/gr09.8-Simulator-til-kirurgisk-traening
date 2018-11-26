@@ -23,8 +23,12 @@ public class VisningAfventerFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+        // TODO onClick skal slettes når bluetooth er implementeret i InsufflatorVisningActivity.java
         Fragment fragment;
         fragment = new InsufflatorFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("erInstruktor", true);
+        fragment.setArguments(args);
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

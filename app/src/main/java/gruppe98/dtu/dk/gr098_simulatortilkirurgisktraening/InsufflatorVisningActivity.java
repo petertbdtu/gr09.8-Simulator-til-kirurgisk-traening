@@ -11,12 +11,13 @@ public class InsufflatorVisningActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insufflator_visning);
 
-        if (savedInstanceState == null) {
-            Fragment fragment = new VisningAfventerFragment();
-            getFragmentManager().beginTransaction()
-                    .add(R.id.fragmentContainer, fragment)
-                    .commit();
-        }
+        Fragment fragment = new VisningAfventerFragment();
+        getFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer, fragment)
+                .commit();
+
+        // TODO Vent på bluetooth asynkront
+        // TODO sæt aktivt scenarie når bluetooth svarer
 
     }
 }
