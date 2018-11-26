@@ -6,7 +6,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 
 public class InsufflatorSimApp extends Application {
 
-//    public static DataHaandtering dataHaandtering;
+    public static Scenario aktivtScenarie;
 
     @Override
     public void onCreate() {
@@ -29,5 +29,6 @@ public class InsufflatorSimApp extends Application {
             data.opretScenarie(s1);
         }
     }
+
 
 }

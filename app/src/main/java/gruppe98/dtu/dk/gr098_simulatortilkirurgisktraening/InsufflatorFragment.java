@@ -40,10 +40,12 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         {
             bindInstruktorKnapper();
         }
+        else
+        {
 
-        // TODO hent aktivt scenarie fra InsufflatorSimApp
-        Scenario sc = DataHaandtering.getInstance().hentScenarie("TestScenarie");
-        loadScenarie(sc);
+        }
+
+        loadScenarie(InsufflatorSimApp.aktivtScenarie);
 
         return view;
     }
