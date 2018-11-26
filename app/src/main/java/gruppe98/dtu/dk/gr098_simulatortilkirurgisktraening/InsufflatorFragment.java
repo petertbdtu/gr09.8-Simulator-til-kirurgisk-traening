@@ -108,5 +108,18 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         // TODO opsæt instruktør funktionalitet.
+        switch (v.getId())
+        {
+            case R.id.incTrykKnap:
+                break;
+            case R.id.decTrykKnap:
+                break;
+            case R.id.incFlowrateKnap:
+                break;
+            case R.id.decFlowrateKnap:
+                break;
+            case R.id.resetVolumenKnap:
+                break;
+        }
     }
 }

@@ -30,5 +30,4 @@ public class InsufflatorSimApp extends Application {
         }
     }
 
-
 }
