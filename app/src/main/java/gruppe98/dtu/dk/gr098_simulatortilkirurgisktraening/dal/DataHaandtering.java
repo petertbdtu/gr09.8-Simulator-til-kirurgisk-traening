@@ -7,8 +7,9 @@ import java.util.Map;
 
 public class DataHaandtering {
     private static DataHaandtering instans = new DataHaandtering();
-    private static DataAccessLayer<Scenario> daoScenarier;
+    private static DataAccessLayer dao;
     private String scenarierFileName = "ScenarierFil.data";
+    private String logsFileName = "LogsFil.data";
     private String filePath;
 
     public static DataHaandtering getInstance() {
@@ -18,43 +19,54 @@ public class DataHaandtering {
     }
 
     private DataHaandtering() {
-        daoScenarier = new DataAccessLayer<Scenario>();
+        dao = new DataAccessLayer<>();
     }
 
     public void init(String filePath) {
         this.filePath = filePath;
         try {
-            daoScenarier.loadData(filePath + "/" + scenarierFileName);
+            dao.loadData(filePath + "/" + scenarierFileName);
         } catch (java.lang.NullPointerException e) {
             Map<String,Scenario> tempList = new HashMap<>();
-            daoScenarier.saveData(tempList, filePath + "/" + scenarierFileName);
+            dao.saveData(tempList, filePath + "/" + scenarierFileName);
+        }
+        try {
+        } catch (java.lang.NullPointerException e) {
+            dao.loadData(filePath + "/" + logsFileName);
+            Map<String,LogEntry> tempListLogs = new HashMap<>();
+            dao.saveData(tempListLogs, filePath + "/" + logsFileName);
         }
     }
 
     public void opretScenarie(Scenario scenarie) {
-        Map<String,Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        Map<String,Scenario> tempScenarier = dao.loadData(filePath + "/" + scenarierFileName);
         tempScenarier.put(scenarie.getName(), scenarie);
-        daoScenarier.saveData(tempScenarier, filePath + "/" + scenarierFileName);
+        dao.saveData(tempScenarier, filePath + "/" + scenarierFileName);
     }
 
     public List<Scenario> hentAlleScenarier(){
-        List<Scenario> tempScenarier = new ArrayList<Scenario>(daoScenarier.loadData(filePath + "/" + scenarierFileName).values());
+        List<Scenario> tempScenarier = new ArrayList<Scenario>(dao.loadData(filePath + "/" + scenarierFileName).values());
         return tempScenarier;
     }
 
     public Scenario hentScenarie(String navn) {
-        Map<String,Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        Map<String,Scenario> tempScenarier = dao.loadData(filePath + "/" + scenarierFileName);
         return tempScenarier.get(navn);
     }
 
     public boolean scenarieEksisterer(String navn) {
-        Map<String,Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        Map<String,Scenario> tempScenarier = dao.loadData(filePath + "/" + scenarierFileName);
         return tempScenarier.containsKey(navn);
     }
 
     public void fjernScenarie(String s) {
-        Map<String,Scenario> tempScenarier = daoScenarier.loadData(filePath + "/" + scenarierFileName);
+        Map<String,Scenario> tempScenarier = dao.loadData(filePath + "/" + scenarierFileName);
         tempScenarier.remove(s);
-        daoScenarier.saveData(tempScenarier, filePath + "/" + scenarierFileName);
+        dao.saveData(tempScenarier, filePath + "/" + scenarierFileName);
+    }
+
+    public List<LogEntry> hentAlleLogs() {
+        List<LogEntry> logElementer = new ArrayList<>(dao.loadData(filePath + "/" + logsFileName).values());
+        return  logElementer;
     }
 }

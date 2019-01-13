@@ -37,7 +37,8 @@
         <activity
             android:name=".VaelgTablet"
             android:screenOrientation="landscape" />
-        <!--<activity android:name=".TestDataLag"></activity>-->
+        <!-- <activity android:name=".TestDataLag"></activity> -->
+        <activity android:name=".ShowLogsActivity"></activity>
     </application>
 
 </manifest>
