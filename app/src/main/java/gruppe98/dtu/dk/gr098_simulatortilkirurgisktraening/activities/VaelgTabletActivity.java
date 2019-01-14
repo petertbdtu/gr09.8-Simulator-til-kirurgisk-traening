@@ -32,7 +32,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     RecyclerView.Adapter rvaLogs;
     RecyclerView.Adapter rvaScenarier;
 
-    WifiP2P WifiP2p;
+    WifiP2P WP;
     List<WifiP2pDevice> ConnectedPeers;
 
 
@@ -42,15 +42,6 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_vaelg_tablet);
         checkPermissions();
 
-
-        btnFunktion = findViewById(R.id.btnFunction);
-        btnFunktion.setOnClickListener(this);
-        RV = findViewById(R.id.rvIndhold);
-        rvaTablets = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
-        rvaPeers = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
-        rvaLogs = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
-        rvaScenarier = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
-        RV.setAdapter(rvaTablets);
     }
 
     @Override
@@ -65,7 +56,18 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void init() {
+        btnFunktion = findViewById(R.id.btnFunction);
+        btnFunktion.setOnClickListener(this);
+        RV = findViewById(R.id.rvIndhold);
+        rvaTablets = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
+        rvaPeers = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
+        rvaLogs = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
+        rvaScenarier = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
+        RV.setAdapter(rvaTablets);
 
+        WP = new WifiP2P(this);
+        WP.enableDiscovery();
+        WP.registerReciever(this);
     }
 
     private void checkPermissions() {
@@ -84,14 +86,6 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
        Intent tabletAktiviteter = new Intent(this, ShowLogsActivity.class);
        startActivity(tabletAktiviteter);
-    }
-
-    private void ChangeAdapter() {
-
-    }
-
-    private void UpdateRecycleView() {
-
     }
 
     @Override
