@@ -11,6 +11,7 @@ public class DataHaandtering {
     private String scenarierFileName = "ScenarierFil.data";
     private String logsFileName = "LogsFil.data";
     private String filePath;
+    private ArrayList<String> forbundneTablets;
 
     public static DataHaandtering getInstance() {
         if(instans == null)
@@ -43,6 +44,14 @@ public class DataHaandtering {
         tempScenarier.put(scenarie.getName(), scenarie);
         dao.saveData(tempScenarier, filePath + "/" + scenarierFileName);
     }
+
+    public ArrayList<String> hentForbundneTablets(){
+        forbundneTablets = new ArrayList<>();
+        forbundneTablets.add("Samsund");
+        forbundneTablets.add("oneplus");
+        return forbundneTablets;
+    }
+
 
     public List<Scenario> hentAlleScenarier(){
         List<Scenario> tempScenarier = new ArrayList<Scenario>(dao.loadData(filePath + "/" + scenarierFileName).values());
