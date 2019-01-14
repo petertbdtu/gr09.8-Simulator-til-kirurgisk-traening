@@ -41,6 +41,7 @@
     <string name="tablet_liste_element_valgBrugs">Vælg Brugssenarie</string>
     <string name="tablet_liste_element_selog">Se Log</string>
     <string name="tablet_liste_element_slet">Slet</string>
-    <string name="send_brugss">Send</string>
+
+
 
 </resources>
