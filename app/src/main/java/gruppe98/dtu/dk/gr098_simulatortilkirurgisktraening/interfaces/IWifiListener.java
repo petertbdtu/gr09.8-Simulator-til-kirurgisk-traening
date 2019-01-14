@@ -12,7 +12,7 @@ public interface IWifiListener {
     public void PeerChosen(WifiP2pDevice WPD);
     public void DeviceConnected(boolean isGroupOwner, String groupOwnerAddress);
     public void DeviceDisconnected();
-    public void MessageReceived(String msg);
+    public void MessageReceived(byte[] msg);
 
 
 }

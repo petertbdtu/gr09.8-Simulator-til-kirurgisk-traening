@@ -123,5 +123,5 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     public void DeviceDisconnected() { }
 
     @Override
-    public void MessageReceived(String msg) { }
+    public void MessageReceived(byte[] msg) { }
 }
