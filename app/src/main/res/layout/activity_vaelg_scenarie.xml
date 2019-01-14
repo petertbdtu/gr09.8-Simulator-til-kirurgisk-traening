@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VaelgScenarieActivity">
+    tools:context=".activities.VaelgScenarieActivity">
 
     <TextView
-        android:id="@+id/overskrift"
+        android:id="@+id/tvOverskrift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overskrift" />
+        app:layout_constraintTop_toBottomOf="@+id/tvOverskrift" />
 
     <FrameLayout
         android:id="@+id/fragmentScenarieContainer"

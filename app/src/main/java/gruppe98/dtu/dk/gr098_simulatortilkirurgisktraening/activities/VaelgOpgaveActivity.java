@@ -1,10 +1,12 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 
 
 public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,7 +33,7 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
                 startActivity(BrugssecenairerVisning);
                 break;
             case R.id.clForbinTTablet:
-                Intent ForbinTTabletVisning = new Intent(getApplicationContext(), VaelgTablet.class);
+                Intent ForbinTTabletVisning = new Intent(getApplicationContext(), VaelgTabletActivity.class);
                 startActivity(ForbinTTabletVisning);
                 break;
             default:

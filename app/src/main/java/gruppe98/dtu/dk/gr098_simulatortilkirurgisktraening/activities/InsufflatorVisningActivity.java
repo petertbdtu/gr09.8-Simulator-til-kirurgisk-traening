@@ -1,9 +1,12 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.VisningAfventerFragment;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.InsufflatorSimApp;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 
 public class InsufflatorVisningActivity extends AppCompatActivity {

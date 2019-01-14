@@ -1,4 +1,4 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -8,12 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.LogEntry;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.OutcomeOptions;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.DatePickerFragment;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.ShowLogsListFragment;
 
 public class ShowLogsActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 

@@ -1,7 +1,5 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
-import android.app.Fragment;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.ShowLogsActivity;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.LogEntry;
 
-class ShowLogsRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogsRecyclerViewAdapter.ViewHolder> {
+public class ShowLogsRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogsRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<LogEntry> listLogElementer;
     private ShowLogsActivity context;

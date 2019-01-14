@@ -1,8 +1,7 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.app.Fragment;
 import android.content.DialogInterface;
-import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.InsufflatorSimApp;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.InsufflatorFragment;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.ScenarieListFragment;
 
 public class VaelgScenarieActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,7 +29,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vaelg_scenarie);
 
-        overskrift = findViewById(R.id.overskrift);
+        overskrift = findViewById(R.id.tvOverskrift);
 
         scenarieKnap = findViewById(R.id.scenarieKnap);
         scenarieKnap.setOnClickListener(this);

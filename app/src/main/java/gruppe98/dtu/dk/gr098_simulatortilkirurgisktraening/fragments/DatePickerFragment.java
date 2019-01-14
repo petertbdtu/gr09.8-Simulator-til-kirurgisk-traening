@@ -1,4 +1,4 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

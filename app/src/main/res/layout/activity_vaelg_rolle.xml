@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:longClickable="false"
-    tools:context=".VaelgRolleActivity">
+    tools:context=".activities.VaelgRolleActivity">
 
     <TextView
         android:id="@+id/tvVaelgRolle"

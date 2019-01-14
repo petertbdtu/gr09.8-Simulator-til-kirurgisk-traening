@@ -1,7 +1,6 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +11,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.VaelgScenarieActivity;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.VaelgScenarieRecyclerViewAdapter;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 

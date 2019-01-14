@@ -1,4 +1,4 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application;
 
 import android.app.Application;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
