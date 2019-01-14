@@ -28,13 +28,13 @@ public class MeterView extends View {
     private void setup() {
         this.interval = 100;
         this.aktuelVaerdi = 0;
-        this.forventetVaerdi = 0;
+        this.forventetVaerdi = -FORVENTET_VAERDI_HALV_BREDDE; // Skjul forventetVaerdi indtil den sættes.
         this.tomFarve = new Paint();
         this.tomFarve.setARGB(0, 0, 0, 0);
         this.aktuelFarve = new Paint();
         this.aktuelFarve.setARGB(255, 255, 0, 0);
         this.forventetFarve = new Paint();
-        this.forventetFarve.setARGB(0,0,255,0);
+        this.forventetFarve.setARGB(255,0,255,0);
     }
 
     @Override
@@ -44,11 +44,12 @@ public class MeterView extends View {
         int height = getHeight();
         int width = getWidth();
 
-        float middle = height - (height * aktuelVaerdi / interval);
+        float aktuelHoejde = height - (height * aktuelVaerdi / interval);
+        float forventetHoejde = height - forventetVaerdi;
 
-        canvas.drawRect(0, 0, width, middle, tomFarve);
-        canvas.drawRect(0, middle, width, height, aktuelFarve);
-        canvas.drawRect(0, middle-FORVENTET_VAERDI_HALV_BREDDE, width, middle+FORVENTET_VAERDI_HALV_BREDDE, forventetFarve);
+        canvas.drawRect(0, 0, width, aktuelHoejde, tomFarve);
+        canvas.drawRect(0, aktuelHoejde, width, height, aktuelFarve);
+        canvas.drawRect(0, forventetHoejde-FORVENTET_VAERDI_HALV_BREDDE, width, forventetHoejde+FORVENTET_VAERDI_HALV_BREDDE, forventetFarve);
     }
 
     public float getInterval() {
