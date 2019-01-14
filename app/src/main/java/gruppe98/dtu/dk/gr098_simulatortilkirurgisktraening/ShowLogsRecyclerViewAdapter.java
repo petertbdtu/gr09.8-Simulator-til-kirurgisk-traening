@@ -1,5 +1,7 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
 
+import android.app.Fragment;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.LogEntry;
 
@@ -34,9 +39,14 @@ class ShowLogsRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogsRecyclerV
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LogEntry logElement = listLogElementer.get(position);
 
+       // Calendar c = Calendar.getInstance();
+        //c.setTimeInMillis(logElement.getStart());
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        holder.startTid.setText(format1.format(logElement.getStart()));
         holder.scenarie_navn.setText(logElement.getLoggedScenario().getName());
-        holder.startTid.setText(""+logElement.getStart());
-        holder.slutTid.setText(""+logElement.getCompleted());
+
+       // c.setTimeInMillis(logElement.getCompleted());
+        holder.slutTid.setText(format1.format(logElement.getStart()));
         holder.resultat.setText(logElement.getOutcome().name());
 
 
@@ -52,6 +62,7 @@ class ShowLogsRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogsRecyclerV
             @Override
             public void onClick(View view) {
                 //vis scenarie i fragmentcontainer, går tilbage til liste ved click
+
             }
         });
     }

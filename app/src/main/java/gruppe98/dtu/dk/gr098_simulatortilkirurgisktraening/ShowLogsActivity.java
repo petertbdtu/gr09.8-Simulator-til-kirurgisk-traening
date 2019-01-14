@@ -35,6 +35,7 @@ public class ShowLogsActivity extends AppCompatActivity implements DatePickerDia
             }
         });
 
+        indlaesRecyclerViewFragment(0);
 
     }
 
@@ -51,8 +52,6 @@ public class ShowLogsActivity extends AppCompatActivity implements DatePickerDia
     }
 
     private void indlaesRecyclerViewFragment(int currentDay) {
-
-
 
         Bundle args = new Bundle();
         args.putInt("currentDay",currentDay);

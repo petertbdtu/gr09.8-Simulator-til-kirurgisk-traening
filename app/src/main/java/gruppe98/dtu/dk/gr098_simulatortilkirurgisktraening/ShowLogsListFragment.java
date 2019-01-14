@@ -44,18 +44,35 @@ public class ShowLogsListFragment extends Fragment {
         ArrayList<LogEntry> tempLogArrayList = new ArrayList<>();
         LogEntry test = new LogEntry();
         test.setComment("");
-        test.setCompleted(1);
-        test.setStart(1);
+        test.setCompleted(System.currentTimeMillis());
+        test.setStart(System.currentTimeMillis());
         test.setLoggedScenario(DataHaandtering.getInstance().hentScenarie("TestScenarie"));
         test.setOutcome(OutcomeOptions.SUCCESS);
+        LogEntry test2 = new LogEntry();
+        test2.setComment("");
+        test2.setCompleted(System.currentTimeMillis());
+        test2.setStart(System.currentTimeMillis());
+        test2.setLoggedScenario(DataHaandtering.getInstance().hentScenarie("TestScenarie"));
+        test2.setOutcome(OutcomeOptions.SUCCESS);
         tempLogArrayList.add(test);
-        /*
+        tempLogArrayList.add(test2);
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+        tempLogArrayList.add(makeDummy());
+
         for(LogEntry logElement:DataHaandtering.getInstance().hentAlleLogs()) {
 
-            if(currentDay==logElement.getStart()) {
+            if(true) {
                 tempLogArrayList.add(logElement);
             }
-        }*/
+        }
         System.out.println("DEBUG: array har size() "+tempLogArrayList.size());
 
         aktiverRecyclerView(tempLogArrayList);
@@ -69,6 +86,16 @@ public class ShowLogsListFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         System.out.println("DEBUG: crashed?");
+    }
+
+    private LogEntry makeDummy() {
+        LogEntry test = new LogEntry();
+        test.setComment("");
+        test.setCompleted(System.currentTimeMillis());
+        test.setStart(System.currentTimeMillis());
+        test.setLoggedScenario(DataHaandtering.getInstance().hentScenarie("TestScenarie"));
+        test.setOutcome(OutcomeOptions.SUCCESS);
+        return test;
     }
 }
 

@@ -1,5 +1,7 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
+import android.icu.util.Calendar;
+
 import java.time.ZonedDateTime;
 
 public class LogEntry {
@@ -7,8 +9,9 @@ public class LogEntry {
     // private deviceidentifier <--
     private Scenario loggedScenario;
     //dateTime formats er lidt fucked up...
-    private int start;
-    private int completed;
+    //long unixTime = System.currentTimeMillis() / 1000L;
+    private long start;
+    private long completed;
     private OutcomeOptions outcome;
     private String comment;
 
@@ -20,19 +23,19 @@ public class LogEntry {
         this.loggedScenario = loggedScenario;
     }
 
-    public int getStart() {
+    public long getStart() {
         return start;
     }
 
-    public void setStart(int start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public int getCompleted() {
+    public long getCompleted() {
         return completed;
     }
 
-    public void setCompleted(int completed) {
+    public void setCompleted(long completed) {
         this.completed = completed;
     }
 
