@@ -8,8 +8,10 @@ import android.view.View;
 
 public class MeterView extends View {
 
-    private float interval, vaerdi;
-    private Paint tomFarve, fyldFarve;
+    private final static int FORVENTET_VAERDI_HALV_BREDDE = 3;
+
+    private float interval, aktuelVaerdi, forventetVaerdi;
+    private Paint tomFarve, aktuelFarve, forventetFarve;
 
     public MeterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -25,11 +27,14 @@ public class MeterView extends View {
 
     private void setup() {
         this.interval = 100;
-        this.vaerdi = 0;
+        this.aktuelVaerdi = 0;
+        this.forventetVaerdi = -FORVENTET_VAERDI_HALV_BREDDE; // Skjul forventetVaerdi indtil den sættes.
         this.tomFarve = new Paint();
         this.tomFarve.setARGB(0, 0, 0, 0);
-        this.fyldFarve = new Paint();
-        this.fyldFarve.setARGB(255, 255, 0, 0);
+        this.aktuelFarve = new Paint();
+        this.aktuelFarve.setARGB(255, 255, 0, 0);
+        this.forventetFarve = new Paint();
+        this.forventetFarve.setARGB(255,0,255,0);
     }
 
     @Override
@@ -39,11 +44,12 @@ public class MeterView extends View {
         int height = getHeight();
         int width = getWidth();
 
-        float middle = height - (height * vaerdi / interval);
+        float aktuelHoejde = height - (height * aktuelVaerdi / interval);
+        float forventetHoejde = height - forventetVaerdi;
 
-        canvas.drawRect(0, 0, width, middle, tomFarve);
-        canvas.drawRect(0, middle, width, height, fyldFarve);
-
+        canvas.drawRect(0, 0, width, aktuelHoejde, tomFarve);
+        canvas.drawRect(0, aktuelHoejde, width, height, aktuelFarve);
+        canvas.drawRect(0, forventetHoejde-FORVENTET_VAERDI_HALV_BREDDE, width, forventetHoejde+FORVENTET_VAERDI_HALV_BREDDE, forventetFarve);
     }
 
     public float getInterval() {
@@ -54,14 +60,21 @@ public class MeterView extends View {
         this.interval = interval;
     }
 
-    public float getVaerdi() {
-        return vaerdi;
+    public float getAktuelVaerdi() {
+        return aktuelVaerdi;
     }
 
-    public void setVaerdi(float vaerdi) {
-        this.vaerdi = vaerdi;
+    public void setAktuelVaerdi(float aktuelVaerdi) {
+        this.aktuelVaerdi = aktuelVaerdi;
     }
 
+    public float getForventetVaerdi() {
+        return forventetVaerdi;
+    }
+
+    public void setForventetVaerdi(float forventetVaerdi) {
+        this.forventetVaerdi = forventetVaerdi;
+    }
     public Paint getTomFarve() {
         return tomFarve;
     }
@@ -70,11 +83,19 @@ public class MeterView extends View {
         this.tomFarve = tomFarve;
     }
 
-    public Paint getFyldFarve() {
-        return fyldFarve;
+    public Paint getAktuelFarve() {
+        return aktuelFarve;
     }
 
-    public void setFyldFarve(Paint fyldFarve) {
-        this.fyldFarve = fyldFarve;
+    public void setAktuelFarve(Paint aktuelFarve) {
+        this.aktuelFarve = aktuelFarve;
+    }
+
+    public Paint getForventetFarve() {
+        return forventetFarve;
+    }
+
+    public void setForventetFarve(Paint forventetFarve) {
+        this.forventetFarve = forventetFarve;
     }
 }

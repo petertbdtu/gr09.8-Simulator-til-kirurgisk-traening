@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.LEDView;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView;
@@ -90,14 +89,14 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     public void loadScenarie(Scenario sc) {
         flowrateMaalDisplay.setText(Integer.toString(sc.getTargetFlowRate()));
         flowrateDisplay.setText(Integer.toString(sc.getActualFlowRate()));
-        flowrateMeter.setVaerdi(sc.getActualFlowRate());
+        flowrateMeter.setAktuelVaerdi(sc.getActualFlowRate());
 
         trykMaalDisplay.setText(Integer.toString(sc.getTargetPressure()));
         trykDisplay.setText(Integer.toString(sc.getActualPressure()));
-        trykMeter.setVaerdi(sc.getActualPressure());
+        trykMeter.setAktuelVaerdi(sc.getActualPressure());
 
         volumenDisplay.setText(Integer.toString(sc.getVolume()));
-        volumenMeter.setVaerdi(sc.getVolume());
+        volumenMeter.setAktuelVaerdi(sc.getVolume());
     }
 
     public void bindInstruktorKnapper() {
