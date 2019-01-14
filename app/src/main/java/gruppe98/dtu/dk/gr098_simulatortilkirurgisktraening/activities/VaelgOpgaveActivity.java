@@ -22,7 +22,7 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
         clBrugssc = findViewById(R.id.clBrugsscenairer);
         clBrugssc.setOnClickListener(this);
 
-        clForbindTablet = findViewById(R.id.clForbinTTablet);
+        clForbindTablet = findViewById(R.id.clTablet);
         clForbindTablet.setOnClickListener(this);
     }
 
@@ -32,7 +32,7 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
                 Intent BrugssecenairerVisning = new Intent(getApplicationContext(), VaelgScenarieActivity.class);
                 startActivity(BrugssecenairerVisning);
                 break;
-            case R.id.clForbinTTablet:
+            case R.id.clTablet:
                 Intent ForbinTTabletVisning = new Intent(getApplicationContext(), VaelgTabletActivity.class);
                 startActivity(ForbinTTabletVisning);
                 break;
