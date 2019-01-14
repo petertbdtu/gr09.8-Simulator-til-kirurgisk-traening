@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
@@ -110,20 +111,30 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     @Override
     public void MessageReceived(byte[] msg) {
-        Toast.makeText(this, "Received: "+msg, Toast.LENGTH_SHORT).show();
+        ByteBuffer byteBuffer = ByteBuffer.wrap(msg);
 
-        Fragment fragment;
-        fragment = new InsufflatorFragment();
-        Bundle args = new Bundle();
-        args.putBoolean("erInstruktor", false);
-        args.putByteArray("scenarieByteArray", msg);
-        fragment.setArguments(args);
+        // MAC address as string from WifiManager with getBytes() is 17 bytes long.
+        byte[] targetMACAddr = new byte[17];
+        byte[] scenarioByteArray = new byte[1024-17];
+        byteBuffer.get(targetMACAddr);
+        byteBuffer.get(scenarioByteArray);
 
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+        byte[] ourMACAddr = WP.getMacAddress().getBytes();
 
-        ft.replace(R.id.fragmentContainer, fragment)
-                .commit();
+        if (ourMACAddr == targetMACAddr) {
+            Fragment fragment;
+            fragment = new InsufflatorFragment();
+            Bundle args = new Bundle();
+            args.putBoolean("erInstruktor", false);
+            args.putByteArray("scenarieByteArray", scenarioByteArray);
+            fragment.setArguments(args);
+
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+
+            ft.replace(R.id.fragmentContainer, fragment)
+                    .commit();
+        }
     }
 
     @Override

@@ -172,6 +172,8 @@ public class WifiP2P {
             sendReceiveThread.write(msg);
     }
 
-
+    public String getMacAddress() {
+        return WM.getConnectionInfo().getMacAddress();
+    }
 
 }

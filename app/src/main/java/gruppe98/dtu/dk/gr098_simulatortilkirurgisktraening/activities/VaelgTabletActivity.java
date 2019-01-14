@@ -176,4 +176,9 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     public void SletTablet(String Id) {
 
     }
+
+    @Override
+    public void sendBrugsscenarie(String brugsscencarie) {
+
+    }
 }
