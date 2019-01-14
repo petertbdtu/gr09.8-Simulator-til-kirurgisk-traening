@@ -3,11 +3,13 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 import android.Manifest;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -25,7 +27,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     private static final int MY_PERMISSIONS_REQUEST = 1;
 
-    WifiP2P WP;
+    private WifiP2P WP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +111,6 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     @Override
     public void MessageReceived(byte[] msg) {
         Toast.makeText(this, "Received: "+msg, Toast.LENGTH_SHORT).show();
-        // TODO oversæt byte[] til scenarie
-        // TODO start insufflatorvisning fragment
 
         Fragment fragment;
         fragment = new InsufflatorFragment();
@@ -128,7 +128,22 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        // Bloker tilbagegang med bekræftelse
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Are you sure?");
+        builder.setMessage("Do you want to leave?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 }
