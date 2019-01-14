@@ -7,6 +7,7 @@ import android.net.wifi.p2p.WifiP2pDevice;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import java.util.List;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.ShowLogsActivity;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.PeerAdapter;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.VaelgTabletsRecyleViewAdapter;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
@@ -25,6 +27,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
 public class VaelgTabletActivity extends AppCompatActivity implements View.OnClickListener, IWifiListener, IRecycleViewAdapterListener {
 
     private static final int MY_PERMISSIONS_REQUEST = 0;
+    int ButtonState = 0;
     Button btnFunktion;
     RecyclerView RV;
     RecyclerView.Adapter rvaTablets;
@@ -58,12 +61,22 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private void init() {
         btnFunktion = findViewById(R.id.btnFunction);
         btnFunktion.setOnClickListener(this);
-        RV = findViewById(R.id.rvIndhold);
-        rvaTablets = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
+
+        ArrayList<String> liste = new ArrayList<>();
+        liste.add("Test 1");
+        liste.add("Test 2");
+
+        //Adapters
+        rvaTablets = new VaelgTabletsRecyleViewAdapter(liste,this);
         rvaPeers = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
         rvaLogs = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
         rvaScenarier = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
-        RV.setAdapter(rvaTablets);
+
+        //Recycleview
+        RV = findViewById(R.id.rvIndhold);
+        RV.setHasFixedSize(true);
+        RV.setLayoutManager(new LinearLayoutManager(this));
+        RV.setAdapter(rvaPeers);
 
         WP = new WifiP2P(this);
         WP.enableDiscovery();
@@ -84,8 +97,24 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-       Intent tabletAktiviteter = new Intent(this, ShowLogsActivity.class);
-       startActivity(tabletAktiviteter);
+       switch (ButtonState) {
+           case 0:
+               ChangeToConnectTablet();
+               break;
+           case 1:
+               break;
+           case 2:
+               break;
+           case 3:
+               break;
+       }
+    }
+
+    private void ChangeToConnectTablet() {
+        ButtonState = 1;
+        btnFunktion.setVisibility(View.GONE);
+        WP.enableDiscovery();
+        RV.setAdapter(rvaPeers);
     }
 
     @Override
@@ -114,7 +143,12 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void PeerChosen(WifiP2pDevice WPD) { }
+    public void PeerChosen(WifiP2pDevice WPD) {
+        ButtonState = 0;
+        btnFunktion.setVisibility(View.VISIBLE);
+        WP.disableDiscovery();
+        RV.setAdapter(rvaTablets);
+    }
 
     @Override
     public void DeviceConnected(boolean isGroupOwner, String groupOwnerAddress) { }
@@ -124,4 +158,19 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void MessageReceived(byte[] msg) { }
+
+    @Override
+    public void VaelgBrugsscenarie(String Id) {
+
+    }
+
+    @Override
+    public void SeLog(String Id) {
+
+    }
+
+    @Override
+    public void SletTablet(String Id) {
+
+    }
 }
