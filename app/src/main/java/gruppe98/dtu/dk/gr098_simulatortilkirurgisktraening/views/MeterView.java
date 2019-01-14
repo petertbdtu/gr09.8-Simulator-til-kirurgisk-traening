@@ -8,7 +8,7 @@ import android.view.View;
 
 public class MeterView extends View {
 
-    private final static int FORVENTET_VAERDI_HALV_BREDDE = 3;
+    private final static int FORVENTET_VAERDI_HALV_BREDDE = 5;
 
     private float interval, aktuelVaerdi, forventetVaerdi;
     private Paint tomFarve, aktuelFarve, forventetFarve;
@@ -30,7 +30,7 @@ public class MeterView extends View {
         this.aktuelVaerdi = 0;
         this.forventetVaerdi = -FORVENTET_VAERDI_HALV_BREDDE; // Skjul forventetVaerdi indtil den sættes.
         this.tomFarve = new Paint();
-        this.tomFarve.setARGB(0, 0, 0, 0);
+        this.tomFarve.setARGB(255, 64, 64, 64);
         this.aktuelFarve = new Paint();
         this.aktuelFarve.setARGB(255, 255, 0, 0);
         this.forventetFarve = new Paint();
@@ -45,7 +45,7 @@ public class MeterView extends View {
         int width = getWidth();
 
         float aktuelHoejde = height - (height * aktuelVaerdi / interval);
-        float forventetHoejde = height - forventetVaerdi;
+        float forventetHoejde = height - (height * forventetVaerdi / interval);
 
         canvas.drawRect(0, 0, width, aktuelHoejde, tomFarve);
         canvas.drawRect(0, aktuelHoejde, width, height, aktuelFarve);

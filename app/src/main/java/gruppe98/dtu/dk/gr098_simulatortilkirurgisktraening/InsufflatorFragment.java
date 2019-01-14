@@ -92,10 +92,12 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         flowrateMaalDisplay.setText(Integer.toString(sc.getTargetFlowRate()));
         flowrateDisplay.setText(Integer.toString(sc.getActualFlowRate()));
         flowrateMeter.setAktuelVaerdi(sc.getActualFlowRate());
+        flowrateMeter.setForventetVaerdi(sc.getTargetFlowRate());
 
         trykMaalDisplay.setText(Integer.toString(sc.getTargetPressure()));
         trykDisplay.setText(Integer.toString(sc.getActualPressure()));
         trykMeter.setAktuelVaerdi(sc.getActualPressure());
+        trykMeter.setForventetVaerdi(sc.getTargetPressure());
 
         volumenDisplay.setText(Integer.toString(sc.getVolume()));
         volumenMeter.setAktuelVaerdi(sc.getVolume());
