@@ -161,8 +161,7 @@ public class WifiP2P {
                 switch(msg.what) {
                     case MESSAGE_READ:
                         byte[] readBuffer = (byte[]) msg.obj;
-                        String tempMsg = new String(readBuffer,0,msg.arg1);
-                        ((IWifiListener)context).MessageReceived(tempMsg);
+                        ((IWifiListener)context).MessageReceived(readBuffer);
                         break;
                 }
                 return true;
@@ -170,9 +169,9 @@ public class WifiP2P {
         });
     }
 
-    public void sendMessage(String msg) {
+    public void sendMessage(byte[] msg) {
         if(sendReceiveThread != null)
-            sendReceiveThread.write(msg.getBytes());
+            sendReceiveThread.write(msg);
     }
 
 
