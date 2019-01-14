@@ -16,8 +16,8 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.VaelgScena
 
 public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<VaelgScenarieRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<String> list_scenarie_navne;
-    private VaelgScenarieActivity context;
+        private ArrayList<String> list_scenarie_navne;
+        private VaelgScenarieActivity context;
 
     public VaelgScenarieRecyclerViewAdapter(ArrayList<String> list_scenarie_navne, VaelgScenarieActivity context){
         this.list_scenarie_navne = list_scenarie_navne;
