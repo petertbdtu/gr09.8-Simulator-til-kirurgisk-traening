@@ -32,6 +32,8 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
     ImageView startKnap, stopKnap, incTrykKnap, decTrykKnap, incFlowrateKnap, decFlowrateKnap, resetVolumenKnap;
 
+    Scenario aktivtScenarie;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,13 +46,15 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         if(erInstruktor)
         {
             bindInstruktorKnapper();
+            aktivtScenarie = InsufflatorSimApp.aktivtScenarie;
         }
         else
         {
-
+            byte[] aktivtScenarieByteArray = this.getArguments().getByteArray("scenarieByteArray");
+            aktivtScenarie = new Scenario(aktivtScenarieByteArray);
         }
 
-        loadScenarie(InsufflatorSimApp.aktivtScenarie);
+        loadScenarie(aktivtScenarie);
 
         return view;
     }
