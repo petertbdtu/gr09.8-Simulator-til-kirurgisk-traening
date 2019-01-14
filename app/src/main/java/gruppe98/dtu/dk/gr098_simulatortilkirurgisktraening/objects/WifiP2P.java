@@ -92,13 +92,11 @@ public class WifiP2P {
         WPM.connect(WPMC, WPC, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(context,"Connected to:\n" + WPD.deviceName,Toast.LENGTH_SHORT).show();
                 enableDiscovery();
             }
 
             @Override
             public void onFailure(int reason) {
-                Toast.makeText(context,"Failed to connect to:\n" + WPD.deviceName,Toast.LENGTH_SHORT).show();
             }
         });
     }

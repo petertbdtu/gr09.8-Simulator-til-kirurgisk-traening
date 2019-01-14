@@ -22,13 +22,18 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.LEDView;
 public class VaelgTabletsRecyleViewAdapter extends RecyclerView.Adapter<VaelgTabletsRecyleViewAdapter.ViewHolder> {
     private static final String TAG = "tabletRecyclerViewAdapter";
 
-    private ArrayList<String> list_tablet_ID;
+    private ArrayList<String> listTabletId;
     private Context context;
 
 
     public VaelgTabletsRecyleViewAdapter(ArrayList<String> list_tablet_ID, Context context) {
-        this.list_tablet_ID = list_tablet_ID;
+        this.listTabletId = list_tablet_ID;
         this.context = context;
+    }
+
+    public void updateData(ArrayList<String> listTabletId) {
+        this.listTabletId = listTabletId;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -45,31 +50,31 @@ public class VaelgTabletsRecyleViewAdapter extends RecyclerView.Adapter<VaelgTab
 //                .asBitmap()
 //                .load(hs.get(position).billede)
 //                .into(holder.enhedBilleder);
-        viewHolder.tablet_liste_element_ID.setText(list_tablet_ID.get(position));
+        viewHolder.tablet_liste_element_ID.setText(listTabletId.get(position));
         //viewHolder.tablet_liste_element_LED.setText(list_tablet_ID.get(position));
       viewHolder.tablet_liste_element_valgBrugs.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              ((IRecycleViewAdapterListener)context).VaelgBrugsscenarie(list_tablet_ID.get(viewHolder.getAdapterPosition()));
+              ((IRecycleViewAdapterListener)context).VaelgBrugsscenarie(listTabletId.get(viewHolder.getAdapterPosition()));
           }
       });
         viewHolder.tablet_liste_element_selog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((IRecycleViewAdapterListener)context).SeLog(list_tablet_ID.get(viewHolder.getAdapterPosition()));
+                ((IRecycleViewAdapterListener)context).SeLog(listTabletId.get(viewHolder.getAdapterPosition()));
             }
         });
         viewHolder.tablet_liste_element_slet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((IRecycleViewAdapterListener)context).SletTablet(list_tablet_ID.get(viewHolder.getAdapterPosition()));
+                ((IRecycleViewAdapterListener)context).SletTablet(listTabletId.get(viewHolder.getAdapterPosition()));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return list_tablet_ID.size();
+        return listTabletId.size();
     }
 
 

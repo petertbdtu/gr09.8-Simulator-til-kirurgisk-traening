@@ -30,13 +30,13 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     int ButtonState = 0;
     Button btnFunktion;
     RecyclerView RV;
-    RecyclerView.Adapter rvaTablets;
+    VaelgTabletsRecyleViewAdapter rvaTablets;
     PeerAdapter rvaPeers;
     RecyclerView.Adapter rvaLogs;
     RecyclerView.Adapter rvaScenarier;
 
     WifiP2P WP;
-    List<WifiP2pDevice> ConnectedPeers;
+    ArrayList<String> ConnectedPeers;
 
 
     @Override
@@ -62,12 +62,12 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         btnFunktion = findViewById(R.id.btnFunction);
         btnFunktion.setOnClickListener(this);
 
-        ArrayList<String> liste = new ArrayList<>();
-        liste.add("Test 1");
-        liste.add("Test 2");
+        ConnectedPeers = new ArrayList<>();
+        ConnectedPeers.add("Test 1");
+        ConnectedPeers.add("Test 2");
 
         //Adapters
-        rvaTablets = new VaelgTabletsRecyleViewAdapter(liste,this);
+        rvaTablets = new VaelgTabletsRecyleViewAdapter(ConnectedPeers,this);
         rvaPeers = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
         rvaLogs = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
         rvaScenarier = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
@@ -102,6 +102,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
                ChangeToConnectTablet();
                break;
            case 1:
+               //Should never end here / Button visibility is GONE
                break;
            case 2:
                break;
@@ -147,6 +148,8 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         ButtonState = 0;
         btnFunktion.setVisibility(View.VISIBLE);
         WP.disableDiscovery();
+        ConnectedPeers.add(WPD.deviceAddress);
+        rvaTablets.updateData(ConnectedPeers);
         RV.setAdapter(rvaTablets);
     }
 
