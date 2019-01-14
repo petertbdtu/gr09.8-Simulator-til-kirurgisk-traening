@@ -1,6 +1,7 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 
 public class Scenario implements Serializable {
     private String name;
@@ -17,6 +18,15 @@ public class Scenario implements Serializable {
         this.actualFlowRate = 0;
         this.targetFlowRate = 0;
         this.volume = 0;
+    }
+
+    public Scenario(byte[] byteArray) {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(byteArray);
+        this.actualPressure = byteBuffer.getInt();
+        this.targetPressure = byteBuffer.getInt();
+        this.actualFlowRate = byteBuffer.getInt();
+        this.targetFlowRate = byteBuffer.getInt();
+        this.volume = byteBuffer.getInt();
     }
 
     public String getName() {
@@ -75,5 +85,15 @@ public class Scenario implements Serializable {
         if(volume > 99) {volume = 99;}
         if(volume < 0) {volume = 0;}
         this.volume = volume;
+    }
+
+    public byte[] toByteArray() {
+        return ByteBuffer.allocate(1024)
+                .putInt(actualPressure)
+                .putInt(targetPressure)
+                .putInt(actualFlowRate)
+                .putInt(targetFlowRate)
+                .putInt(volume)
+                .array();
     }
 }
