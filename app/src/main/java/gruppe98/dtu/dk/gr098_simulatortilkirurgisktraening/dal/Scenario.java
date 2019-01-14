@@ -32,6 +32,8 @@ public class Scenario implements Serializable {
     }
 
     public void setActualPressure(int actualPressure) {
+        if(actualPressure > 99) {actualPressure = 99;}
+        if(actualPressure < 0) {actualPressure = 0;}
         this.actualPressure = actualPressure;
     }
 
@@ -40,6 +42,8 @@ public class Scenario implements Serializable {
     }
 
     public void setTargetPressure(int targetPressure) {
+        if(targetPressure > 99) {targetPressure = 99;}
+        if(targetPressure < 0) {targetPressure = 0;}
         this.targetPressure = targetPressure;
     }
 
@@ -48,6 +52,8 @@ public class Scenario implements Serializable {
     }
 
     public void setActualFlowRate(int actualFlowRate) {
+        if(actualFlowRate > 99) {actualFlowRate = 99;}
+        if(actualFlowRate < 0) {actualFlowRate = 0;}
         this.actualFlowRate = actualFlowRate;
     }
 
@@ -56,6 +62,8 @@ public class Scenario implements Serializable {
     }
 
     public void setTargetFlowRate(int targetFlowRate) {
+        if(targetFlowRate > 99) {targetFlowRate = 99;}
+        if(targetFlowRate < 0) {targetFlowRate = 0;}
         this.targetFlowRate = targetFlowRate;
     }
 
@@ -64,6 +72,8 @@ public class Scenario implements Serializable {
     }
 
     public void setVolume(int volume) {
+        if(volume > 99) {volume = 99;}
+        if(volume < 0) {volume = 0;}
         this.volume = volume;
     }
 }

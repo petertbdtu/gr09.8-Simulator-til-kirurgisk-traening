@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -193,6 +195,7 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     }
 
     private void showNumberPickDialog(){
+        /*
         final NumberPicker numberPicker = new NumberPicker(getActivity());
         numberPicker.setMaxValue(99);
         numberPicker.setMinValue(0);
@@ -238,6 +241,52 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
             }
         });
 
+        builder.show();
+        */
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Indtast værdi");
+
+        final EditText input = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(input.getText().toString().length() != 0) {
+                    int tmp = Integer.parseInt(input.getText().toString());
+
+                        Scenario as = InsufflatorSimApp.aktivtScenarie;
+                        switch (ve) {
+                            case trykTarget:
+                                as.setTargetPressure(tmp);
+                                break;
+                            case trykAktuel:
+                                as.setActualPressure(tmp);
+                                break;
+                            case flowrateTarget:
+                                as.setTargetFlowRate(tmp);
+                                break;
+                            case flowrateAktuel:
+                                as.setActualFlowRate(tmp);
+                                break;
+                            case volumen:
+                                as.setVolume(tmp);
+                                break;
+                        }
+
+                        loadScenarie(InsufflatorSimApp.aktivtScenarie);
+                        dialogInterface.dismiss();
+                }
+            }
+        });
+        builder.setNegativeButton("Annuller", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
         builder.show();
     }
 
