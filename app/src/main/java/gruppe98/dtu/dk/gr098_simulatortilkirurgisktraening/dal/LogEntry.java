@@ -9,7 +9,7 @@ public class LogEntry {
     // private deviceidentifier <--
     private Scenario loggedScenario;
     //dateTime formats er lidt fucked up...
-    //long unixTime = System.currentTimeMillis() / 1000L;
+    //long unixTime = System.currentTimeMillis();
     private long start;
     private long completed;
     private OutcomeOptions outcome;
