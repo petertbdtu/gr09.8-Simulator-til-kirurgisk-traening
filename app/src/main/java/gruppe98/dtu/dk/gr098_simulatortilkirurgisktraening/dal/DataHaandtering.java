@@ -55,6 +55,8 @@ public class DataHaandtering {
 
     public List<Scenario> hentAlleScenarier(){
         List<Scenario> tempScenarier = new ArrayList<Scenario>(dao.loadData(filePath + "/" + scenarierFileName).values());
+        if(tempScenarier == null)
+            return new ArrayList<>();
         return tempScenarier;
     }
 

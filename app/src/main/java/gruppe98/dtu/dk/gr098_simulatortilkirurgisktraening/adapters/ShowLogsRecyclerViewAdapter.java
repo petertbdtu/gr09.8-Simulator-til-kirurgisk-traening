@@ -1,8 +1,10 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +21,16 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.LogEntry;
 public class ShowLogsRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogsRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<LogEntry> listLogElementer;
-    private ShowLogsActivity context;
+    private Context context;
 
-    public ShowLogsRecyclerViewAdapter(ArrayList<LogEntry> listLogElementer, ShowLogsActivity context) {
+    public ShowLogsRecyclerViewAdapter(ArrayList<LogEntry> listLogElementer, Context context) {
         this.listLogElementer = listLogElementer;
         this.context = context;
+    }
+
+    public void updateData(ArrayList<LogEntry> listLogElementer) {
+        this.listLogElementer = listLogElementer;
+        notifyDataSetChanged();
     }
 
     @NonNull

@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pGroup;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.ActivityCompat;
@@ -88,10 +89,10 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     @Override
     public void DiscoveryEnabled(boolean b) {
-        if(b)
+        /*if(b)
             Toast.makeText(this,"Started Discovery",Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(this,"Discovery Disabled",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Discovery Disabled",Toast.LENGTH_SHORT).show();*/
     }
 
     @Override
@@ -111,7 +112,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     @Override
     public void MessageReceived(byte[] msg) {
-        ByteBuffer byteBuffer = ByteBuffer.wrap(msg);
+        /*ByteBuffer byteBuffer = ByteBuffer.wrap(msg);
 
         // MAC address as string from WifiManager with getBytes() is 17 bytes long.
         byte[] targetMACAddr = new byte[17];
@@ -121,12 +122,12 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
         byte[] ourMACAddr = WP.getMacAddress().getBytes();
 
-        if (ourMACAddr == targetMACAddr) {
+        //if (ourMACAddr == targetMACAddr) {*/
             Fragment fragment;
             fragment = new InsufflatorFragment();
             Bundle args = new Bundle();
             args.putBoolean("erInstruktor", false);
-            args.putByteArray("scenarieByteArray", scenarioByteArray);
+            args.putByteArray("scenarieByteArray", msg);
             fragment.setArguments(args);
 
             FragmentManager fm = getFragmentManager();
@@ -134,7 +135,12 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
             ft.replace(R.id.fragmentContainer, fragment)
                     .commit();
-        }
+        //}
+    }
+
+    @Override
+    public void GroupInfoUpdate(WifiP2pGroup WPG) {
+
     }
 
     @Override

@@ -1,9 +1,9 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pGroup;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +13,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.SerializationUtils;
+
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.ShowLogsActivity;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.PeerAdapter;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.SendScenarieRecyclerViewAdapter;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.ShowLogsRecyclerViewAdapter;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.VaelgTabletsRecyleViewAdapter;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.LogEntry;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.OutcomeOptions;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
@@ -32,11 +40,13 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     RecyclerView RV;
     VaelgTabletsRecyleViewAdapter rvaTablets;
     PeerAdapter rvaPeers;
-    RecyclerView.Adapter rvaLogs;
-    RecyclerView.Adapter rvaScenarier;
+    ShowLogsRecyclerViewAdapter rvaLogs;
+    SendScenarieRecyclerViewAdapter rvaScenarier;
 
+    String ReciverAddress;
     WifiP2P WP;
-    ArrayList<String> ConnectedPeers;
+    ArrayList<LogEntry> DeviceLogs;
+    ArrayList<Scenario> Brugsscenarier;
 
 
     @Override
@@ -45,6 +55,13 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_vaelg_tablet);
         checkPermissions();
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        WP.disableDiscovery();
+        WP.unregisterReciever();
     }
 
     @Override
@@ -62,25 +79,39 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         btnFunktion = findViewById(R.id.btnFunction);
         btnFunktion.setOnClickListener(this);
 
-        ConnectedPeers = new ArrayList<>();
-        ConnectedPeers.add("Test 1");
-        ConnectedPeers.add("Test 2");
+        //Test data
+        DeviceLogs = new ArrayList<>();
+        LogEntry test = new LogEntry();
+        test.setComment("");
+        test.setCompleted(System.currentTimeMillis());
+        test.setStart(System.currentTimeMillis());
+        test.setLoggedScenario(DataHaandtering.getInstance().hentScenarie("TestScenarie"));
+        test.setOutcome(OutcomeOptions.SUCCESS);
+        LogEntry test2 = new LogEntry();
+        test2.setComment("");
+        test2.setCompleted(System.currentTimeMillis());
+        test2.setStart(System.currentTimeMillis());
+        test2.setLoggedScenario(DataHaandtering.getInstance().hentScenarie("TestScenarie"));
+        test2.setOutcome(OutcomeOptions.SUCCESS);
+        DeviceLogs.add(test);
+        DeviceLogs.add(test2);
 
         //Adapters
-        rvaTablets = new VaelgTabletsRecyleViewAdapter(ConnectedPeers,this);
+        rvaTablets = new VaelgTabletsRecyleViewAdapter(new ArrayList<WifiP2pDevice>(),this);
         rvaPeers = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
-        rvaLogs = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
-        rvaScenarier = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
+        rvaLogs = new ShowLogsRecyclerViewAdapter(DeviceLogs,this);
+        rvaScenarier = new SendScenarieRecyclerViewAdapter(DataHaandtering.getInstance().hentAlleScenarier(),this);
 
         //Recycleview
         RV = findViewById(R.id.rvIndhold);
         RV.setHasFixedSize(true);
         RV.setLayoutManager(new LinearLayoutManager(this));
-        RV.setAdapter(rvaPeers);
 
         WP = new WifiP2P(this);
         WP.enableDiscovery();
         WP.registerReciever(this);
+
+        ChangeToMainView();
     }
 
     private void checkPermissions() {
@@ -132,10 +163,10 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void DiscoveryEnabled(boolean b) {
-        if(b)
+        /*if(b)
             Toast.makeText(this,"Started Discovery",Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(this,"Discovery Disabled",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Discovery Disabled",Toast.LENGTH_SHORT).show();*/
     }
 
     @Override
@@ -145,12 +176,8 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void PeerChosen(WifiP2pDevice WPD) {
-        ButtonState = 0;
-        btnFunktion.setVisibility(View.VISIBLE);
-        WP.disableDiscovery();
-        ConnectedPeers.add(WPD.deviceAddress);
-        rvaTablets.updateData(ConnectedPeers);
-        RV.setAdapter(rvaTablets);
+        WP.connectToDevice(WPD);
+        ChangeToMainView();
     }
 
     @Override
@@ -163,22 +190,60 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     public void MessageReceived(byte[] msg) { }
 
     @Override
-    public void VaelgBrugsscenarie(String Id) {
+    public void GroupInfoUpdate(WifiP2pGroup WPG) {
+        if(WPG != null) {
+            WPG.getClientList();
+            ArrayList<WifiP2pDevice> tmpList = new ArrayList<>(WPG.getClientList());
+            rvaTablets.updateData(tmpList);
+        }
+    }
 
+    private void ChangeToMainView(){
+        WP.getConnectedDevices();
+        ButtonState = 0;
+        btnFunktion.setVisibility(View.VISIBLE);
+        WP.disableDiscovery();
+        RV.setAdapter(rvaTablets);
+    }
+
+    @Override
+    public void VaelgBrugsscenarie(String Id) {
+        ButtonState = 2;
+        btnFunktion.setVisibility(View.GONE);
+        rvaScenarier.updateData(DataHaandtering.getInstance().hentAlleScenarier());
+        RV.setAdapter(rvaScenarier);
+        ReciverAddress = Id;
     }
 
     @Override
     public void SeLog(String Id) {
-
+        ButtonState = 3;
+        btnFunktion.setVisibility(View.GONE);
+        rvaLogs.updateData(DeviceLogs);
+        RV.setAdapter(rvaLogs);
     }
 
     @Override
     public void SletTablet(String Id) {
-
+        //TODO disconnect fra device
     }
 
     @Override
-    public void sendBrugsscenarie(String brugsscencarie) {
+    public void sendBrugsscenarie(Scenario brugsscencarie) {
+        /*
+        byte[] BB = ReciverAddress.getBytes();//ByteBuffer.allocate(1024)
+                //.put(ReciverAddress.getBytes())
+                //.put(brugsscencarie.toByteArray())
+                //.array();
+*/
+        WP.sendMessage(SerializationUtils.serialize(brugsscencarie));
+    }
 
+    @Override
+    public void onBackPressed() {
+        if(ButtonState == 0)
+            finish();
+        else
+            ChangeToMainView();
     }
 }

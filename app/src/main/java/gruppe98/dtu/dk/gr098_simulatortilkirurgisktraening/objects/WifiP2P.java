@@ -7,11 +7,11 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -170,6 +170,17 @@ public class WifiP2P {
     public void sendMessage(byte[] msg) {
         if(sendReceiveThread != null)
             sendReceiveThread.write(msg);
+    }
+
+    public List<WifiP2pDevice> getConnectedDevices() {
+        WPM.requestGroupInfo(WPMC, new WifiP2pManager.GroupInfoListener() {
+            @Override
+            public void onGroupInfoAvailable(WifiP2pGroup group) {
+                ((IWifiListener)context).GroupInfoUpdate(group);
+            }
+        });
+
+        return null;
     }
 
     public String getMacAddress() {

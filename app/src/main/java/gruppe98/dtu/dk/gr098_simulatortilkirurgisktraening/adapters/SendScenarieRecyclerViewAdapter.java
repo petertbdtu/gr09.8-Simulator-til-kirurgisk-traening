@@ -1,7 +1,6 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,19 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
-
-import static gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R.id.navnSenarie;
 
 public class SendScenarieRecyclerViewAdapter extends RecyclerView.Adapter<SendScenarieRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<String> sendScenarier;
+    private List<Scenario> sendScenarier;
     private Context context;
 
-    public SendScenarieRecyclerViewAdapter(ArrayList<String> send_brugsscenarie, Context context) {
+    public SendScenarieRecyclerViewAdapter(List<Scenario> send_brugsscenarie, Context context) {
         this.sendScenarier = send_brugsscenarie;
         this.context = context;
     }
@@ -32,7 +30,7 @@ public class SendScenarieRecyclerViewAdapter extends RecyclerView.Adapter<SendSc
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        return new ViewHolder(inflater.inflate(R.layout.send_brugsscenarie, parent));
+        return new ViewHolder(inflater.inflate(R.layout.adapter_send_scenarie, null));
     }
 
     @Override
@@ -44,12 +42,17 @@ public class SendScenarieRecyclerViewAdapter extends RecyclerView.Adapter<SendSc
                 ((IRecycleViewAdapterListener)context).sendBrugsscenarie(sendScenarier.get(holder.getAdapterPosition()));
             }
         });
-        vh.navnSenarie.setText(sendScenarier.get(position));
+        vh.navnSenarie.setText(sendScenarier.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
         return sendScenarier.size();
+    }
+
+    public void updateData(List<Scenario> brugsscenarier) {
+        this.sendScenarier = brugsscenarier;
+        notifyDataSetChanged();
     }
 
 

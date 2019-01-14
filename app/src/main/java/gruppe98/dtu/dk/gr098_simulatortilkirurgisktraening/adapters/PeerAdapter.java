@@ -37,8 +37,6 @@ public class PeerAdapter extends RecyclerView.Adapter {
         return new PeerViewHolder(inflater.inflate(R.layout.adapter_peer,null));
     }
 
-
-
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         PeerViewHolder PVH = (PeerViewHolder) viewHolder;

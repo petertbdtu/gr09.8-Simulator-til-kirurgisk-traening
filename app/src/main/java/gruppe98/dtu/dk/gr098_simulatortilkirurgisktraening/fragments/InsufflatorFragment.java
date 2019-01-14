@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.InsufflatorSimApp;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
@@ -51,7 +53,7 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         else
         {
             byte[] aktivtScenarieByteArray = this.getArguments().getByteArray("scenarieByteArray");
-            aktivtScenarie = new Scenario(aktivtScenarieByteArray);
+            aktivtScenarie = SerializationUtils.deserialize(aktivtScenarieByteArray);
         }
 
         loadScenarie(aktivtScenarie);

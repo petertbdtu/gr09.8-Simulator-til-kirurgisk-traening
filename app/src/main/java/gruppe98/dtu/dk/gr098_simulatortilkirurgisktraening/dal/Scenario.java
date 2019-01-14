@@ -1,5 +1,8 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 
@@ -20,14 +23,19 @@ public class Scenario implements Serializable {
         this.volume = 0;
     }
 
-    public Scenario(byte[] byteArray) {
+    /*public Scenario(byte[] byteArray) {
+        byte[] b = new byte[1024];
+
+
+
+
         ByteBuffer byteBuffer = ByteBuffer.wrap(byteArray);
         this.actualPressure = byteBuffer.getInt();
         this.targetPressure = byteBuffer.getInt();
         this.actualFlowRate = byteBuffer.getInt();
         this.targetFlowRate = byteBuffer.getInt();
         this.volume = byteBuffer.getInt();
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -87,13 +95,22 @@ public class Scenario implements Serializable {
         this.volume = volume;
     }
 
-    public byte[] toByteArray() {
-        return ByteBuffer.allocate(1024)
+    /*public byte[] toByteArray() {
+        byte[] bb = new byte[20];
+
+
+        for(int i = 0 ; i < 20 ; i++) {
+            if(i < 4) {
+
+            }
+        }
+
+        return ByteBuffer.allocate(1024-17)
                 .putInt(actualPressure)
                 .putInt(targetPressure)
                 .putInt(actualFlowRate)
                 .putInt(targetFlowRate)
                 .putInt(volume)
                 .array();
-    }
+    }*/
 }
