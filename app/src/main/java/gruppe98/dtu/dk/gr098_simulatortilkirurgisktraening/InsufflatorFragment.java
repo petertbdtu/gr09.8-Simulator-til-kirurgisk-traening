@@ -1,14 +1,18 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
@@ -126,18 +130,23 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         {
             case R.id.flowrateMaalDisplay:
                 ve = VALGT_ELEMENT.flowrateTarget;
+                showNumberPickDialog();
                 break;
             case R.id.flowrateDisplay:
                 ve = VALGT_ELEMENT.flowrateAktuel;
+                showNumberPickDialog();
                 break;
             case R.id.trykMaalDisplay:
                 ve = VALGT_ELEMENT.trykTarget;
+                showNumberPickDialog();
                 break;
             case R.id.trykDisplay:
                 ve = VALGT_ELEMENT.trykAktuel;
+                showNumberPickDialog();
                 break;
             case R.id.volumenDisplay:
                 ve = VALGT_ELEMENT.volumen;
+                showNumberPickDialog();
                 break;
             case R.id.incTrykKnap:
             case R.id.incFlowrateKnap:
@@ -183,4 +192,54 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         InsufflatorSimApp.aktivtScenarie = as;
         loadScenarie(as);
     }
+
+    private void showNumberPickDialog(){
+        final NumberPicker numberPicker = new NumberPicker(getActivity());
+        numberPicker.setMaxValue(99);
+        numberPicker.setMinValue(0);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Tal");
+        builder.setMessage("Vælg værdi :");
+        builder.setView(numberPicker);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //dialogHost.onPositiveButton(numberPicker.getValue());
+                Scenario as = InsufflatorSimApp.aktivtScenarie;
+                switch (ve) {
+                    case trykTarget:
+                        as.setTargetPressure(numberPicker.getValue());
+                        break;
+                    case trykAktuel:
+                        as.setActualPressure(numberPicker.getValue());
+                        break;
+                    case flowrateTarget:
+                        as.setTargetFlowRate(numberPicker.getValue());
+                        break;
+                    case flowrateAktuel:
+                        as.setActualFlowRate(numberPicker.getValue());
+                        break;
+                    case volumen:
+                        as.setVolume(numberPicker.getValue());
+                        break;
+                }
+
+                loadScenarie(InsufflatorSimApp.aktivtScenarie);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("ANNULLER", new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //dialogHost.onCancelButton();
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+    }
+
 }
