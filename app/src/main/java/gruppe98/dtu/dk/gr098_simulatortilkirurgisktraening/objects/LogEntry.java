@@ -1,8 +1,4 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
-
-import android.icu.util.Calendar;
-
-import java.time.ZonedDateTime;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 
 public class LogEntry {
 

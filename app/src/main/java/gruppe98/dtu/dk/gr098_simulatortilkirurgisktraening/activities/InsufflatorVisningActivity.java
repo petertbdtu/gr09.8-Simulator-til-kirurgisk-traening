@@ -1,50 +1,104 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.Manifest;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pGroup;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.InsufflatorFragment;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.VisningAfventerFragment;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.InsufflatorSimApp;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
 
 public class InsufflatorVisningActivity extends AppCompatActivity implements IWifiListener {
 
     private static final int MY_PERMISSIONS_REQUEST = 1;
+    private WifiP2P wp;
 
-    private WifiP2P WP;
+    /////////////////////////////////////////
+    //// Activity overrides /////////////////
+    /////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insufflator_visning);
 
-        InsufflatorSimApp.aktivtScenarie = new Scenario();
+        ApplicationSingleton.getInstance().aktivtScenarie = new Scenario();
 
-        Fragment fragment = new VisningAfventerFragment();
-        getFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, fragment)
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer, new VisningAfventerFragment())
                 .commit();
 
         checkPermissions();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(wp != null)
+            wp.registerReceiver(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if(requestCode == MY_PERMISSIONS_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if(ApplicationSingleton.getInstance().WifiP2P == null) {
+                    wp = new WifiP2P(this, false);
+                    ApplicationSingleton.getInstance().WifiP2P = wp;
+                } else {
+                    wp = ApplicationSingleton.getInstance().WifiP2P;
+                    wp.registerReceiver(this);
+                }
+            } else {
+                Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Are you sure?");
+        builder.setMessage("Do you want to leave?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ApplicationSingleton.getInstance().WifiP2P = wp;
+        wp.unRegisterReceiver();
+    }
+
+    /////////////////////////////////////////
+    //// Activity methods ///////////////////
+    /////////////////////////////////////////
 
     private void checkPermissions() {
         String[] permissions = new String[]{
@@ -58,53 +112,21 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         ActivityCompat.requestPermissions(this, permissions, MY_PERMISSIONS_REQUEST);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if(requestCode == MY_PERMISSIONS_REQUEST) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                init();
-            } else {
-                Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void init() {
-        WP = new WifiP2P(this);
-        WP.enableDiscovery();
-        WP.registerReciever(this);
-    }
+    /////////////////////////////////////////
+    //// WifiP2P overrides //////////////////
+    /////////////////////////////////////////
 
     @Override
-    public void WifiEnabled(boolean b) {
-        if(!b)
-            Toast.makeText(this,"Make sure wifi is enabled",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void P2PEnabled(boolean b) {
-        if(!b)
-            Toast.makeText(this,"P2P couldn't initialize",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void DiscoveryEnabled(boolean b) {
-        /*if(b)
-            Toast.makeText(this,"Started Discovery",Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(this,"Discovery Disabled",Toast.LENGTH_SHORT).show();*/
-    }
+    public void DiscoveryEnabled(boolean b) { }
 
     @Override
     public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) { }
 
     @Override
-    public void PeerChosen(WifiP2pDevice WPD) { }
-
-    @Override
-    public void DeviceConnected(boolean isGroupOwner, String groupOwnerAddress) {
-        // Display built-in default scenario immediately or wait until receiving?
+    public void DeviceConnected() {
+        // TODO Display built-in default scenario immediately or wait until receiving? Currently Waiting
         Toast.makeText(this,"connected",Toast.LENGTH_SHORT).show();
+        wp.disableDiscovery();
     }
 
     @Override
@@ -123,44 +145,21 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         byte[] ourMACAddr = WP.getMacAddress().getBytes();
 
         //if (ourMACAddr == targetMACAddr) {*/
-            Fragment fragment;
-            fragment = new InsufflatorFragment();
-            Bundle args = new Bundle();
-            args.putBoolean("erInstruktor", false);
-            args.putByteArray("scenarieByteArray", msg);
-            fragment.setArguments(args);
+        Toast.makeText(this,"Message:\n" + msg,Toast.LENGTH_SHORT).show();
 
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
+        Fragment fragment = new InsufflatorFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("erInstruktor", false);
+        args.putByteArray("scenarieByteArray", msg);
+        fragment.setArguments(args);
 
-            ft.replace(R.id.fragmentContainer, fragment)
-                    .commit();
-        //}
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .commit();
     }
 
     @Override
-    public void GroupInfoUpdate(WifiP2pGroup WPG) {
+    public void GroupInfoUpdate(WifiP2pGroup WPG) { }
 
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Are you sure?");
-        builder.setMessage("Do you want to leave?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
 }

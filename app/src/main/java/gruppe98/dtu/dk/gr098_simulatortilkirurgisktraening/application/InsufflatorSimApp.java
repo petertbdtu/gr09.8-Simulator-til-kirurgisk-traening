@@ -1,23 +1,22 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application;
 
 import android.app.Application;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
+
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 
 public class InsufflatorSimApp extends Application {
 
-    public static Scenario aktivtScenarie;
+    //
 
     @Override
     public void onCreate() {
         super.onCreate();
-        System.out.println("---------------> DEBUG InsufflatorSimApp" + this.getFilesDir().getPath());
-        DataHaandtering.getInstance().init(this.getFilesDir().getPath());
+        ApplicationSingleton.getInstance().init(this.getFilesDir().getPath());
         TestingDataLayer();
     }
 
     private void TestingDataLayer() {
-        DataHaandtering data = DataHaandtering.getInstance();
+        ApplicationSingleton data = ApplicationSingleton.getInstance();
         if (!data.scenarieEksisterer("TestScenarie")){
             Scenario s1 = new Scenario();
             s1.setName("TestScenarie");

@@ -1,22 +1,15 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 
 
-import android.content.Context;
-import android.os.Environment;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 
-public class DataAccessLayer<E> {
+public class DataAccess<E> {
 
     public Map<String, E> loadData(String fileName) {
         Map<String,E> data = new HashMap<>();

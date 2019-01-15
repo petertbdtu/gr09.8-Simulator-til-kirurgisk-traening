@@ -12,6 +12,8 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -33,14 +35,17 @@ public class WifiP2P {
     private WifiP2PSendReceiveThread sendReceiveThread;
     private InetAddress broadcastAddress;
 
-
+    private boolean isGroupOwner;
+    private boolean keepDiscoverEnabled;
     private Context context;
 
-    public WifiP2P(Context context){
+    public WifiP2P(Context context, boolean isGroupOwner){
         this.context = context;
+        this.isGroupOwner = isGroupOwner;
+        keepDiscoverEnabled = false;
+
         checkWifi();
         init();
-        enableDiscovery();
     }
 
     private void init(){
@@ -57,52 +62,61 @@ public class WifiP2P {
         IF.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
         IF.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         IF.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+
+        if(isGroupOwner) {
+            WPM.createGroup(WPMC, new WifiP2pManager.ActionListener() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(context,"Group creation succes",Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(int reason) {
+                    Toast.makeText(context,"Group creation failed",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        context.registerReceiver(BR,IF);
     }
+
 
     public void checkWifi(){
         WM = (WifiManager) context.getApplicationContext().getSystemService(context.WIFI_SERVICE);
         if(!WM.isWifiEnabled())
             WM.setWifiEnabled(true);
-        ((IWifiListener) context).WifiEnabled(true);
-
-    }
-
-    public void registerReciever(Context context) {
-        this.context = context;
-        context.registerReceiver(BR,IF);
-    }
-
-    public void unregisterReciever() {
-        context.unregisterReceiver(BR);
-
     }
 
     public void enableDiscovery() {
+        keepDiscoverEnabled = true;
         WPM.discoverPeers(WPMC,AL);
     }
 
     public void disableDiscovery() {
+        keepDiscoverEnabled = false;
         WPM.stopPeerDiscovery(WPMC,AL);
+    }
+
+    public void registerReceiver(Context context) {
+        this.context = context;
+        this.context.registerReceiver(BR,IF);
+    }
+
+    public void unRegisterReceiver() {
+        context.unregisterReceiver(BR);
     }
 
     public void connectToDevice(final WifiP2pDevice WPD) {
         WifiP2pConfig WPC = new WifiP2pConfig();
         WPC.deviceAddress = WPD.deviceAddress;
-
         WPM.connect(WPMC, WPC, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                enableDiscovery();
             }
 
             @Override
             public void onFailure(int reason) {
             }
         });
-    }
-
-    public void forceRequestPeers() {
-        ((WifiP2PBroadcastReceiver)BR).forceRequestPeers();
     }
 
     private WifiP2pManager.ActionListener createActionListener(){
@@ -123,9 +137,7 @@ public class WifiP2P {
         return new WifiP2pManager.PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
-                List<WifiP2pDevice> listWPD = new ArrayList<>();
-                listWPD.addAll(peers.getDeviceList());
-                ((IWifiListener)context).ChangesInPeersAvailable(listWPD);
+                ((IWifiListener)context).ChangesInPeersAvailable(new ArrayList<>(peers.getDeviceList()));
             }
         };
     }
@@ -135,7 +147,6 @@ public class WifiP2P {
             @Override
             public void onConnectionInfoAvailable(WifiP2pInfo info) {
                 if(info.groupFormed && sendReceiveThread==null) {
-                    enableDiscovery();
                     try {
                         byte[] ba = info.groupOwnerAddress.getAddress();
                         ba[3] = (byte) 255;
@@ -145,7 +156,9 @@ public class WifiP2P {
                     }
                     sendReceiveThread = new WifiP2PSendReceiveThread(handler,broadcastAddress);
                     sendReceiveThread.start();
-                    ((IWifiListener)context).DeviceConnected(info.isGroupOwner, info.groupOwnerAddress.getHostAddress());
+                    if(keepDiscoverEnabled)
+                        enableDiscovery();
+                    ((IWifiListener)context).DeviceConnected();
                 }
             }
         };

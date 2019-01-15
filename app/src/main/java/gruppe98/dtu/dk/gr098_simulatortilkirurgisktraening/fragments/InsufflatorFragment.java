@@ -1,10 +1,10 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments;
 
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import org.apache.commons.lang3.SerializationUtils;
 
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.InsufflatorSimApp;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.LEDView;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView;
 
@@ -48,7 +48,7 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         if(erInstruktor)
         {
             bindInstruktorKnapper();
-            aktivtScenarie = InsufflatorSimApp.aktivtScenarie;
+            aktivtScenarie = ApplicationSingleton.getInstance().aktivtScenarie;
         }
         else
         {
@@ -134,7 +134,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        Scenario as = InsufflatorSimApp.aktivtScenarie;
         switch (v.getId()) {
             case R.id.flowrateMaalDisplay:
                 ve = VALGT_ELEMENT.flowrateTarget;
@@ -157,8 +156,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
                 showNumberPickDialog();
                 break;
         }
-        InsufflatorSimApp.aktivtScenarie = as;
-        loadScenarie(as);
     }
 
     private void showNumberPickDialog(){
@@ -223,27 +220,24 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(input.getText().toString().length() != 0) {
                     int tmp = Integer.parseInt(input.getText().toString());
-
-                        Scenario as = InsufflatorSimApp.aktivtScenarie;
                         switch (ve) {
                             case trykTarget:
-                                as.setTargetPressure(tmp);
+                                ApplicationSingleton.getInstance().aktivtScenarie.setTargetPressure(tmp);
                                 break;
                             case trykAktuel:
-                                as.setActualPressure(tmp);
+                                ApplicationSingleton.getInstance().aktivtScenarie.setActualPressure(tmp);
                                 break;
                             case flowrateTarget:
-                                as.setTargetFlowRate(tmp);
+                                ApplicationSingleton.getInstance().aktivtScenarie.setTargetFlowRate(tmp);
                                 break;
                             case flowrateAktuel:
-                                as.setActualFlowRate(tmp);
+                                ApplicationSingleton.getInstance().aktivtScenarie.setActualFlowRate(tmp);
                                 break;
                             case volumen:
-                                as.setVolume(tmp);
+                                ApplicationSingleton.getInstance().aktivtScenarie.setVolume(tmp);
                                 break;
                         }
-
-                        loadScenarie(InsufflatorSimApp.aktivtScenarie);
+                        loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
                         dialogInterface.dismiss();
                 }
             }

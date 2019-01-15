@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.ShowLogsActivity;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.LogEntry;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.LogEntry;
 
-public class ShowLogsRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogsRecyclerViewAdapter.ViewHolder> {
+public class ShowLogsAdapter extends RecyclerView.Adapter<ShowLogsAdapter.ViewHolder> {
 
     private ArrayList<LogEntry> listLogElementer;
     private Context context;
 
-    public ShowLogsRecyclerViewAdapter(ArrayList<LogEntry> listLogElementer, Context context) {
+    public ShowLogsAdapter(ArrayList<LogEntry> listLogElementer, Context context) {
         this.listLogElementer = listLogElementer;
         this.context = context;
     }
@@ -35,9 +33,9 @@ public class ShowLogsRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogsRe
 
     @NonNull
     @Override
-    public ShowLogsRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.log_entry_layout, parent, false);
-        return new ShowLogsRecyclerViewAdapter.ViewHolder(view);
+    public ShowLogsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_log_entry, parent, false);
+        return new ShowLogsAdapter.ViewHolder(view);
     }
 
     @Override

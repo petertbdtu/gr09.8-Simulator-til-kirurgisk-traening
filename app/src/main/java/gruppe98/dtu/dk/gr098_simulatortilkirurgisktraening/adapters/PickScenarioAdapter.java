@@ -1,5 +1,6 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -12,32 +13,41 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.VaelgScenarieActivity;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 
-public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<VaelgScenarieRecyclerViewAdapter.ViewHolder> {
+public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapter.ViewHolder> {
 
         private ArrayList<String> list_scenarie_navne;
-        private VaelgScenarieActivity context;
+        private Context context;
 
-    public VaelgScenarieRecyclerViewAdapter(ArrayList<String> list_scenarie_navne, VaelgScenarieActivity context){
-        this.list_scenarie_navne = list_scenarie_navne;
+    public PickScenarioAdapter(Context context){
         this.context = context;
+        hentScenarier();
+    }
+
+    private void hentScenarier() {
+        ArrayList<String> tmpList = new ArrayList<>();
+        for( Scenario s : ApplicationSingleton.getInstance().hentAlleScenarier() )
+            tmpList.add(s.getName());
+        list_scenarie_navne = tmpList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.scenarie_liste_layout, parent, false);
-        return new ViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        return new ViewHolder(inflater.inflate(R.layout.adapter_vaelg_scenarie,null));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.scenarie_navn.setText(list_scenarie_navne.get(i));
         viewHolder.rediger.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.skiftTilRedigerScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                    ((IRecycleViewAdapterListener)context).redigerScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
                 }
             }
         );
@@ -45,7 +55,9 @@ public class VaelgScenarieRecyclerViewAdapter extends RecyclerView.Adapter<Vaelg
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        context.sletScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                        ApplicationSingleton.getInstance().fjernScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                        hentScenarier();
+                        notifyDataSetChanged();
                     }
                 }
         );

@@ -12,15 +12,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 
-public class SendScenarieRecyclerViewAdapter extends RecyclerView.Adapter<SendScenarieRecyclerViewAdapter.ViewHolder> {
+public class SendScenarioAdapter extends RecyclerView.Adapter<SendScenarioAdapter.ViewHolder> {
 
     private List<Scenario> sendScenarier;
     private Context context;
 
-    public SendScenarieRecyclerViewAdapter(List<Scenario> send_brugsscenarie, Context context) {
+    public SendScenarioAdapter(List<Scenario> send_brugsscenarie, Context context) {
         this.sendScenarier = send_brugsscenarie;
         this.context = context;
     }

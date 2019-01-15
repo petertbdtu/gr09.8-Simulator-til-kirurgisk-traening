@@ -1,10 +1,5 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 import java.io.Serializable;
-import java.nio.ByteBuffer;
 
 public class Scenario implements Serializable {
     private String name;

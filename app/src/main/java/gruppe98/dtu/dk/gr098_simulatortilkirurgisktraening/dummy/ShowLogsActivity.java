@@ -1,16 +1,15 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dummy;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
 
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.DatePickerFragment;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.ShowLogsListFragment;
 

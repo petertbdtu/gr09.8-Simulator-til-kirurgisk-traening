@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_tablet_liste_element"
-    tools:context="adapters.VaelgTabletsRecyleViewAdapter">
+    tools:context=".adapters.PickTabletAdapter">
 
 
     <android.support.constraint.ConstraintLayout

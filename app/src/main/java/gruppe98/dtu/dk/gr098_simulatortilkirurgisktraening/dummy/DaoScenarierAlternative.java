@@ -1,13 +1,5 @@
-package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal;
+package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dummy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 /*
 import static gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.ScenarieHaandteringAlternative.PATH;
 */

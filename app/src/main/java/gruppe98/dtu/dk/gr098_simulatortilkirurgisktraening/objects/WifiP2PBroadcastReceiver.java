@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
+
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
 
 public class WifiP2PBroadcastReceiver extends android.content.BroadcastReceiver implements WifiP2pManager.PeerListListener {
@@ -30,7 +31,11 @@ public class WifiP2PBroadcastReceiver extends android.content.BroadcastReceiver 
 
         if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
             int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
-            ((IWifiListener) context).P2PEnabled(state == WifiP2pManager.WIFI_P2P_STATE_ENABLED);
+            if(state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
+                //This implies the P2P manager is up and running
+            } else {
+                //This implies the P2P manager is down / not working
+            }
 
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             WPM.requestPeers(WPMC,PLL);

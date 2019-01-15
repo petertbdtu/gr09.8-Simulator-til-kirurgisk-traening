@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
 
 public class PeerAdapter extends RecyclerView.Adapter {
 
@@ -43,7 +43,7 @@ public class PeerAdapter extends RecyclerView.Adapter {
         PVH.ivChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((IWifiListener)context).PeerChosen(listWPD.get(viewHolder.getAdapterPosition()));
+                ((IRecycleViewAdapterListener)context).PeerChosen(listWPD.get(viewHolder.getAdapterPosition()));
             }
         });
         PVH.tvName.setText(listWPD.get(i).deviceName);

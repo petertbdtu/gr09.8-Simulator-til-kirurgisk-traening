@@ -1,9 +1,9 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;

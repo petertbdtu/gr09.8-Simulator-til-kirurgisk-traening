@@ -1,23 +1,18 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.VaelgScenarieActivity;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.VaelgScenarieRecyclerViewAdapter;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.Scenario;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.PickScenarioAdapter;
 
-public class ScenarieListFragment extends Fragment implements View.OnClickListener {
+public class ScenarieListFragment extends Fragment {
 
     View view;
 
@@ -27,37 +22,13 @@ public class ScenarieListFragment extends Fragment implements View.OnClickListen
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_vaelg_scenarie_liste, container, false);
 
-        indlaesScenarier();
+        //Initialize Recyclerview
+        RecyclerView rv = view.findViewById(R.id.recyclerView);
+        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rv.setHasFixedSize(true);
+        rv.setAdapter(new PickScenarioAdapter(getActivity()));
 
         return view;
     }
 
-// TODO find ud af hvad der skal ske her.
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        indlaesScenarier();
-//    }
-
-    private void indlaesScenarier() {
-        ArrayList<String> liste_scenarie_navne = new ArrayList<>();
-        for(Scenario scenarie:DataHaandtering.getInstance().hentAlleScenarier()) {
-            liste_scenarie_navne.add(scenarie.getName());
-        }
-
-        aktiverRecyclerView(liste_scenarie_navne);
-    }
-
-    @Override
-    public void onClick(View v) {
-    }
-
-    private void aktiverRecyclerView(ArrayList<String> navne) {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        VaelgScenarieRecyclerViewAdapter adapter = new VaelgScenarieRecyclerViewAdapter(navne, (VaelgScenarieActivity) getActivity());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-    }
 }

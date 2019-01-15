@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.ShowLogsRecyclerViewAdapter;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.ShowLogsActivity;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.DataHaandtering;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.LogEntry;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dal.OutcomeOptions;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.ShowLogsAdapter;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.dummy.ShowLogsActivity;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.LogEntry;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.OutcomeOptions;
 
 public class ShowLogsListFragment extends Fragment {
 
@@ -49,13 +49,13 @@ public class ShowLogsListFragment extends Fragment {
         test.setComment("");
         test.setCompleted(System.currentTimeMillis());
         test.setStart(System.currentTimeMillis());
-        test.setLoggedScenario(DataHaandtering.getInstance().hentScenarie("TestScenarie"));
+        test.setLoggedScenario(ApplicationSingleton.getInstance().hentScenarie("TestScenarie"));
         test.setOutcome(OutcomeOptions.SUCCESS);
         LogEntry test2 = new LogEntry();
         test2.setComment("");
         test2.setCompleted(System.currentTimeMillis());
         test2.setStart(System.currentTimeMillis());
-        test2.setLoggedScenario(DataHaandtering.getInstance().hentScenarie("TestScenarie"));
+        test2.setLoggedScenario(ApplicationSingleton.getInstance().hentScenarie("TestScenarie"));
         test2.setOutcome(OutcomeOptions.SUCCESS);
         tempLogArrayList.add(test);
         tempLogArrayList.add(test2);
@@ -70,7 +70,7 @@ public class ShowLogsListFragment extends Fragment {
         tempLogArrayList.add(makeDummy());
         tempLogArrayList.add(makeDummy());
 
-        for(LogEntry logElement:DataHaandtering.getInstance().hentAlleLogs()) {
+        for(LogEntry logElement:ApplicationSingleton.getInstance().hentAlleLogs()) {
 
             if(true) {
                 tempLogArrayList.add(logElement);
@@ -83,7 +83,7 @@ public class ShowLogsListFragment extends Fragment {
 
     private void aktiverRecyclerView(ArrayList<LogEntry> logElementer) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        ShowLogsRecyclerViewAdapter adapter = new ShowLogsRecyclerViewAdapter(logElementer, (ShowLogsActivity) getActivity());
+        ShowLogsAdapter adapter = new ShowLogsAdapter(logElementer, (ShowLogsActivity) getActivity());
 
         recyclerView.setAdapter(adapter);
 
@@ -96,7 +96,7 @@ public class ShowLogsListFragment extends Fragment {
         test.setComment("");
         test.setCompleted(System.currentTimeMillis());
         test.setStart(System.currentTimeMillis());
-        test.setLoggedScenario(DataHaandtering.getInstance().hentScenarie("TestScenarie"));
+        test.setLoggedScenario(ApplicationSingleton.getInstance().hentScenarie("TestScenarie"));
         test.setOutcome(OutcomeOptions.SUCCESS);
         return test;
     }

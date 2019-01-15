@@ -6,12 +6,9 @@ import android.net.wifi.p2p.WifiP2pGroup;
 import java.util.List;
 
 public interface IWifiListener {
-    public void WifiEnabled(boolean b);
-    public void P2PEnabled(boolean b);
     public void DiscoveryEnabled(boolean b);
     public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD);
-    public void PeerChosen(WifiP2pDevice WPD);
-    public void DeviceConnected(boolean isGroupOwner, String groupOwnerAddress);
+    public void DeviceConnected();
     public void DeviceDisconnected();
     public void MessageReceived(byte[] msg);
     public void GroupInfoUpdate(WifiP2pGroup WPG);

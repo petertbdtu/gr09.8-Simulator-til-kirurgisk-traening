@@ -16,14 +16,14 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.LEDView;
 
-public class VaelgTabletsRecyleViewAdapter extends RecyclerView.Adapter<VaelgTabletsRecyleViewAdapter.ViewHolder> {
+public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.ViewHolder> {
     private static final String TAG = "tabletRecyclerViewAdapter";
 
     private ArrayList<WifiP2pDevice> listDevices;
     private Context context;
 
 
-    public VaelgTabletsRecyleViewAdapter(ArrayList<WifiP2pDevice> listDevices, Context context) {
+    public PickTabletAdapter(ArrayList<WifiP2pDevice> listDevices, Context context) {
         this.listDevices = listDevices;
         this.context = context;
     }
@@ -41,7 +41,7 @@ public class VaelgTabletsRecyleViewAdapter extends RecyclerView.Adapter<VaelgTab
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final VaelgTabletsRecyleViewAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final PickTabletAdapter.ViewHolder viewHolder, int position) {
 
 
         viewHolder.tablet_liste_element_ID.setText(listDevices.get(position).deviceName);
