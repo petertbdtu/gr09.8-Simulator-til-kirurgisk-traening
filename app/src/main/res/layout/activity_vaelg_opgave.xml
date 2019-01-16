@@ -5,6 +5,7 @@
     android:id="@+id/clMainVaelgOpgave"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/baggrund"
     tools:context=".activities.VaelgOpgaveActivity">
 
     <TextView
@@ -45,7 +46,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/constraint_border"
+            android:background="@drawable/knap_kanter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/clTablet"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +92,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/constraint_border"
+            android:background="@drawable/knap_kanter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

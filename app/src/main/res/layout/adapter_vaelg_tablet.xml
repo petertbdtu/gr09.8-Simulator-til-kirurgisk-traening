@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_tablet_liste_element"
     tools:context=".adapters.PickTabletAdapter">
 
 
@@ -50,7 +49,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/tablet_knap"
+            android:background="@drawable/knap_kanter"
             android:text="@string/tablet_liste_element_valgBrugs"
             android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -65,7 +64,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/tablet_knap"
+            android:background="@drawable/knap_kanter"
             android:text="@string/tablet_liste_element_selog"
             android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +79,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/tablet_knap"
+            android:background="@drawable/knap_kanter"
             android:text="@string/tablet_liste_element_slet"
             android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="parent"
