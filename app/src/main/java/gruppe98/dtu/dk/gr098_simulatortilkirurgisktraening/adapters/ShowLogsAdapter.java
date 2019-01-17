@@ -46,7 +46,7 @@ public class ShowLogsAdapter extends RecyclerView.Adapter<ShowLogsAdapter.ViewHo
         //c.setTimeInMillis(logElement.getStart());
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         holder.startTid.setText(format1.format(logElement.getStart()));
-        holder.scenarie_navn.setText(logElement.getLoggedScenario().getName());
+        holder.scenarie_navn.setText(logElement.getScenarioNavn());
 
        // c.setTimeInMillis(logElement.getCompleted());
         holder.slutTid.setText(format1.format(logElement.getStart()));

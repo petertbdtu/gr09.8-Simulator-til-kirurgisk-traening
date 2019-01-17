@@ -111,13 +111,13 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         test.setComment("");
         test.setCompleted(System.currentTimeMillis());
         test.setStart(System.currentTimeMillis());
-        test.setLoggedScenario(ApplicationSingleton.getInstance().hentScenarie("TestScenarie"));
+        test.setScenarioNavn("TestScenarie");
         test.setOutcome(OutcomeOptions.SUCCESS);
         LogEntry test2 = new LogEntry();
         test2.setComment("");
         test2.setCompleted(System.currentTimeMillis());
         test2.setStart(System.currentTimeMillis());
-        test2.setLoggedScenario(ApplicationSingleton.getInstance().hentScenarie("TestScenarie"));
+        test2.setScenarioNavn("TestScenarie");
         test2.setOutcome(OutcomeOptions.SUCCESS);
         DeviceLogs.add(test);
         DeviceLogs.add(test2);

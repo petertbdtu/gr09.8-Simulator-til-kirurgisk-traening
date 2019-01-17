@@ -1,4 +1,6 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class Scenario implements Serializable {
@@ -137,4 +139,5 @@ public class Scenario implements Serializable {
                 .putInt(volume)
                 .array();
     }*/
+
 }
