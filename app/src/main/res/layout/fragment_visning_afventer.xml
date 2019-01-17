@@ -8,9 +8,19 @@
 
 
     <TextView
+        android:id="@+id/deviceNavnTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/afventerTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/afventerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/afventerForbindelse"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
@@ -34,4 +44,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/afventerTextView" />
+
 </android.support.constraint.ConstraintLayout>
