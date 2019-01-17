@@ -48,6 +48,11 @@ public class LEDView extends View {
         return erTaendt;
     }
 
+    public void setErTaendt(boolean erTaendt) {
+        this.erTaendt = erTaendt;
+        invalidate();
+    }
+
     public void taend() {
         this.erTaendt = true;
         invalidate();
