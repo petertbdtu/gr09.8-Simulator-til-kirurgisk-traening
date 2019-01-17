@@ -2,8 +2,15 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 
 public class LogEntry {
 
-    // private deviceidentifier <--
-    private Scenario loggedScenario;
+    public LogEntry(String deviceId, String scenarioNavn, long start, long completed){
+        this.deviceId = deviceId;
+        this.scenarioNavn = scenarioNavn;
+        this.start = start;
+        this.completed = completed;
+    }
+
+    private String deviceId;
+    private String scenarioNavn;
     //dateTime formats er lidt fucked up...
     //long unixTime = System.currentTimeMillis();
     private long start;
@@ -11,12 +18,12 @@ public class LogEntry {
     private OutcomeOptions outcome;
     private String comment;
 
-    public Scenario getLoggedScenario() {
-        return loggedScenario;
+    public String getScenarioNavn() {
+        return scenarioNavn;
     }
 
-    public void setLoggedScenario(Scenario loggedScenario) {
-        this.loggedScenario = loggedScenario;
+    public void setScenarioNavn(String scenarioNavn) {
+        this.scenarioNavn = scenarioNavn;
     }
 
     public long getStart() {
@@ -49,5 +56,13 @@ public class LogEntry {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }
