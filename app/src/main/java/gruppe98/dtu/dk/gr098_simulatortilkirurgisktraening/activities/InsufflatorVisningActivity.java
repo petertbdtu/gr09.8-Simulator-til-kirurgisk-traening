@@ -28,7 +28,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
 public class InsufflatorVisningActivity extends AppCompatActivity implements IWifiListener {
 
     private static final int MY_PERMISSIONS_REQUEST = 1;
-    private WifiP2P wp;
+    private String deviceName;
 
     /////////////////////////////////////////
     //// Activity overrides /////////////////
@@ -41,18 +41,14 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
         ApplicationSingleton.getInstance().aktivtScenarie = new Scenario();
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, new VisningAfventerFragment())
-                .commit();
-
         checkPermissions();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(wp != null)
-            wp.registerReceiver(this);
+        if(ApplicationSingleton.getInstance().WifiP2P != null)
+            ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
     }
 
     @Override
@@ -60,11 +56,9 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         if(requestCode == MY_PERMISSIONS_REQUEST) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if(ApplicationSingleton.getInstance().WifiP2P == null) {
-                    wp = new WifiP2P(this, false);
-                    ApplicationSingleton.getInstance().WifiP2P = wp;
+                    ApplicationSingleton.getInstance().WifiP2P = new WifiP2P(this, false);
                 } else {
-                    wp = ApplicationSingleton.getInstance().WifiP2P;
-                    wp.registerReceiver(this);
+                    ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
                 }
             } else {
                 Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
@@ -95,8 +89,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     @Override
     protected void onStop() {
         super.onStop();
-        ApplicationSingleton.getInstance().WifiP2P = wp;
-        wp.unRegisterReceiver();
+        ApplicationSingleton.getInstance().WifiP2P.unRegisterReceiver();
     }
 
     /////////////////////////////////////////
@@ -129,7 +122,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     public void DeviceConnected() {
         // TODO Display built-in default scenario immediately or wait until receiving? Currently Waiting
         Toast.makeText(this,"connected",Toast.LENGTH_SHORT).show();
-        wp.disableDiscovery();
+        ApplicationSingleton.getInstance().WifiP2P.disableDiscovery();
     }
 
     @Override
@@ -138,8 +131,8 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     @Override
     public void MessageReceived(byte[] msg) {
         CommunicationObject CO = SerializationUtils.deserialize(msg);
-        Toast.makeText(this,CO.getRecipientMacAddress().toUpperCase() + " == " + wp.getMyMacAddress().toUpperCase(), Toast.LENGTH_SHORT).show();
-        if(CO.getRecipientMacAddress().toUpperCase().equals(wp.getMyMacAddress().toUpperCase())) {
+        Toast.makeText(this,CO.getRecipientMacAddress().toUpperCase() + " == " + ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress().toUpperCase(), Toast.LENGTH_SHORT).show();
+        if(CO.getRecipientMacAddress().toUpperCase().equals(ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress().toUpperCase())) {
             Fragment fragment = new InsufflatorFragment();
             Bundle args = new Bundle();
             args.putBoolean("erInstruktor", false);
@@ -155,5 +148,25 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     @Override
     public void GroupInfoUpdate(WifiP2pGroup WPG) { }
+
+    @Override
+    public void SetDeviceName(String name) {
+        if (deviceName == null) {
+            deviceName = name;
+            Fragment fragment = new VisningAfventerFragment();
+            Bundle args = new Bundle();
+            args.putString("deviceName", name);
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainer, fragment)
+                    .commit();
+        }
+    }
+
+  @Override
+  public void OnGroupCreated(boolean b) {
+
+  }
 
 }

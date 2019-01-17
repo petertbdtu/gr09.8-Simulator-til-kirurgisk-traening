@@ -1,10 +1,13 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.Manifest;
+import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pGroup;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +37,6 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
 
 public class VaelgTabletActivity extends AppCompatActivity implements View.OnClickListener, IWifiListener, IRecycleViewAdapterListener {
 
-    private static final int MY_PERMISSIONS_REQUEST = 0;
 
     private SendScenarioAdapter rvaScenarier;
     private PickTabletAdapter rvaTablets;
@@ -43,10 +45,14 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private Button btnFunktion;
     private RecyclerView RV;
 
+
+
     private ArrayList<LogEntry> DeviceLogs;
     private String receiverAddress;
     private int ButtonState = 0;
-    private WifiP2P wp;
+
+    private ProgressDialog dlg;
+    private String targetMacAddress;
 
     /////////////////////////////////////////
     //// Activity overrides /////////////////
@@ -56,32 +62,20 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vaelg_tablet);
-        checkPermissions();
+        init();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(wp != null)
-            wp.registerReceiver(this);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if(requestCode == MY_PERMISSIONS_REQUEST) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                init();
-            } else {
-                Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
-            }
-        }
+        if(ApplicationSingleton.getInstance().WifiP2P != null)
+            ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        ApplicationSingleton.getInstance().WifiP2P = wp;
-        wp.unRegisterReceiver();
+        ApplicationSingleton.getInstance().WifiP2P.unRegisterReceiver();
     }
 
     @Override
@@ -106,18 +100,6 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     //// Activity methods ///////////////////
     /////////////////////////////////////////
 
-    private void checkPermissions() {
-        String[] permissions = new String[]{
-                Manifest.permission.ACCESS_COARSE_LOCATION
-                , Manifest.permission.ACCESS_WIFI_STATE
-                , Manifest.permission.CHANGE_WIFI_STATE
-                , Manifest.permission.INTERNET
-                , Manifest.permission.ACCESS_NETWORK_STATE
-                , Manifest.permission.CHANGE_NETWORK_STATE
-        };
-        ActivityCompat.requestPermissions(this, permissions, MY_PERMISSIONS_REQUEST);
-    }
-
     private void init() {
         //Initialize button
         btnFunktion = findViewById(R.id.btnFunction);
@@ -141,7 +123,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         DeviceLogs.add(test2);
 
         //Initialize Adapters
-        rvaTablets = new PickTabletAdapter(new ArrayList<WifiP2pDevice>(),this);
+        rvaTablets = new PickTabletAdapter(ApplicationSingleton.getInstance().getKnownDevices(),this);
         rvaPeers = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
         rvaLogs = new ShowLogsAdapter(DeviceLogs,this);
         rvaScenarier = new SendScenarioAdapter(ApplicationSingleton.getInstance().hentAlleScenarier(),this);
@@ -151,30 +133,22 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         RV.setHasFixedSize(true);
         RV.setLayoutManager(new LinearLayoutManager(this));
 
-        //Initialize WifiP2P
-        if(ApplicationSingleton.getInstance().WifiP2P == null) {
-            wp = new WifiP2P(this, true);
-            ApplicationSingleton.getInstance().WifiP2P = wp;
-        } else {
-            wp = ApplicationSingleton.getInstance().WifiP2P;
-            wp.registerReceiver(this);
-        }
         //Set start adapter
         ChangeToMainView();
     }
 
     private void ChangeToMainView(){
-        wp.getConnectedDevices();
+        ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices();
         ButtonState = 0;
         btnFunktion.setVisibility(View.VISIBLE);
-        wp.disableDiscovery();
+        ApplicationSingleton.getInstance().WifiP2P.disableDiscovery();
         RV.setAdapter(rvaTablets);
     }
 
     private void ChangeToConnectTablet() {
         ButtonState = 1;
         btnFunktion.setVisibility(View.GONE);
-        wp.enableDiscovery();
+        ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
         RV.setAdapter(rvaPeers);
     }
 
@@ -200,20 +174,38 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void PeerChosen(WifiP2pDevice WPD) {
-        wp.connectToDevice(WPD);
-        ChangeToMainView();
+    public void PeerChosen(final WifiP2pDevice WPD) {
+        ApplicationSingleton.getInstance().WifiP2P.connectToDevice(WPD);
+        targetMacAddress = WPD.deviceAddress;
+        dlg = new ProgressDialog(this);
+        dlg.setCancelable(false);
+        dlg.setMessage("Waiting for response...");
+        dlg.show();
+
+      new Handler().postDelayed(new Runnable() {
+        public void run() {
+          dlg.dismiss();
+          ApplicationSingleton.getInstance().WifiP2P.cancelConnection(WPD);
+        }
+      }, 10000);
+
+        //ChangeToMainView();
     }
 
     @Override
     public void sendBrugsscenarie(Scenario brugsscencarie) {
-        CommunicationObject CO = new CommunicationObject(receiverAddress,wp.getMyMacAddress(),brugsscencarie);
+        CommunicationObject CO = new CommunicationObject(receiverAddress,ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress(),brugsscencarie);
         byte[] tmp = SerializationUtils.serialize(CO);
-        wp.sendMessage(tmp);
+        ApplicationSingleton.getInstance().WifiP2P.sendMessage(tmp);
     }
 
     @Override
     public void redigerScenarie(String scenarieNavn) { }
+
+    @Override
+    public void deleteDevice(String deviceAddress) {
+
+    }
 
     /////////////////////////////////////////
     //// WifiP2P overrides //////////////////
@@ -223,13 +215,36 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     public void DiscoveryEnabled(boolean b) { }
 
     @Override
-    public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) { rvaPeers.updateAdapterData(listWPD); }
+    public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) {
+      rvaPeers.updateAdapterData(listWPD);
+      for(WifiP2pDevice wpd : listWPD){
+        if(wpd.deviceAddress.equals(targetMacAddress)){
+          switch (wpd.status) {
+            case WifiP2pDevice.CONNECTED:
+              targetMacAddress = null;
+              dlg.dismiss();
+              ApplicationSingleton.getInstance().addKnownDevice(wpd.deviceAddress,wpd.deviceName);
+              rvaTablets.updateData(ApplicationSingleton.getInstance().getKnownDevices());
+              ChangeToMainView();
+              break;
+            case WifiP2pDevice.FAILED:
+              dlg.dismiss();
+              Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
+              break;
+            case WifiP2pDevice.UNAVAILABLE:
+              dlg.dismiss();
+              Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
+              break;
+          }
+        }
+      }
+    }
 
     @Override
     public void DeviceConnected() { }
 
     @Override
-    public void DeviceDisconnected() { wp.getConnectedDevices(); }
+    public void DeviceDisconnected() { ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices(); }
 
     @Override
     public void MessageReceived(byte[] msg) { }
@@ -239,7 +254,17 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         if(WPG != null) {
             WPG.getClientList();
             ArrayList<WifiP2pDevice> tmpList = new ArrayList<>(WPG.getClientList());
-            rvaTablets.updateData(tmpList);
+            rvaTablets.updateLEDs(tmpList);
         }
+    }
+
+    @Override
+    public void SetDeviceName(String name) {
+
+    }
+
+    @Override
+    public void OnGroupCreated(boolean b) {
+
     }
 }

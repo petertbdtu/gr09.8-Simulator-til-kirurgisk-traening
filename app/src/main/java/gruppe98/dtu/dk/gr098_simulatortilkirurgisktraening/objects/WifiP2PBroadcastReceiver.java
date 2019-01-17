@@ -3,6 +3,7 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkInfo;
+import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 
@@ -52,6 +53,8 @@ public class WifiP2PBroadcastReceiver extends android.content.BroadcastReceiver 
             }
 
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
+            WifiP2pDevice device = intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
+            ((IWifiListener)context).SetDeviceName(device.deviceName);
             WPM.discoverPeers(WPMC,AL);
         }
     }

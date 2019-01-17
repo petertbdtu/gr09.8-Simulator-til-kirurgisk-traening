@@ -136,4 +136,9 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         ApplicationSingleton.getInstance().aktivtScenarie = ApplicationSingleton.getInstance().hentScenarie(scenarieNavn);
         skiftTilInsufflator();
     }
+
+    @Override
+    public void deleteDevice(String deviceAddress) {
+
+    }
 }

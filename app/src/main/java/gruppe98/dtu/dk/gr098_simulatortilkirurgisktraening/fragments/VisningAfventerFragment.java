@@ -17,7 +17,7 @@ public class VisningAfventerFragment extends Fragment {
         Bundle args = getArguments();
 
         TextView deviceNavn = v.findViewById(R.id.deviceNavnTextView);
-        deviceNavn.setText(args.getString("deviceNavn"));
+        deviceNavn.setText(args.getString("deviceName"));
 
         return v;
     }

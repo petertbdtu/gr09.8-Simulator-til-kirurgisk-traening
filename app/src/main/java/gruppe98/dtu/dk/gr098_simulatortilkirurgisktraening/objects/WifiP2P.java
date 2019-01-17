@@ -69,12 +69,12 @@ public class WifiP2P {
             WPM.createGroup(WPMC, new WifiP2pManager.ActionListener() {
                 @Override
                 public void onSuccess() {
-                    Toast.makeText(context,"Group creation succes",Toast.LENGTH_SHORT).show();
+                    ((IWifiListener)context).OnGroupCreated(true);
                 }
 
                 @Override
                 public void onFailure(int reason) {
-                    Toast.makeText(context,"Group creation failed",Toast.LENGTH_SHORT).show();
+                    ((IWifiListener)context).OnGroupCreated(false);
                 }
             });
         }
@@ -222,5 +222,14 @@ public class WifiP2P {
         });
 
         return null;
+    }
+
+    public void cancelConnection(WifiP2pDevice wpd) {
+        WPM.cancelConnect(WPMC,null);
+    }
+
+    public void close(){
+        WPM.removeGroup(WPMC,null);
+        unRegisterReceiver();
     }
 }

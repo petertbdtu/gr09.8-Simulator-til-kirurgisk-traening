@@ -23,6 +23,8 @@ public class ApplicationSingleton {
     public WifiP2P WifiP2P;
     //public WifiP2P insufflatorWifiP2P;
 
+    private HashMap<String, String> knownDevices;
+
     public static ApplicationSingleton getInstance() {
         if(instance == null)
             instance = new ApplicationSingleton();
@@ -84,4 +86,18 @@ public class ApplicationSingleton {
     }
 
 
+    public HashMap<String, String> getKnownDevices() {
+        if(knownDevices == null){
+            knownDevices = new HashMap<>();
+            knownDevices.put("address", "name");
+        }
+        return knownDevices;
+    }
+
+    public void addKnownDevice(String key, String value) {
+        if(knownDevices.isEmpty()){
+            knownDevices = new HashMap<>();
+        }
+        knownDevices.put(key, value);
+    }
 }
