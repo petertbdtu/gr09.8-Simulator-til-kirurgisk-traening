@@ -26,7 +26,7 @@ public class MeterView extends View {
     }
 
     private void setup() {
-        this.interval = 100;
+        this.interval = 99;
         this.aktuelVaerdi = 0;
         this.forventetVaerdi = -FORVENTET_VAERDI_HALV_BREDDE; // Skjul forventetVaerdi indtil den sættes.
         this.tomFarve = new Paint();
@@ -58,6 +58,7 @@ public class MeterView extends View {
 
     public void setInterval(float interval) {
         this.interval = interval;
+        invalidate();
     }
 
     public float getAktuelVaerdi() {
@@ -66,6 +67,7 @@ public class MeterView extends View {
 
     public void setAktuelVaerdi(float aktuelVaerdi) {
         this.aktuelVaerdi = aktuelVaerdi;
+        invalidate();
     }
 
     public float getForventetVaerdi() {
@@ -74,6 +76,7 @@ public class MeterView extends View {
 
     public void setForventetVaerdi(float forventetVaerdi) {
         this.forventetVaerdi = forventetVaerdi;
+        invalidate();
     }
     public Paint getTomFarve() {
         return tomFarve;
@@ -81,6 +84,7 @@ public class MeterView extends View {
 
     public void setTomFarve(Paint tomFarve) {
         this.tomFarve = tomFarve;
+        invalidate();
     }
 
     public Paint getAktuelFarve() {
@@ -89,6 +93,7 @@ public class MeterView extends View {
 
     public void setAktuelFarve(Paint aktuelFarve) {
         this.aktuelFarve = aktuelFarve;
+        invalidate();
     }
 
     public Paint getForventetFarve() {
@@ -97,5 +102,6 @@ public class MeterView extends View {
 
     public void setForventetFarve(Paint forventetFarve) {
         this.forventetFarve = forventetFarve;
+        invalidate();
     }
 }

@@ -50,10 +50,12 @@ public class LEDView extends View {
 
     public void taend() {
         this.erTaendt = true;
+        invalidate();
     }
 
     public void sluk() {
         this.erTaendt = false;
+        invalidate();
     }
 
     public Paint getTaendtFarve() {
@@ -62,6 +64,7 @@ public class LEDView extends View {
 
     public void setTaendtFarve(Paint taendtFarve) {
         this.taendtFarve = taendtFarve;
+        invalidate();
     }
 
     public Paint getSlukketFarve() {
@@ -70,5 +73,6 @@ public class LEDView extends View {
 
     public void setSlukketFarve(Paint slukketFarve) {
         this.slukketFarve = slukketFarve;
+        invalidate();
     }
 }
