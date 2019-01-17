@@ -35,8 +35,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     LEDView overtrykLed, tubeblokeretLed;
     TextView trykDisplay, trykMaalDisplay, flowrateDisplay, flowrateMaalDisplay, volumenDisplay;
 
-    ImageView startKnap, stopKnap, incTrykKnap, decTrykKnap, incFlowrateKnap, decFlowrateKnap, resetVolumenKnap;
-
     Scenario aktivtScenarie;
 
     @Nullable
@@ -85,15 +83,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         // Volumen
         volumenDisplay = view.findViewById(R.id.volumenDisplay);
         volumenMeter = view.findViewById(R.id.volumenMeter);
-
-        // OBS AT DE INDTIL VIDERE ER IMAGEVIEWS
-        startKnap = view.findViewById(R.id.startKnap);
-        stopKnap = view.findViewById(R.id.stopKnap);
-        incTrykKnap = view.findViewById(R.id.incTrykKnap);
-        decTrykKnap = view.findViewById(R.id.decTrykKnap);
-        incFlowrateKnap = view.findViewById(R.id.incFlowrateKnap);
-        decFlowrateKnap = view.findViewById(R.id.decFlowrateKnap);
-        resetVolumenKnap = view.findViewById(R.id.resetVolumenKnap);
     }
 
     public void loadScenarie(Scenario sc) {
@@ -118,15 +107,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         flowrateMaalDisplay.setOnClickListener(this);
         flowrateDisplay.setOnClickListener(this);
         volumenDisplay.setOnClickListener(this);
-
-//        startKnap.setOnClickListener(this);
-//        stopKnap.setOnClickListener(this);
-//        incTrykKnap.setOnClickListener(this);
-//        decTrykKnap.setOnClickListener(this);
-//        incFlowrateKnap.setOnClickListener(this);
-//        decFlowrateKnap.setOnClickListener(this);
-        // resetVolumenKnap kan godt bruges da volumen displayet ikke bør have noget med scenariet at gøre.
-//        resetVolumenKnap.setOnClickListener(this);
     }
 
     private enum VALGT_ELEMENT{

@@ -4,16 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.InsufflatorFragment">
+    tools:context=".fragments.InsufflatorFragment"
+    android:background="@color/colorLightGray">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/clTopBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tubeblokeretTekst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/tubeblokeretTekst"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.LEDView
             android:id="@+id/tubeblokeretLed"
@@ -26,19 +38,12 @@
             app:layout_constraintTop_toTopOf="@id/tubeblokeretTekst" />
 
         <TextView
-            android:id="@+id/tubeblokeretTekst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/tubeblokeretTekst"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
             android:id="@+id/overtrykTekst"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="@string/overtrykTekst"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tubeblokeretLed"
             app:layout_constraintTop_toTopOf="parent" />
@@ -59,9 +64,9 @@
         android:id="@+id/clCenter"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,11 +76,23 @@
             android:id="@+id/clGasforsyning"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/knap_kanter"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/clTryk"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="00"
+                android:textColor="#00000000"
+                android:textSize="100sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gasforsyningTitel" />
 
             <TextView
                 android:id="@+id/gasforsyningTitel"
@@ -84,65 +101,32 @@
                 android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:text="@string/gasforsyningTitel"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
                 android:id="@+id/gasforsyningMeter"
-                android:layout_width="16dp"
+                android:layout_width="32dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/clGasforsyningKnapper"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gasforsyningTitel" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/clGasforsyningKnapper"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
-                android:background="@drawable/knap_kanter"
+                android:text="00"
+                android:textColor="#00000000"
+                android:textSize="100sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-
-                <ImageView
-                    android:id="@+id/startKnap"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/stopKnap"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/ic_start_round" />
-
-                <ImageView
-                    android:id="@+id/stopKnap"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toStartOf="@+id/startKnap"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/ic_stop_round" />
-
-            </android.support.constraint.ConstraintLayout>
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </android.support.constraint.ConstraintLayout>
@@ -151,7 +135,6 @@
             android:id="@+id/clFlowrate"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/knap_kanter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/clVolumen"
             app:layout_constraintStart_toEndOf="@+id/clTryk"
@@ -164,6 +147,7 @@
                 android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:text="@string/flowrateTitel"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -178,56 +162,14 @@
                 android:paddingEnd="@dimen/displayPadding"
                 android:text="00"
                 android:textColor="@color/colorDisplayRed"
-                android:textSize="36sp"
+                android:textSize="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/flowrateTitel" />
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/clFlowrateKnapper"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                    android:id="@+id/incFlowrateKnap"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/decFlowrateKnap"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_expand_less_black_128dp" />
-
-                <ImageView
-                    android:id="@+id/decFlowrateKnap"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toStartOf="@+id/incFlowrateKnap"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_expand_more_black_128dp" />
-            </android.support.constraint.ConstraintLayout>
-
             <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
                 android:id="@+id/flowrateMeter"
-                android:layout_width="16dp"
+                android:layout_width="32dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -248,8 +190,8 @@
                 android:paddingEnd="@dimen/displayPadding"
                 android:text="00"
                 android:textColor="@color/colorDisplayGreen"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/clFlowrateKnapper"
+                android:textSize="100sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -259,7 +201,6 @@
             android:id="@+id/clTryk"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/knap_kanter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/clFlowrate"
             app:layout_constraintStart_toEndOf="@+id/clGasforsyning"
@@ -272,6 +213,7 @@
                 android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:text="@string/trykTitel"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -285,16 +227,15 @@
                 android:paddingStart="@dimen/displayPadding"
                 android:paddingEnd="@dimen/displayPadding"
                 android:text="00"
-                android:textAlignment="center"
                 android:textColor="@color/colorDisplayRed"
-                android:textSize="36sp"
+                android:textSize="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trykTitel" />
 
             <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
                 android:id="@+id/trykMeter"
-                android:layout_width="16dp"
+                android:layout_width="32dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -306,48 +247,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/trykDisplay" />
 
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/clTrykKnapper"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                    android:id="@+id/incTrykKnap"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/decTrykKnap"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_expand_less_black_128dp" />
-
-                <ImageView
-                    android:id="@+id/decTrykKnap"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toStartOf="@+id/incTrykKnap"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_expand_more_black_128dp" />
-            </android.support.constraint.ConstraintLayout>
-
             <TextView
                 android:id="@+id/trykMaalDisplay"
                 android:layout_width="wrap_content"
@@ -358,8 +257,8 @@
                 android:paddingEnd="@dimen/displayPadding"
                 android:text="00"
                 android:textColor="@color/colorDisplayGreen"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/clTrykKnapper"
+                android:textSize="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -369,11 +268,22 @@
             android:id="@+id/clVolumen"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/knap_kanter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/clFlowrate"
             app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="00"
+                android:textColor="#00000000"
+                android:textSize="100sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/volumenTitel"
@@ -382,6 +292,7 @@
                 android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:text="@string/volumenTitel"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -394,10 +305,10 @@
                 android:background="@color/colorDisplayBackground"
                 android:paddingStart="@dimen/displayPadding"
                 android:paddingEnd="@dimen/displayPadding"
-                android:text="00.0"
+                android:text="00"
                 android:textAlignment="center"
                 android:textColor="@color/colorDisplayRed"
-                android:textSize="36sp"
+                android:textSize="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/volumenTitel" />
@@ -405,41 +316,16 @@
 
             <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
                 android:id="@+id/volumenMeter"
-                android:layout_width="16dp"
+                android:layout_width="32dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/clVolumenKnapper"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/volumenDisplay" />
 
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/clVolumenKnapper"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageButton
-                    android:id="@+id/resetVolumenKnap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:background="@null"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/ic_reset_round" />
-            </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
 
