@@ -12,6 +12,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
@@ -19,6 +21,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.Applicati
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.InsufflatorFragment;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.VisningAfventerFragment;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.CommunicationObject;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
 
@@ -134,29 +137,20 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     @Override
     public void MessageReceived(byte[] msg) {
-        /*ByteBuffer byteBuffer = ByteBuffer.wrap(msg);
+        CommunicationObject CO = SerializationUtils.deserialize(msg);
+        Toast.makeText(this,CO.getRecipientMacAddress().toUpperCase() + " == " + wp.getMyMacAddress().toUpperCase(), Toast.LENGTH_SHORT).show();
+        if(CO.getRecipientMacAddress().toUpperCase().equals(wp.getMyMacAddress().toUpperCase())) {
+            Fragment fragment = new InsufflatorFragment();
+            Bundle args = new Bundle();
+            args.putBoolean("erInstruktor", false);
+            args.putByteArray("scenarieByteArray", msg);
+            fragment.setArguments(args);
 
-        // MAC address as string from WifiManager with getBytes() is 17 bytes long.
-        byte[] targetMACAddr = new byte[17];
-        byte[] scenarioByteArray = new byte[1024-17];
-        byteBuffer.get(targetMACAddr);
-        byteBuffer.get(scenarioByteArray);
-
-        byte[] ourMACAddr = WP.getMacAddress().getBytes();
-
-        //if (ourMACAddr == targetMACAddr) {*/
-        Toast.makeText(this,"Message:\n" + msg,Toast.LENGTH_SHORT).show();
-
-        Fragment fragment = new InsufflatorFragment();
-        Bundle args = new Bundle();
-        args.putBoolean("erInstruktor", false);
-        args.putByteArray("scenarieByteArray", msg);
-        fragment.setArguments(args);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, fragment)
-                .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .commit();
+        }
     }
 
     @Override
