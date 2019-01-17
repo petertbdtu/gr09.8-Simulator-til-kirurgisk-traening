@@ -26,6 +26,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters.ShowLogsAdap
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.CommunicationObject;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.LogEntry;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.OutcomeOptions;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
@@ -154,7 +155,6 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         if(ApplicationSingleton.getInstance().WifiP2P == null) {
             wp = new WifiP2P(this, true);
             ApplicationSingleton.getInstance().WifiP2P = wp;
-            System.out.println("DEBUG: "+wp.getMacAddress());
         } else {
             wp = ApplicationSingleton.getInstance().WifiP2P;
             wp.registerReceiver(this);
@@ -207,14 +207,8 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void sendBrugsscenarie(Scenario brugsscencarie) {
-        /*
-        byte[] BB = receiverAddress.getBytes();//ByteBuffer.allocate(1024)
-                //.put(receiverAddress.getBytes())
-                //.put(brugsscencarie.toByteArray())
-                //.array();
-*/
-        byte[] tmp = SerializationUtils.serialize(brugsscencarie);
-        Toast.makeText(this,"Message:\n" + tmp,Toast.LENGTH_SHORT).show();
+        CommunicationObject CO = new CommunicationObject(receiverAddress,wp.getMyMacAddress(),brugsscencarie);
+        byte[] tmp = SerializationUtils.serialize(CO);
         wp.sendMessage(tmp);
     }
 

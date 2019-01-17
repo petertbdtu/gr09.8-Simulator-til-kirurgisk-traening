@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 public class Scenario implements Serializable {
     private String name;
+    private boolean overPressureLED, tubeBlockedLED;
+    private int gasSupply;
     private int actualPressure;
     private int targetPressure;
     private int actualFlowRate;
@@ -13,6 +15,9 @@ public class Scenario implements Serializable {
 
     public Scenario() {
         this.name = "";
+        this.overPressureLED = false;
+        this.tubeBlockedLED = false;
+        this.gasSupply = 0;
         this.actualPressure = 0;
         this.targetPressure = 0;
         this.actualFlowRate = 0;
@@ -90,6 +95,30 @@ public class Scenario implements Serializable {
         if(volume > 99) {volume = 99;}
         if(volume < 0) {volume = 0;}
         this.volume = volume;
+    }
+
+    public boolean isOverPressureLED() {
+        return overPressureLED;
+    }
+
+    public void setOverPressureLED(boolean overPressureLED) {
+        this.overPressureLED = overPressureLED;
+    }
+
+    public boolean isTubeBlockedLED() {
+        return tubeBlockedLED;
+    }
+
+    public void setTubeBlockedLED(boolean tubeBlockedLED) {
+        this.tubeBlockedLED = tubeBlockedLED;
+    }
+
+    public int getGasSupply() {
+        return gasSupply;
+    }
+
+    public void setGasSupply(int gasSupply) {
+        this.gasSupply = gasSupply;
     }
 
     /*public byte[] toByteArray() {

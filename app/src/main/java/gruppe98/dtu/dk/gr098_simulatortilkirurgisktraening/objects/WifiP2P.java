@@ -15,8 +15,10 @@ import android.os.Message;
 import android.widget.Toast;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
@@ -180,6 +182,32 @@ public class WifiP2P {
         });
     }
 
+    public String getMyMacAddress() {
+        try {
+            List<NetworkInterface> nFaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nFace : nFaces) {
+                if (nFace.getName().equalsIgnoreCase("p2p0")) {
+                    byte[] bm = nFace.getHardwareAddress();
+                    if(bm == null)
+                        return "";
+
+                    StringBuilder str = new StringBuilder();
+                    for(byte b : bm)
+                        str.append(String.format("%02X:", b));
+
+                    if (str.length() > 0)
+                        str = str.deleteCharAt(str.length()-1);
+
+                    return str.toString();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
     public void sendMessage(byte[] msg) {
         if(sendReceiveThread != null)
             sendReceiveThread.write(msg);
@@ -195,9 +223,4 @@ public class WifiP2P {
 
         return null;
     }
-
-    public String getMacAddress() {
-        return WM.getConnectionInfo().getMacAddress();
-    }
-
 }

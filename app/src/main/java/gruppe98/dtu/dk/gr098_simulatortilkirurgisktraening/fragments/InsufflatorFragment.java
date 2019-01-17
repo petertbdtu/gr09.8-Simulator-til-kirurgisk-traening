@@ -6,18 +6,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.SerializationUtils;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.CommunicationObject;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.LEDView;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView;
@@ -31,8 +32,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     MeterView gasforsyningMeter, trykMeter, flowrateMeter, volumenMeter;
     LEDView overtrykLed, tubeblokeretLed;
     TextView trykDisplay, trykMaalDisplay, flowrateDisplay, flowrateMaalDisplay, volumenDisplay;
-
-    ImageView startKnap, stopKnap, incTrykKnap, decTrykKnap, incFlowrateKnap, decFlowrateKnap, resetVolumenKnap;
 
     Scenario aktivtScenarie;
 
@@ -53,7 +52,8 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         else
         {
             byte[] aktivtScenarieByteArray = this.getArguments().getByteArray("scenarieByteArray");
-            aktivtScenarie = SerializationUtils.deserialize(aktivtScenarieByteArray);
+            CommunicationObject CO = SerializationUtils.deserialize(aktivtScenarieByteArray);
+            aktivtScenarie = CO.getScenario();
         }
 
         loadScenarie(aktivtScenarie);
@@ -82,51 +82,41 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         // Volumen
         volumenDisplay = view.findViewById(R.id.volumenDisplay);
         volumenMeter = view.findViewById(R.id.volumenMeter);
-
-        // OBS AT DE INDTIL VIDERE ER IMAGEVIEWS
-        startKnap = view.findViewById(R.id.startKnap);
-        stopKnap = view.findViewById(R.id.stopKnap);
-        incTrykKnap = view.findViewById(R.id.incTrykKnap);
-        decTrykKnap = view.findViewById(R.id.decTrykKnap);
-        incFlowrateKnap = view.findViewById(R.id.incFlowrateKnap);
-        decFlowrateKnap = view.findViewById(R.id.decFlowrateKnap);
-        resetVolumenKnap = view.findViewById(R.id.resetVolumenKnap);
     }
 
     public void loadScenarie(Scenario sc) {
-        flowrateMaalDisplay.setText(Integer.toString(sc.getTargetFlowRate()));
-        flowrateDisplay.setText(Integer.toString(sc.getActualFlowRate()));
+        overtrykLed.setErTaendt(sc.isOverPressureLED());
+        tubeblokeretLed.setErTaendt(sc.isTubeBlockedLED());
+
+        gasforsyningMeter.setAktuelVaerdi(sc.getGasSupply());
+
+        flowrateMaalDisplay.setText(String.format("%02d", sc.getTargetFlowRate()));
+        flowrateDisplay.setText(String.format("%02d", sc.getActualFlowRate()));
         flowrateMeter.setAktuelVaerdi(sc.getActualFlowRate());
         flowrateMeter.setForventetVaerdi(sc.getTargetFlowRate());
 
-        trykMaalDisplay.setText(Integer.toString(sc.getTargetPressure()));
-        trykDisplay.setText(Integer.toString(sc.getActualPressure()));
+        trykMaalDisplay.setText(String.format("%02d", sc.getTargetPressure()));
+        trykDisplay.setText(String.format("%02d", sc.getActualPressure()));
         trykMeter.setAktuelVaerdi(sc.getActualPressure());
         trykMeter.setForventetVaerdi(sc.getTargetPressure());
 
-        volumenDisplay.setText(Integer.toString(sc.getVolume()));
+        volumenDisplay.setText(String.format("%02d", sc.getVolume()));
         volumenMeter.setAktuelVaerdi(sc.getVolume());
     }
 
     public void bindInstruktorKnapper() {
-
+        overtrykLed.setOnClickListener(this);
+        tubeblokeretLed.setOnClickListener(this);
+        gasforsyningMeter.setOnClickListener(this);
         trykMaalDisplay.setOnClickListener(this);
         trykDisplay.setOnClickListener(this);
         flowrateMaalDisplay.setOnClickListener(this);
         flowrateDisplay.setOnClickListener(this);
         volumenDisplay.setOnClickListener(this);
-
-//        startKnap.setOnClickListener(this);
-//        stopKnap.setOnClickListener(this);
-//        incTrykKnap.setOnClickListener(this);
-//        decTrykKnap.setOnClickListener(this);
-//        incFlowrateKnap.setOnClickListener(this);
-//        decFlowrateKnap.setOnClickListener(this);
-        // resetVolumenKnap kan godt bruges da volumen displayet ikke bør have noget med scenariet at gøre.
-//        resetVolumenKnap.setOnClickListener(this);
     }
 
     private enum VALGT_ELEMENT{
+        gasForsyning,
         trykTarget, trykAktuel,
         flowrateTarget, flowrateAktuel,
         volumen
@@ -134,112 +124,100 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+
+        if (v.getId() == R.id.overtrykLed)
+        {
+            ApplicationSingleton.getInstance().aktivtScenarie.setOverPressureLED(!ApplicationSingleton.getInstance().aktivtScenarie.isOverPressureLED());
+            loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
+            return;
+        }
+        if (v.getId() == R.id.tubeblokeretLed) {
+            ApplicationSingleton.getInstance().aktivtScenarie.setTubeBlockedLED(!ApplicationSingleton.getInstance().aktivtScenarie.isTubeBlockedLED());
+            loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
+            return;
+        }
+
         switch (v.getId()) {
+            case R.id.gasforsyningMeter:
+                ve = VALGT_ELEMENT.gasForsyning;
+                break;
             case R.id.flowrateMaalDisplay:
                 ve = VALGT_ELEMENT.flowrateTarget;
-                showNumberPickDialog();
                 break;
             case R.id.flowrateDisplay:
                 ve = VALGT_ELEMENT.flowrateAktuel;
-                showNumberPickDialog();
                 break;
             case R.id.trykMaalDisplay:
                 ve = VALGT_ELEMENT.trykTarget;
-                showNumberPickDialog();
                 break;
             case R.id.trykDisplay:
                 ve = VALGT_ELEMENT.trykAktuel;
-                showNumberPickDialog();
                 break;
             case R.id.volumenDisplay:
                 ve = VALGT_ELEMENT.volumen;
-                showNumberPickDialog();
                 break;
         }
+        showNumberPickDialog();
     }
 
     private void showNumberPickDialog(){
-        /*
-        final NumberPicker numberPicker = new NumberPicker(getActivity());
-        numberPicker.setMaxValue(99);
-        numberPicker.setMinValue(0);
+        LinearLayout LL = new LinearLayout(getActivity());
+        LL.setOrientation(LinearLayout.HORIZONTAL);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Tal");
-        builder.setMessage("Vælg værdi :");
-        builder.setView(numberPicker);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        final NumberPicker numPick1 = new NumberPicker(getActivity());
+        numPick1.setMaxValue(9);
+        numPick1.setMinValue(0);
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //dialogHost.onPositiveButton(numberPicker.getValue());
-                Scenario as = InsufflatorSimApp.aktivtScenarie;
-                switch (ve) {
-                    case trykTarget:
-                        as.setTargetPressure(numberPicker.getValue());
-                        break;
-                    case trykAktuel:
-                        as.setActualPressure(numberPicker.getValue());
-                        break;
-                    case flowrateTarget:
-                        as.setTargetFlowRate(numberPicker.getValue());
-                        break;
-                    case flowrateAktuel:
-                        as.setActualFlowRate(numberPicker.getValue());
-                        break;
-                    case volumen:
-                        as.setVolume(numberPicker.getValue());
-                        break;
-                }
+        final NumberPicker numPick2 = new NumberPicker(getActivity());
+        numPick2.setMaxValue(9);
+        numPick2.setMinValue(0);
 
-                loadScenarie(InsufflatorSimApp.aktivtScenarie);
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("ANNULLER", new DialogInterface.OnClickListener(){
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(50, 50);
+        params.gravity = Gravity.CENTER;
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //dialogHost.onCancelButton();
-                dialog.dismiss();
-            }
-        });
+        LinearLayout.LayoutParams numPicerParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        numPicerParams.weight = 1;
 
-        builder.show();
-        */
+        LinearLayout.LayoutParams qPicerParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        qPicerParams.weight = 1;
+
+        LL.setLayoutParams(params);
+        LL.addView(numPick1,numPicerParams);
+        LL.addView(numPick2,qPicerParams);
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Indtast værdi");
 
-        final EditText input = new EditText(getActivity());
-        input.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        builder.setView(input);
+        builder.setView(LL);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(input.getText().toString().length() != 0) {
-                    int tmp = Integer.parseInt(input.getText().toString());
-                        switch (ve) {
-                            case trykTarget:
-                                ApplicationSingleton.getInstance().aktivtScenarie.setTargetPressure(tmp);
-                                break;
-                            case trykAktuel:
-                                ApplicationSingleton.getInstance().aktivtScenarie.setActualPressure(tmp);
-                                break;
-                            case flowrateTarget:
-                                ApplicationSingleton.getInstance().aktivtScenarie.setTargetFlowRate(tmp);
-                                break;
-                            case flowrateAktuel:
-                                ApplicationSingleton.getInstance().aktivtScenarie.setActualFlowRate(tmp);
-                                break;
-                            case volumen:
-                                ApplicationSingleton.getInstance().aktivtScenarie.setVolume(tmp);
-                                break;
-                        }
-                        loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
-                        dialogInterface.dismiss();
+                int tmp = (numPick1.getValue()*10) + numPick2.getValue();
+
+                switch (ve) {
+                    case gasForsyning:
+                        ApplicationSingleton.getInstance().aktivtScenarie.setGasSupply(tmp);
+                        break;
+                    case trykTarget:
+                        ApplicationSingleton.getInstance().aktivtScenarie.setTargetPressure(tmp);
+                        break;
+                    case trykAktuel:
+                        ApplicationSingleton.getInstance().aktivtScenarie.setActualPressure(tmp);
+                        break;
+                    case flowrateTarget:
+                        ApplicationSingleton.getInstance().aktivtScenarie.setTargetFlowRate(tmp);
+                        break;
+                    case flowrateAktuel:
+                        ApplicationSingleton.getInstance().aktivtScenarie.setActualFlowRate(tmp);
+                        break;
+                    case volumen:
+                        ApplicationSingleton.getInstance().aktivtScenarie.setVolume(tmp);
+                        break;
                 }
+                loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
+                dialogInterface.dismiss();
             }
         });
         builder.setNegativeButton("Annuller", new DialogInterface.OnClickListener() {
@@ -249,6 +227,7 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
             }
         });
         builder.show();
+
     }
 
 }
