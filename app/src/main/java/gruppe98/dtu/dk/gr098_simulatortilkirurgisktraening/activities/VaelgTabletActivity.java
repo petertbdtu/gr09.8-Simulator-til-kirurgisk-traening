@@ -154,6 +154,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         if(ApplicationSingleton.getInstance().WifiP2P == null) {
             wp = new WifiP2P(this, true);
             ApplicationSingleton.getInstance().WifiP2P = wp;
+            System.out.println("DEBUG: "+wp.getMacAddress());
         } else {
             wp = ApplicationSingleton.getInstance().WifiP2P;
             wp.registerReceiver(this);
@@ -211,7 +212,8 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
                 //.put(receiverAddress.getBytes())
                 //.put(brugsscencarie.toByteArray())
                 //.array();
-*/      byte[] tmp = SerializationUtils.serialize(brugsscencarie);
+*/
+        byte[] tmp = SerializationUtils.serialize(brugsscencarie);
         Toast.makeText(this,"Message:\n" + tmp,Toast.LENGTH_SHORT).show();
         wp.sendMessage(tmp);
     }

@@ -143,10 +143,10 @@ public class WifiP2P {
     }
 
     private WifiP2pManager.ConnectionInfoListener createConnectionInfoListener() {
-        return new WifiP2pManager.ConnectionInfoListener(){
+        return new WifiP2pManager.ConnectionInfoListener() {
             @Override
             public void onConnectionInfoAvailable(WifiP2pInfo info) {
-                if(info.groupFormed && sendReceiveThread==null) {
+                if (info.groupFormed && sendReceiveThread == null) {
                     try {
                         byte[] ba = info.groupOwnerAddress.getAddress();
                         ba[3] = (byte) 255;
@@ -154,11 +154,11 @@ public class WifiP2P {
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     }
-                    sendReceiveThread = new WifiP2PSendReceiveThread(handler,broadcastAddress);
+                    sendReceiveThread = new WifiP2PSendReceiveThread(handler, broadcastAddress);
                     sendReceiveThread.start();
-                    if(keepDiscoverEnabled)
+                    if (keepDiscoverEnabled)
                         enableDiscovery();
-                    ((IWifiListener)context).DeviceConnected();
+                    ((IWifiListener) context).DeviceConnected();
                 }
             }
         };

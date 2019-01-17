@@ -1,10 +1,16 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application;
 
+import android.media.MediaScannerConnection;
+import android.os.Environment;
+import android.widget.Toast;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.VaelgOpgaveActivity;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.DataAccess;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.LogEntry;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
@@ -14,6 +20,7 @@ public class ApplicationSingleton {
 
     private static final String SCENARIO_FILENAME = "ScenarioFile.data";
     private static final String LOG_FILENAME = "LogFile.data";
+    private static final String EXTERNAL_DIR = "/InsufflatorSimApp";
     private static ApplicationSingleton instance;
 
     private String filePath;
@@ -42,10 +49,11 @@ public class ApplicationSingleton {
             dao.saveData(tempList, filePath + "/" + SCENARIO_FILENAME);
         }
         try {
-        } catch (java.lang.NullPointerException e) {
             dao.loadData(filePath + "/" + LOG_FILENAME);
             Map<String,LogEntry> tempListLogs = new HashMap<>();
             dao.saveData(tempListLogs, filePath + "/" + LOG_FILENAME);
+        } catch (java.lang.NullPointerException e) {
+
         }
     }
 
@@ -53,6 +61,7 @@ public class ApplicationSingleton {
         Map<String,Scenario> tempScenarier = dao.loadData(filePath + "/" + SCENARIO_FILENAME);
         tempScenarier.put(scenarie.getName(), scenarie);
         dao.saveData(tempScenarier, filePath + "/" + SCENARIO_FILENAME);
+        dao.saveDataExternalFiles(tempScenarier,Environment.getExternalStorageDirectory().getAbsolutePath()+EXTERNAL_DIR+"/Available Scenarios");
     }
 
     public List<Scenario> hentAlleScenarier(){
@@ -74,6 +83,7 @@ public class ApplicationSingleton {
 
     public void fjernScenarie(String s) {
         Map<String,Scenario> tempScenarier = dao.loadData(filePath + "/" + SCENARIO_FILENAME);
+        dao.removeFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+EXTERNAL_DIR+"/Available Scenarios/"+tempScenarier.get(s).getName()+".txt"));
         tempScenarier.remove(s);
         dao.saveData(tempScenarier, filePath + "/" + SCENARIO_FILENAME);
     }
@@ -84,4 +94,17 @@ public class ApplicationSingleton {
     }
 
 
+    public void initExternalStorage() {
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath()+EXTERNAL_DIR+"/Available Scenarios";
+        System.out.println("DEBUG"+path);
+        File dir = new File(path);
+        if(!dir.exists()){
+            dir.mkdirs();
+        } else {
+            System.out.println("DEBUG: dir exist");
+        }
+
+//        dao.loadDataExternalFiles(dir);
+        dao.saveData((dao.loadDataExternalFiles(dir)),  filePath + "/" + SCENARIO_FILENAME);
+    }
 }
