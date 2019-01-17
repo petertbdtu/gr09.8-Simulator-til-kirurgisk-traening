@@ -36,171 +36,157 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.Applicati
 
 public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnClickListener, IWifiListener {
 
-    private static final int EXTERNAL_STORAGE_PERMISSION_CODE = 42;
-    ConstraintLayout clBrugssc;
-    ConstraintLayout clForbindTablet;
+  private static final int EXTERNAL_STORAGE_PERMISSION_CODE = 42;
+  ConstraintLayout clBrugssc;
+  ConstraintLayout clForbindTablet;
 
-    private static final int MY_PERMISSIONS_REQUEST = 0;
+  private static final int MY_PERMISSIONS_REQUEST = 0;
 
-    private ProgressDialog dlg;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vaelg_opgave);
-
-        clBrugssc = findViewById(R.id.clBrugsscenairer);
-        clBrugssc.setOnClickListener(this);
-
-        clForbindTablet = findViewById(R.id.clTablet);
-        clForbindTablet.setOnClickListener(this);
+  private ProgressDialog dlg;
 
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_vaelg_opgave);
 
-        dlg = new ProgressDialog(this);
-        dlg.setCancelable(false);
-        dlg.setMessage("Initialising P2P...");
-        dlg.show();
+    clBrugssc = findViewById(R.id.clBrugsscenairer);
+    clBrugssc.setOnClickListener(this);
 
-        new Handler().postDelayed(new Runnable() {public void run() { dlg.dismiss(); }}, 5000);
+    clForbindTablet = findViewById(R.id.clTablet);
+    clForbindTablet.setOnClickListener(this);
 
-        checkPermissions();
+
+
+    dlg = new ProgressDialog(this);
+    dlg.setCancelable(false);
+    dlg.setMessage("Initialising P2P...");
+    dlg.show();
+
+    new Handler().postDelayed(new Runnable() {public void run() { dlg.dismiss(); }}, 5000);
+
+    checkPermissions();
+  }
+
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    if(requestCode == MY_PERMISSIONS_REQUEST) {
+      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        init();
+        dlg.dismiss();
+        MediaScannerConnection.scanFile(this, new String[] {Environment.getExternalStorageDirectory().getAbsolutePath()}, null, null);
+        ApplicationSingleton.getInstance().initExternalStorage();
+      } else {
+        Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
+      }
     }
+  }
 
-    private void initExternalStorage() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CODE);
+
+  public void onClick(View v) {
+    switch (v.getId()) {
+      case R.id.clBrugsscenairer:
+        Intent BrugssecenairerVisning = new Intent(getApplicationContext(), VaelgScenarieActivity.class);
+        startActivity(BrugssecenairerVisning);
+        break;
+      case R.id.clTablet:
+        Intent ForbinTTabletVisning = new Intent(getApplicationContext(), VaelgTabletActivity.class);
+        startActivity(ForbinTTabletVisning);
+        break;
+      default:
+        break;
     }
+  }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if(requestCode == EXTERNAL_STORAGE_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Loaded scenarios", Toast.LENGTH_SHORT).show();
-                MediaScannerConnection.scanFile(this, new String[] {Environment.getExternalStorageDirectory().getAbsolutePath()}, null, null);
-                ApplicationSingleton.getInstance().initExternalStorage();
-            } else {
-                Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
-            }
-        }
+  private void init() {
+    //Initialize WifiP2P
+    if(ApplicationSingleton.getInstance().WifiP2P == null) {
+      ApplicationSingleton.getInstance().WifiP2P = new WifiP2P(this, true);
+    } else {
+      ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
     }
+  }
 
 
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.clBrugsscenairer:
-                Intent BrugssecenairerVisning = new Intent(getApplicationContext(), VaelgScenarieActivity.class);
-                startActivity(BrugssecenairerVisning);
-                break;
-            case R.id.clTablet:
-                Intent ForbinTTabletVisning = new Intent(getApplicationContext(), VaelgTabletActivity.class);
-                startActivity(ForbinTTabletVisning);
-                break;
-            default:
-                break;
-        }
+  private void checkPermissions() {
+    String[] permissions = new String[]{
+            Manifest.permission.ACCESS_COARSE_LOCATION
+            , Manifest.permission.ACCESS_WIFI_STATE
+            , Manifest.permission.CHANGE_WIFI_STATE
+            , Manifest.permission.INTERNET
+            , Manifest.permission.ACCESS_NETWORK_STATE
+            , Manifest.permission.CHANGE_NETWORK_STATE
+            , Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+    ActivityCompat.requestPermissions(this, permissions, MY_PERMISSIONS_REQUEST);
+  }
+
+  @Override
+  public void DiscoveryEnabled(boolean b) {
+
+  }
+
+  @Override
+  public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) {
+
+  }
+
+  @Override
+  public void DeviceConnected() {
+
+  }
+
+  @Override
+  public void DeviceDisconnected() {
+
+  }
+
+  @Override
+  public void MessageReceived(byte[] msg) {
+
+  }
+
+  @Override
+  public void GroupInfoUpdate(WifiP2pGroup WPG) {
+
+  }
+
+  @Override
+  public void SetDeviceName(String name) {
+
+  }
+
+  @Override
+  public void OnGroupCreated(boolean b) {
+    if(b){
+      dlg.dismiss();
+    } else {
+      dlg.dismiss();
+      finish();
     }
+  }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if(requestCode == MY_PERMISSIONS_REQUEST) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                init();
-                dlg.dismiss();
-            } else {
-                Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+  @Override
+  public void onBackPressed() {
 
-    private void init() {
-        //Initialize WifiP2P
-        if(ApplicationSingleton.getInstance().WifiP2P == null) {
-            ApplicationSingleton.getInstance().WifiP2P = new WifiP2P(this, true);
-        } else {
-            ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
-        }
-    }
-
-
-    private void checkPermissions() {
-        String[] permissions = new String[]{
-                Manifest.permission.ACCESS_COARSE_LOCATION
-                , Manifest.permission.ACCESS_WIFI_STATE
-                , Manifest.permission.CHANGE_WIFI_STATE
-                , Manifest.permission.INTERNET
-                , Manifest.permission.ACCESS_NETWORK_STATE
-                , Manifest.permission.CHANGE_NETWORK_STATE
-        };
-        ActivityCompat.requestPermissions(this, permissions, MY_PERMISSIONS_REQUEST);
-        initExternalStorage();
-    }
-
-    @Override
-    public void DiscoveryEnabled(boolean b) {
-
-    }
-
-    @Override
-    public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) {
-
-    }
-
-    @Override
-    public void DeviceConnected() {
-
-    }
-
-    @Override
-    public void DeviceDisconnected() {
-
-    }
-
-    @Override
-    public void MessageReceived(byte[] msg) {
-
-    }
-
-    @Override
-    public void GroupInfoUpdate(WifiP2pGroup WPG) {
-
-    }
-
-    @Override
-    public void SetDeviceName(String name) {
-
-    }
-
-    @Override
-    public void OnGroupCreated(boolean b) {
-        if(b){
-            dlg.dismiss();
-        } else {
-            dlg.dismiss();
-            finish();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Are you sure?");
-        builder.setMessage("Do you want to leave?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                ApplicationSingleton.getInstance().WifiP2P.close();
-                ApplicationSingleton.getInstance().WifiP2P = null;
-                finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Are you sure?");
+    builder.setMessage("Do you want to leave?");
+    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int id) {
+        dialog.dismiss();
+        ApplicationSingleton.getInstance().WifiP2P.close();
+        ApplicationSingleton.getInstance().WifiP2P = null;
+        finish();
+      }
+    });
+    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int id) {
+        dialog.cancel();
+      }
+    });
+    builder.show();
+  }
 }
