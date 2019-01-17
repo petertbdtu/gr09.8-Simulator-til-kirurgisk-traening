@@ -2,6 +2,8 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 
 public class LogEntry {
 
+    public LogEntry(){}
+
     public LogEntry(String deviceId, String scenarioNavn, long start, long completed){
         this.deviceId = deviceId;
         this.scenarioNavn = scenarioNavn;
