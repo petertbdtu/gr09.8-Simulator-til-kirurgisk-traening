@@ -86,17 +86,17 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     }
 
     public void loadScenarie(Scenario sc) {
-        flowrateMaalDisplay.setText(Integer.toString(sc.getTargetFlowRate()));
-        flowrateDisplay.setText(Integer.toString(sc.getActualFlowRate()));
+        flowrateMaalDisplay.setText(String.format("%02d", sc.getTargetFlowRate()));
+        flowrateDisplay.setText(String.format("%02d", sc.getActualFlowRate()));
         flowrateMeter.setAktuelVaerdi(sc.getActualFlowRate());
         flowrateMeter.setForventetVaerdi(sc.getTargetFlowRate());
 
-        trykMaalDisplay.setText(Integer.toString(sc.getTargetPressure()));
-        trykDisplay.setText(Integer.toString(sc.getActualPressure()));
+        trykMaalDisplay.setText(String.format("%02d", sc.getTargetPressure()));
+        trykDisplay.setText(String.format("%02d", sc.getActualPressure()));
         trykMeter.setAktuelVaerdi(sc.getActualPressure());
         trykMeter.setForventetVaerdi(sc.getTargetPressure());
 
-        volumenDisplay.setText(Integer.toString(sc.getVolume()));
+        volumenDisplay.setText(String.format("%02d", sc.getVolume()));
         volumenMeter.setAktuelVaerdi(sc.getVolume());
     }
 
