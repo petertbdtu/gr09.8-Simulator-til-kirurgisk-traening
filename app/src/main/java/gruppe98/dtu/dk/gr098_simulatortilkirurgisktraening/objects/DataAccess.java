@@ -27,7 +27,7 @@ public class DataAccess<E> {
     public Map<String, Scenario> loadDataExternalFiles(File dir) {
         Map<String, Scenario> data = new HashMap<>();
         JSONObject jsonObject;
-        Scenario scenario;
+        Scenario tempScenario;
         for(File file:dir.listFiles()) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -43,17 +43,10 @@ public class DataAccess<E> {
                 json = sb.toString();
                 reader.close();
                 jsonObject = new JSONObject(json);
-                /*scenario = new Scenario();
-                scenario.setName(jsonObject.getString("name"));
-                scenario.setActualFlowRate(jsonObject.getInt("actualFlowRate"));
-                scenario.setActualPressure(jsonObject.getInt("actualPressure"));
-                scenario.setTargetFlowRate(jsonObject.getInt("targetFlowRate"));
-                scenario.setTargetPressure(jsonObject.getInt("targetPressure"));
-                scenario.setVolume(jsonObject.getInt("volumen"));
-                System.out.println("boellehat "+jsonObject.toString());
-                System.out.println("DEBUG: boellehat "+file.getName());*/
-
-                data.put(jsonObject.getString("name"), scenarioFromJson(jsonObject));
+                System.out.println("DEBUG: name="+file.getName().replace(".txt","")+" string: "+jsonObject.toString());
+                tempScenario = scenarioFromJson(jsonObject);
+                System.out.println("DEBUG: "+ tempScenario.getVolume());
+                data.put(file.getName().replace(".txt",""), tempScenario);
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -82,13 +75,16 @@ public class DataAccess<E> {
     private Scenario scenarioFromJson(JSONObject jsonObject) throws JSONException {
 
         Scenario scenario = new Scenario();
-                scenario.setName(jsonObject.getString("name"));
+                //scenario.setName(jsonObject.getString("name"));
                 scenario.setActualFlowRate(jsonObject.getInt("actualFlowRate"));
                 scenario.setActualPressure(jsonObject.getInt("actualPressure"));
                 scenario.setTargetFlowRate(jsonObject.getInt("targetFlowRate"));
                 scenario.setTargetPressure(jsonObject.getInt("targetPressure"));
                 scenario.setVolume(jsonObject.getInt("volume"));
-        System.out.println("DEBUG: "+scenario.getName()+" "+scenario.getVolume());
+                scenario.setGasSupply(jsonObject.getInt("gasSupply"));
+                scenario.setOverPressureLED(jsonObject.getBoolean("overPressureLED"));
+                scenario.setTubeBlockedLED(jsonObject.getBoolean("tubeBlockedLED"));
+        System.out.println("DEBUG: "+scenario.getGasSupply()+" "+scenario.getVolume());
                 return scenario;
     }
 
@@ -128,12 +124,15 @@ public class DataAccess<E> {
     private JSONObject createJSON(Scenario value) {
         JSONObject json = new JSONObject();
         try {
-            json.put("name", value.getName());
+          //  json.put("name", value.getName());
             json.put("actualPressure", value.getActualPressure());
             json.put("targetPressure",value.getTargetPressure());
             json.put("actualFlowRate",value.getActualFlowRate());
             json.put("targetFlowRate",value.getTargetFlowRate());
             json.put("volume",value.getVolume());
+            json.put("gasSupply", value.getGasSupply());
+            json.put("tubeBlockedLED", value.isTubeBlockedLED());
+            json.put("overPressureLED", value.isOverPressureLED());
         } catch (JSONException e) {
             e.printStackTrace();
         }

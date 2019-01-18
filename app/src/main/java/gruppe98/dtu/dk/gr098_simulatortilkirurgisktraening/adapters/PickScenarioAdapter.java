@@ -1,6 +1,8 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
 import android.content.Context;
+import android.media.MediaScannerConnection;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -28,9 +30,7 @@ public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapte
     }
 
     private void hentScenarier() {
-        ArrayList<String> tmpList = new ArrayList<>();
-        for( Scenario s : ApplicationSingleton.getInstance().hentAlleScenarier() )
-            tmpList.add(s.getName());
+        ArrayList<String> tmpList = new ArrayList<>(ApplicationSingleton.getInstance().hentAlleScenarier().keySet());
         list_scenarie_navne = tmpList;
     }
 

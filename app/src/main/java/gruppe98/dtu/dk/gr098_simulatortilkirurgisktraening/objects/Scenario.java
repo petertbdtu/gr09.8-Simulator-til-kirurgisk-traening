@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 public class Scenario implements Serializable {
-    private String name;
+   // private String name;
     private boolean overPressureLED, tubeBlockedLED;
     private int gasSupply;
     private int actualPressure;
@@ -14,7 +14,7 @@ public class Scenario implements Serializable {
     private int volume;
 
     public Scenario() {
-        this.name = "";
+       // this.name = "";
         this.overPressureLED = false;
         this.tubeBlockedLED = false;
         this.gasSupply = 0;
@@ -39,14 +39,14 @@ public class Scenario implements Serializable {
         this.volume = byteBuffer.getInt();
     }*/
 
-    public String getName() {
+  /*  public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-
+*/
     public int getActualPressure() {
         return actualPressure;
     }
@@ -120,6 +120,7 @@ public class Scenario implements Serializable {
     public void setGasSupply(int gasSupply) {
         this.gasSupply = gasSupply;
     }
+
 
     /*public byte[] toByteArray() {
         byte[] bb = new byte[20];

@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
@@ -18,10 +20,12 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 public class SendScenarioAdapter extends RecyclerView.Adapter<SendScenarioAdapter.ViewHolder> {
 
     private List<Scenario> sendScenarier;
+    private List<String> sendScenarierNavne;
     private Context context;
 
-    public SendScenarioAdapter(List<Scenario> send_brugsscenarie, Context context) {
-        this.sendScenarier = send_brugsscenarie;
+    public SendScenarioAdapter(Map<String, Scenario> send_brugsscenarie, Context context) {
+        sendScenarier = new ArrayList<Scenario>(send_brugsscenarie.values());
+        sendScenarierNavne = new ArrayList<>(send_brugsscenarie.keySet());
         this.context = context;
     }
 
@@ -42,7 +46,7 @@ public class SendScenarioAdapter extends RecyclerView.Adapter<SendScenarioAdapte
                 ((IRecycleViewAdapterListener)context).sendBrugsscenarie(sendScenarier.get(holder.getAdapterPosition()));
             }
         });
-        vh.navnSenarie.setText(sendScenarier.get(position).getName());
+        vh.navnSenarie.setText(sendScenarierNavne.get(position));
     }
 
     @Override
@@ -50,8 +54,9 @@ public class SendScenarioAdapter extends RecyclerView.Adapter<SendScenarioAdapte
         return sendScenarier.size();
     }
 
-    public void updateData(List<Scenario> brugsscenarier) {
-        this.sendScenarier = brugsscenarier;
+    public void updateData(Map<String, Scenario> brugsscenarier) {
+        this.sendScenarierNavne = new ArrayList<>(brugsscenarier.keySet());
+        this.sendScenarier = new ArrayList<>(brugsscenarier.values());
         notifyDataSetChanged();
     }
 

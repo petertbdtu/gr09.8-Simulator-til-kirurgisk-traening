@@ -1,8 +1,10 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.content.DialogInterface;
+import android.media.MediaScannerConnection;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
     Button scenarieKnap;
     TextView overskrift;
     int scenarieKnapTilstand;
+    String scenarieNavn;
 
     /////////////////////////////////////////
     //// Activity overrides /////////////////
@@ -56,7 +59,8 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
             dialogVaelgScenarieNavn();
         }
         else {
-            ApplicationSingleton.getInstance().opretScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
+            ApplicationSingleton.getInstance().opretScenarie(ApplicationSingleton.getInstance().aktivtScenarie, scenarieNavn);
+            MediaScannerConnection.scanFile(this, new String[] {Environment.getExternalStorageDirectory().getAbsolutePath()}, null, null);
             skiftTilScenarieListe();
         }
     }
@@ -80,7 +84,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
                 // TODO skal være mindst et bogstav langt.
                 // TODO tjek at navn ikke er brugt.
                 Scenario tmpScenarie = new Scenario();
-                tmpScenarie.setName(input.getText().toString());
+                scenarieNavn = input.getText().toString();
                 ApplicationSingleton.getInstance().aktivtScenarie = tmpScenarie;
                 skiftTilInsufflator();
             }})
@@ -102,7 +106,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
     }
 
     private void skiftTilInsufflator() {
-        overskrift.setText(ApplicationSingleton.getInstance().aktivtScenarie.getName());
+        overskrift.setText(scenarieNavn);
         Bundle args = new Bundle();
         args.putBoolean("erInstruktor", true);
         Fragment fragment = new InsufflatorFragment();
@@ -134,6 +138,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
     @Override
     public void redigerScenarie(String scenarieNavn) {
         ApplicationSingleton.getInstance().aktivtScenarie = ApplicationSingleton.getInstance().hentScenarie(scenarieNavn);
+        this.scenarieNavn = scenarieNavn;
         skiftTilInsufflator();
     }
 

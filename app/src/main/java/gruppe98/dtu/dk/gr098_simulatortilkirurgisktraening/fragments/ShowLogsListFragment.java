@@ -46,7 +46,7 @@ public class ShowLogsListFragment extends Fragment {
     private void indlaesLogs(int currentDay) {
         ArrayList<LogEntry> tempLogArrayList = new ArrayList<>();
         LogEntry test = new LogEntry();
-        test.setComment("");
+       /* test.setComment("");
         test.setCompleted(System.currentTimeMillis());
         test.setStart(System.currentTimeMillis());
         test.setScenarioNavn(ApplicationSingleton.getInstance().hentScenarie("TestScenarie").getName());
@@ -69,7 +69,7 @@ public class ShowLogsListFragment extends Fragment {
         tempLogArrayList.add(makeDummy());
         tempLogArrayList.add(makeDummy());
         tempLogArrayList.add(makeDummy());
-
+*/
         for(LogEntry logElement:ApplicationSingleton.getInstance().hentAlleLogs()) {
 
             if(true) {
@@ -91,7 +91,7 @@ public class ShowLogsListFragment extends Fragment {
         System.out.println("DEBUG: crashed?");
     }
 
-    private LogEntry makeDummy() {
+   /* private LogEntry makeDummy() {
         LogEntry test = new LogEntry();
         test.setComment("");
         test.setCompleted(System.currentTimeMillis());
@@ -99,6 +99,6 @@ public class ShowLogsListFragment extends Fragment {
         test.setScenarioNavn(ApplicationSingleton.getInstance().hentScenarie("TestScenarie").getName());
         test.setOutcome(OutcomeOptions.SUCCESS);
         return test;
-    }
+    }*/
 }
 
