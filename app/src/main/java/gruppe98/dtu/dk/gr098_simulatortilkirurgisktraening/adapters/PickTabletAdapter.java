@@ -61,9 +61,8 @@ public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull final PickTabletAdapter.ViewHolder viewHolder, int position) {
 
-        if(mapLEDStatus.get(listAddresses.get(position))) {
-            viewHolder.tablet_liste_element_LED.taend();
-        }
+        viewHolder.tablet_liste_element_LED.setErTaendt(mapLEDStatus.get(listAddresses.get(position)));
+
         viewHolder.tablet_liste_element_ID.setText(mapDevices.get(listAddresses.get(position)));
         viewHolder.tablet_liste_element_valgBrugs.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,8 +105,12 @@ public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            Paint colour = new Paint();
+            colour.setARGB(255, 0, 255, 0);
+
             tablet_liste_element_LED = itemView.findViewById(R.id.tablet_liste_element_LED);
-            tablet_liste_element_LED.setTaendtFarve(new Paint(Color.GREEN));
+            tablet_liste_element_LED.setTaendtFarve(colour);
             tablet_liste_element_ID = itemView.findViewById(R.id.tablet_liste_element_ID);
             tablet_liste_element_valgBrugs = itemView.findViewById(R.id.tablet_liste_element_valgBrugs);
             tablet_liste_element_selog = itemView.findViewById(R.id.tablet_liste_element_selog);
@@ -117,9 +120,14 @@ public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.Vi
     }
 
     public void updateLEDs(List<WifiP2pDevice> list){
+
+        for(String str : listAddresses) {
+            mapLEDStatus.put(str,false);
+        }
+
         for(WifiP2pDevice wif : list){
-            if(mapLEDStatus.containsKey(wif.deviceAddress) && (wif.status == WifiP2pDevice.CONNECTED)){
-                mapLEDStatus.put(wif.deviceAddress,true);
+            if(mapLEDStatus.containsKey(wif.deviceAddress)){
+                mapLEDStatus.put(wif.deviceAddress,wif.status == WifiP2pDevice.CONNECTED);
             }
         }
 

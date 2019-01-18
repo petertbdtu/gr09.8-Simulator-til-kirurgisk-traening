@@ -56,6 +56,7 @@ public class WifiP2PBroadcastReceiver extends android.content.BroadcastReceiver 
             WifiP2pDevice device = intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
             ((IWifiListener)context).SetDeviceName(device.deviceName);
             WPM.discoverPeers(WPMC,AL);
+            System.out.println("THIS DEVICE CHANGED ACTION");
         }
     }
 

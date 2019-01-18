@@ -3,35 +3,27 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pGroup;
-import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Environment;
-import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
-import android.widget.Toast;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
 
 
 public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnClickListener, IWifiListener {
@@ -149,7 +141,7 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
   }
 
   @Override
-  public void GroupInfoUpdate(WifiP2pGroup WPG) {
+  public void GroupInfoUpdate(WifiP2pGroup WPG, long time) {
 
   }
 

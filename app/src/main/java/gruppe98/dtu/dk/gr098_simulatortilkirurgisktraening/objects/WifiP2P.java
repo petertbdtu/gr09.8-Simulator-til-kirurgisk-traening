@@ -88,6 +88,12 @@ public class WifiP2P {
             WM.setWifiEnabled(true);
     }
 
+    public void killWifi(){
+        if(WM==null) {WM = (WifiManager) context.getApplicationContext().getSystemService(context.WIFI_SERVICE);}
+        if(WM.isWifiEnabled())
+            WM.setWifiEnabled(false);
+    }
+
     public void enableDiscovery() {
         keepDiscoverEnabled = true;
         WPM.discoverPeers(WPMC,AL);
@@ -99,12 +105,17 @@ public class WifiP2P {
     }
 
     public void registerReceiver(Context context) {
+        unRegisterReceiver();
         this.context = context;
         this.context.registerReceiver(BR,IF);
     }
 
     public void unRegisterReceiver() {
-        context.unregisterReceiver(BR);
+        try {
+            context.unregisterReceiver(BR);
+        } catch (IllegalArgumentException e) {
+            System.out.println("XD");
+        }
     }
 
     public void connectToDevice(final WifiP2pDevice WPD) {
@@ -214,12 +225,18 @@ public class WifiP2P {
     }
 
     public List<WifiP2pDevice> getConnectedDevices() {
+        final long time = System.currentTimeMillis();
+
         WPM.requestGroupInfo(WPMC, new WifiP2pManager.GroupInfoListener() {
             @Override
             public void onGroupInfoAvailable(WifiP2pGroup group) {
-                ((IWifiListener)context).GroupInfoUpdate(group);
+                ((IWifiListener)context).GroupInfoUpdate(group, time);
             }
         });
+
+        if(keepDiscoverEnabled){
+            WPM.discoverPeers(WPMC, AL);
+        }
 
         return null;
     }
@@ -229,6 +246,7 @@ public class WifiP2P {
     }
 
     public void close(){
+        WPM.cancelConnect(WPMC, null);
         WPM.removeGroup(WPMC,null);
         unRegisterReceiver();
     }

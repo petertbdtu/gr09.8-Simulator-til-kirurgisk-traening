@@ -50,6 +50,8 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private ProgressDialog dlg;
     private String targetMacAddress;
 
+    private long lastUpdate;
+
     /////////////////////////////////////////
     //// Activity overrides /////////////////
     /////////////////////////////////////////
@@ -195,6 +197,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void sendBrugsscenarie(Scenario brugsscencarie) {
+        System.out.println("PIS: Sending scenario");
         CommunicationObject CO = new CommunicationObject(receiverAddress,ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress(),brugsscencarie);
         byte[] tmp = SerializationUtils.serialize(CO);
         ApplicationSingleton.getInstance().WifiP2P.sendMessage(tmp);
@@ -215,17 +218,19 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) {
-      rvaPeers.updateAdapterData(listWPD);
-      for(WifiP2pDevice wpd : listWPD){
-        if(wpd.deviceAddress.equals(targetMacAddress)){
+        ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices();
+        rvaPeers.updateAdapterData(listWPD);
+        for(WifiP2pDevice wpd : listWPD){
           switch (wpd.status) {
             case WifiP2pDevice.CONNECTED:
-              targetMacAddress = null;
-              dlg.dismiss();
-              ApplicationSingleton.getInstance().addKnownDevice(wpd.deviceAddress,wpd.deviceName);
-              rvaTablets.updateData(ApplicationSingleton.getInstance().getKnownDevices());
-              ChangeToMainView();
-              break;
+                if(wpd.deviceAddress.equals(targetMacAddress)) {
+                    targetMacAddress = null;
+                    dlg.dismiss();
+                    ApplicationSingleton.getInstance().addKnownDevice(wpd.deviceAddress, wpd.deviceName);
+                    rvaTablets.updateData(ApplicationSingleton.getInstance().getKnownDevices());
+                    ChangeToMainView();
+                }
+                break;
             case WifiP2pDevice.FAILED:
               dlg.dismiss();
               Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
@@ -234,26 +239,37 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
               dlg.dismiss();
               Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
               break;
-          }
+            case WifiP2pDevice.AVAILABLE:
+                if(ApplicationSingleton.getInstance().getKnownDevices().containsKey(wpd.deviceAddress)){
+                    System.out.println("PIS: Found known device   -  " + wpd.deviceName);
+                    ApplicationSingleton.getInstance().WifiP2P.connectToDevice(wpd);
+                }
+                break;
         }
       }
     }
 
     @Override
-    public void DeviceConnected() { }
+    public void DeviceConnected() {  }
 
     @Override
-    public void DeviceDisconnected() { ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices(); }
+    public void DeviceDisconnected() {
+        System.out.println("PIS: Device Disconnected");
+        ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices();
+    }
 
     @Override
     public void MessageReceived(byte[] msg) { }
 
     @Override
-    public void GroupInfoUpdate(WifiP2pGroup WPG) {
-        if(WPG != null) {
-            WPG.getClientList();
-            ArrayList<WifiP2pDevice> tmpList = new ArrayList<>(WPG.getClientList());
-            rvaTablets.updateLEDs(tmpList);
+    public void GroupInfoUpdate(WifiP2pGroup WPG, long time) {
+        if(lastUpdate < time) {
+            lastUpdate = time;
+            if (WPG != null) {
+                System.out.println("PIS: GroupInfoUpdate  -  " + WPG.getClientList());
+                ArrayList<WifiP2pDevice> tmpList = new ArrayList<>(WPG.getClientList());
+                rvaTablets.updateLEDs(tmpList);
+            }
         }
     }
 

@@ -11,7 +11,7 @@ public interface IWifiListener {
     public void DeviceConnected();
     public void DeviceDisconnected();
     public void MessageReceived(byte[] msg);
-    public void GroupInfoUpdate(WifiP2pGroup WPG);
+    public void GroupInfoUpdate(WifiP2pGroup WPG, long time);
     public void SetDeviceName(String name);
     public void OnGroupCreated(boolean b);
 

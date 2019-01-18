@@ -1,6 +1,7 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -75,6 +76,8 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
+                ApplicationSingleton.getInstance().WifiP2P.close();
+                ApplicationSingleton.getInstance().WifiP2P = null;
                 finish();
             }
         });
@@ -89,7 +92,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     @Override
     protected void onStop() {
         super.onStop();
-        ApplicationSingleton.getInstance().WifiP2P.unRegisterReceiver();
+        //ApplicationSingleton.getInstance().WifiP2P.unRegisterReceiver();
     }
 
     /////////////////////////////////////////
@@ -147,7 +150,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     }
 
     @Override
-    public void GroupInfoUpdate(WifiP2pGroup WPG) { }
+    public void GroupInfoUpdate(WifiP2pGroup WPG, long time) { }
 
     @Override
     public void SetDeviceName(String name) {
