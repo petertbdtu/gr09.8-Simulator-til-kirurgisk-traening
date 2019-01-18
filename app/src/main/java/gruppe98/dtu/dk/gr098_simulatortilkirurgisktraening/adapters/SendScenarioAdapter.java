@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,9 +32,10 @@ public class SendScenarioAdapter extends RecyclerView.Adapter<SendScenarioAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-        return new ViewHolder(inflater.inflate(R.layout.adapter_send_scenarie, null));
+        View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_send_scenarie, null, false);
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rootView.setLayoutParams(lp);
+        return new ViewHolder(rootView);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class SendScenarioAdapter extends RecyclerView.Adapter<SendScenarioAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView addBrugs;
+        Button addBrugs;
         TextView navnSenarie;
 
         public ViewHolder(View itemView) {

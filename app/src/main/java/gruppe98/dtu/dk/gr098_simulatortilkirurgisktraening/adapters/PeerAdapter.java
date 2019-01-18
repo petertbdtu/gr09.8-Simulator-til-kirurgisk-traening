@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -33,14 +33,16 @@ public class PeerAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        return new PeerViewHolder(inflater.inflate(R.layout.adapter_peer,null));
+        View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_peer, null, false);
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rootView.setLayoutParams(lp);
+        return new PeerViewHolder(rootView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         PeerViewHolder PVH = (PeerViewHolder) viewHolder;
-        PVH.ivChoose.setOnClickListener(new View.OnClickListener() {
+        PVH.btnForbind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((IRecycleViewAdapterListener)context).PeerChosen(listWPD.get(viewHolder.getAdapterPosition()));
@@ -56,12 +58,12 @@ public class PeerAdapter extends RecyclerView.Adapter {
 
     private class PeerViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivChoose;
+        Button btnForbind;
         TextView tvName;
 
         public PeerViewHolder(View itemView) {
             super(itemView);
-            ivChoose = itemView.findViewById(R.id.ivChoose);
+            btnForbind = itemView.findViewById(R.id.btnForbind);
             tvName = itemView.findViewById(R.id.tvName);
         }
     }
