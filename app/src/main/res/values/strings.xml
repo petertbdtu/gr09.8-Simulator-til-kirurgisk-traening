@@ -41,6 +41,8 @@
     <string name="tablet_liste_element_valgBrugs">Vælg Brugssenarie</string>
     <string name="tablet_liste_element_selog">Se Log</string>
     <string name="tablet_liste_element_slet">Slet</string>
+    <string name="btnFunctionValue">Tilføj</string>
+    <string name="VaelgTablet_SendTilAlle">Send til Alle</string>
 
 
 </resources>
