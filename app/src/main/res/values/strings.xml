@@ -7,14 +7,14 @@
     <string name="volumenTitel">Volume</string>
     <string name="tubeblokeretTekst">Tube Obstructed</string>
     <string name="overtrykTekst">Excessive Pressure</string>
-    <string name="Intro_Titel">Kirugisk Simulator</string>
+    <string name="Intro_Titel">Kirurgisk Simulator</string>
     <string name="Intro_UnderTitel">Træning af studerende</string>
     <string name="intro_logo">Logo</string>
     <string name="VaelgRolle_Titel">Vælg visning</string>
-    <string name="VaelgRolle_InsufflatorTitel">Insufflator Visning</string>
-    <string name="VaelgRolle_InsufflatorText">Simulerer en aktiv insufflator  styret af en instruktør</string>
+    <string name="VaelgRolle_InsufflatorTitel">Insufflator visning</string>
+    <string name="VaelgRolle_InsufflatorText">Simulerer en aktiv insufflator styret af en instruktør</string>
     <string name="VaelgRolle_InstruktørTitel">Instruktør visning</string>
-    <string name="VaelgRolle_InstruktørText">Kontrollerer simuleringen.  Kan oprette, redigere og  starte brugsscenarier</string>
+    <string name="VaelgRolle_InstruktørText">Kontrollerer simulationen. Kan oprette, redigere og starte brugsscenarier</string>
     <string name="vaelg_scenarie_overskrift">Brugsscenarier</string>
     <string name="vaelg_scenarie_knap_nyt_scenarie">Opret nyt</string>
     <string name="scenarie_dummy_navn">Scenarienavn</string>
@@ -38,11 +38,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Tablets">Tablets</string>
     <string name="Ny">Ny</string>
-    <string name="tablet_liste_element_valgBrugs">Vælg Brugssenarie</string>
-    <string name="tablet_liste_element_selog">Se Log</string>
+    <string name="tablet_liste_element_valgBrugs">Vælg Brugsscenarie</string>
+    <string name="tablet_liste_element_selog">Se log</string>
     <string name="tablet_liste_element_slet">Slet</string>
     <string name="btnFunctionValue">Tilføj</string>
-    <string name="VaelgTablet_SendTilAlle">Send til Alle</string>
+    <string name="VaelgTablet_SendTilAlle">Send til alle</string>
 
 
 </resources>
