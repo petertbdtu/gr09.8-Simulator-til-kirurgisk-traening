@@ -1,19 +1,13 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -53,23 +47,6 @@ public class PeerAdapter extends RecyclerView.Adapter {
             }
         });
         PVH.tvName.setText(listWPD.get(i).deviceName);
-        switch (listWPD.get(i).status) {
-            case WifiP2pDevice.CONNECTED:
-                PVH.tvAddress.setText("CONNECTED");
-                break;
-            case WifiP2pDevice.INVITED:
-                PVH.tvAddress.setText("INVITED");
-                break;
-            case WifiP2pDevice.FAILED:
-                PVH.tvAddress.setText("FAILED");
-                break;
-            case WifiP2pDevice.AVAILABLE:
-                PVH.tvAddress.setText("AVAILABLE");
-                break;
-            case WifiP2pDevice.UNAVAILABLE:
-                PVH.tvAddress.setText("UNAVAILABLE");
-                break;
-        }
     }
 
     @Override
@@ -81,13 +58,11 @@ public class PeerAdapter extends RecyclerView.Adapter {
 
         ImageView ivChoose;
         TextView tvName;
-        TextView tvAddress;
 
         public PeerViewHolder(View itemView) {
             super(itemView);
             ivChoose = itemView.findViewById(R.id.ivChoose);
             tvName = itemView.findViewById(R.id.tvName);
-            tvAddress = itemView.findViewById(R.id.tvAddress);
         }
     }
 }

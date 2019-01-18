@@ -34,7 +34,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vaelg_scenarie);
 
-        overskrift = findViewById(R.id.tvOverskrift);
+        overskrift = findViewById(R.id.tvVaelgTabletTitel);
         scenarieKnap = findViewById(R.id.scenarieKnap);
         scenarieKnap.setOnClickListener(this);
 

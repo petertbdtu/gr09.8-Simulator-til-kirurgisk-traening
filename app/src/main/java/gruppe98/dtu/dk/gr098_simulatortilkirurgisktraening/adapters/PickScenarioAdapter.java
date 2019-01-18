@@ -2,7 +2,6 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +35,10 @@ public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        return new ViewHolder(inflater.inflate(R.layout.adapter_vaelg_scenarie,null));
+        View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_vaelg_scenarie, null, false);
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rootView.setLayoutParams(lp);
+        return new ViewHolder(rootView);
     }
 
     @Override
@@ -73,7 +74,6 @@ public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapte
         TextView scenarie_navn;
         Button rediger;
         Button slet;
-        ConstraintLayout liste_layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,7 +81,6 @@ public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapte
             scenarie_navn = itemView.findViewById(R.id.scenarie_navn);
             rediger = itemView.findViewById(R.id.knap_rediger_scenarie);
             slet = itemView.findViewById(R.id.knap_slet_scenarie);
-            liste_layout = itemView.findViewById(R.id.listeElement);
 
 
         }
