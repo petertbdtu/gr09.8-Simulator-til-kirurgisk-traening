@@ -43,6 +43,10 @@
     <string name="tablet_liste_element_slet">Slet</string>
     <string name="btnFunctionValue">Tilføj</string>
     <string name="VaelgTablet_SendTilAlle">Send til alle</string>
+    <string name="displays00Placeholder">00</string>
+    <string name="trykEnhed">mmHg</string>
+    <string name="flowEnhed">L/s</string>
+    <string name="volumenEnhed">L</string>
 
 
 </resources>
