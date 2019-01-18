@@ -59,17 +59,17 @@ public class ApplicationSingleton {
         }
     }
 
-    public void opretScenarie(Scenario scenarie) {
+    public void opretScenarie(Scenario scenarie, String name) {
         Map<String,Scenario> tempScenarier = dao.loadData(filePath + "/" + SCENARIO_FILENAME);
-        tempScenarier.put(scenarie.getName(), scenarie);
+        tempScenarier.put(name, scenarie);
         dao.saveData(tempScenarier, filePath + "/" + SCENARIO_FILENAME);
         dao.saveDataExternalFiles(tempScenarier,Environment.getExternalStorageDirectory().getAbsolutePath()+EXTERNAL_DIR+"/Available Scenarios");
     }
 
-    public List<Scenario> hentAlleScenarier(){
-        List<Scenario> tempScenarier = new ArrayList<Scenario>(dao.loadData(filePath + "/" + SCENARIO_FILENAME).values());
+    public Map<String,Scenario> hentAlleScenarier(){
+        Map<String,Scenario> tempScenarier= dao.loadData(filePath + "/" + SCENARIO_FILENAME);
         if(tempScenarier == null)
-            return new ArrayList<>();
+            return new HashMap<>();
         return tempScenarier;
     }
 
@@ -85,9 +85,10 @@ public class ApplicationSingleton {
 
     public void fjernScenarie(String s) {
         Map<String,Scenario> tempScenarier = dao.loadData(filePath + "/" + SCENARIO_FILENAME);
-        dao.removeFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+EXTERNAL_DIR+"/Available Scenarios/"+tempScenarier.get(s).getName()+".txt"));
+        dao.removeFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+EXTERNAL_DIR+"/Available Scenarios/"+s+".txt"));
         tempScenarier.remove(s);
         dao.saveData(tempScenarier, filePath + "/" + SCENARIO_FILENAME);
+
     }
 
     public List<LogEntry> hentAlleLogs() {

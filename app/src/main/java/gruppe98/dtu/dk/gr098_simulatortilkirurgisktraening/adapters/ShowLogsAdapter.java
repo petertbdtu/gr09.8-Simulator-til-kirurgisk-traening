@@ -33,9 +33,11 @@ public class ShowLogsAdapter extends RecyclerView.Adapter<ShowLogsAdapter.ViewHo
 
     @NonNull
     @Override
-    public ShowLogsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_log_entry, parent, false);
-        return new ShowLogsAdapter.ViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_log_entry, null, false);
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rootView.setLayoutParams(lp);
+        return new ViewHolder(rootView);
     }
 
     @Override

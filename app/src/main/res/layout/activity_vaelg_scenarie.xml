@@ -37,6 +37,7 @@
             android:layout_marginBottom="4dp"
             android:background="@drawable/knap_kanter"
             android:backgroundTintMode="src_atop"
+            android:elevation="4dp"
             android:text="@string/btnFunctionValue"
             android:textSize="14sp"
             android:textStyle="bold"

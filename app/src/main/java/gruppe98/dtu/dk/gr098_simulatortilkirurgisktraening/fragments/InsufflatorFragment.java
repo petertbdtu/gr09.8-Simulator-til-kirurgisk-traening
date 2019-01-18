@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
@@ -29,8 +30,9 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     boolean erInstruktor;
     VALGT_ELEMENT ve = VALGT_ELEMENT.trykAktuel;
 
-    MeterView gasforsyningMeter, trykMeter, flowrateMeter, volumenMeter;
+    MeterView gasforsyningMeter, trykMeter, flowrateMeter;
     LEDView overtrykLed, tubeblokeretLed;
+    ConstraintLayout overtrykCL, tubeblokeretCL;
     TextView trykDisplay, trykMaalDisplay, flowrateDisplay, flowrateMaalDisplay, volumenDisplay;
 
     Scenario aktivtScenarie;
@@ -65,6 +67,8 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         // LED'er
         overtrykLed = view.findViewById(R.id.overtrykLed);
         tubeblokeretLed = view.findViewById(R.id.tubeblokeretLed);
+        overtrykCL = view.findViewById(R.id.clOvertryk);
+        tubeblokeretCL = view.findViewById(R.id.clTube);
 
         // Gasforsyning
         gasforsyningMeter = view.findViewById(R.id.gasforsyningMeter);
@@ -81,7 +85,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
         // Volumen
         volumenDisplay = view.findViewById(R.id.volumenDisplay);
-        volumenMeter = view.findViewById(R.id.volumenMeter);
     }
 
     public void loadScenarie(Scenario sc) {
@@ -101,12 +104,11 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         trykMeter.setForventetVaerdi(sc.getTargetPressure());
 
         volumenDisplay.setText(String.format("%02d", sc.getVolume()));
-        volumenMeter.setAktuelVaerdi(sc.getVolume());
     }
 
     public void bindInstruktorKnapper() {
-        overtrykLed.setOnClickListener(this);
-        tubeblokeretLed.setOnClickListener(this);
+        overtrykCL.setOnClickListener(this);
+        tubeblokeretCL.setOnClickListener(this);
         gasforsyningMeter.setOnClickListener(this);
         trykMaalDisplay.setOnClickListener(this);
         trykDisplay.setOnClickListener(this);
@@ -125,13 +127,13 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.overtrykLed)
+        if (v.getId() == R.id.clOvertryk)
         {
             ApplicationSingleton.getInstance().aktivtScenarie.setOverPressureLED(!ApplicationSingleton.getInstance().aktivtScenarie.isOverPressureLED());
             loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
             return;
         }
-        if (v.getId() == R.id.tubeblokeretLed) {
+        if (v.getId() == R.id.clTube) {
             ApplicationSingleton.getInstance().aktivtScenarie.setTubeBlockedLED(!ApplicationSingleton.getInstance().aktivtScenarie.isTubeBlockedLED());
             loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
             return;

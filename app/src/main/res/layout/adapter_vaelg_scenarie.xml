@@ -25,14 +25,17 @@
         style="@android:style/Widget.DeviceDefault.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/knap_kanter"
+        android:elevation="4dp"
         android:text="@string/rediger"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/knap_slet_scenarie"
+        app:layout_constraintStart_toEndOf="@+id/scenarie_navn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -40,14 +43,17 @@
         style="@android:style/Widget.DeviceDefault.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/knap_kanter"
+        android:elevation="4dp"
         android:text="@string/slet"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/knap_rediger_scenarie"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
