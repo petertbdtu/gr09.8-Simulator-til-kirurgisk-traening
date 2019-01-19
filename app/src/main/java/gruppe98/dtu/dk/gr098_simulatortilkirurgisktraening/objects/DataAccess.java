@@ -142,4 +142,34 @@ public class DataAccess<E> {
     public void removeFile(File file) {
         file.delete();
     }
+
+    public Scenario getScenario(String navn, String path) {
+
+        if(fileExists(path+navn+".txt")) {
+            try {
+                String json = "";
+                BufferedReader reader = new BufferedReader(new FileReader(new File(path + navn + ".txt")));
+                StringBuilder sb = new StringBuilder();
+                String line = reader.readLine();
+
+                while (line != null) {
+                    sb.append(line);
+                    sb.append("\n");
+                    line = reader.readLine();
+                }
+
+                json = sb.toString();
+                reader.close();
+
+                return scenarioFromJson(new JSONObject(json));
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    return null;
+    }
+
+    public boolean fileExists(String path) {
+        return new File(path).exists();
+    }
 }
