@@ -41,7 +41,7 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        view = inflater.inflate(R.layout.fragment_insufflator, container, false);
+        view = inflater.inflate(R.layout.fragment_insufflator_mobil_visning, container, false);
         erInstruktor = this.getArguments().getBoolean("erInstruktor");
 
         initialiserViews();
