@@ -204,6 +204,11 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
+    public void fjernBrugsscenarie(String scenarieNavn) {
+
+    }
+
+    @Override
     public void redigerScenarie(String scenarieNavn) { }
 
     @Override

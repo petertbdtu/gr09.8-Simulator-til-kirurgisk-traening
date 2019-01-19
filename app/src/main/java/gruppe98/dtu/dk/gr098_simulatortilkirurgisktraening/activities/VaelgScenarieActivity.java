@@ -136,6 +136,12 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
     public void sendBrugsscenarie(Scenario brugsscencarie) { }
 
     @Override
+    public void fjernBrugsscenarie(String scenarieNavn) {
+        String filePath = ApplicationSingleton.getInstance().fjernScenarie(scenarieNavn);
+        MediaScannerConnection.scanFile(this, new String[]{filePath}, null, null);
+    }
+
+    @Override
     public void redigerScenarie(String scenarieNavn) {
         ApplicationSingleton.getInstance().aktivtScenarie = ApplicationSingleton.getInstance().hentScenarie(scenarieNavn);
         this.scenarieNavn = scenarieNavn;

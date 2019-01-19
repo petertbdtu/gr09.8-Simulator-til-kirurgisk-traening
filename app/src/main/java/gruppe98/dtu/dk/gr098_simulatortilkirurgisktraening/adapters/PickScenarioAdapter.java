@@ -56,7 +56,8 @@ public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapte
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ApplicationSingleton.getInstance().fjernScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                        ((IRecycleViewAdapterListener)context).fjernBrugsscenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                       // ApplicationSingleton.getInstance().fjernScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
                         hentScenarier();
                         notifyDataSetChanged();
                     }

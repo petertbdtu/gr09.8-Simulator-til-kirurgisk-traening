@@ -1,5 +1,7 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application;
 
+import android.content.Context;
+import android.media.MediaScannerConnection;
 import android.os.Environment;
 
 import java.io.File;
@@ -40,6 +42,7 @@ public class ApplicationSingleton {
         dao = new DataAccess<>();
     }
 
+
     public void init(String internalFilePath, String externalFilePath) {
         this.internalStorageFilePath = internalFilePath;
         this.externalStorageFilePath = externalFilePath;
@@ -74,8 +77,10 @@ public class ApplicationSingleton {
         return dao.fileExists(externalStorageFilePath+EXTERNAL_DIR+navn+".txt");
     }
 
-    public void fjernScenarie(String s) {
-        dao.removeFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+EXTERNAL_DIR+"/Available Scenarios/"+s+".txt"));
+    public String fjernScenarie(String s) {
+        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+EXTERNAL_DIR+"/Available Scenarios/"+s+".txt";
+        dao.removeFile(new File(filePath));
+        return filePath;
     }
 
     public List<LogEntry> hentAlleLogs() {
