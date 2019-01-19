@@ -70,7 +70,7 @@ public class ApplicationSingleton {
     }
 
     public Scenario hentScenarie(String navn) {
-        return dao.getScenario(navn, externalStorageFilePath+EXTERNAL_DIR);
+        return dao.getScenario(navn, externalStorageFilePath+EXTERNAL_DIR+"/Available Scenarios/");
     }
 
     public boolean scenarieEksisterer(String navn) {
