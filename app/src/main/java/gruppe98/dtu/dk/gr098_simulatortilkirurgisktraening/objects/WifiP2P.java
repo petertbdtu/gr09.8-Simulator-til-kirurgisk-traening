@@ -114,7 +114,7 @@ public class WifiP2P {
         try {
             context.unregisterReceiver(BR);
         } catch (IllegalArgumentException e) {
-            System.out.println("XD");
+
         }
     }
 

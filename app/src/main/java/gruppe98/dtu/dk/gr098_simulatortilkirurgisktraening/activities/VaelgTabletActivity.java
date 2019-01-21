@@ -169,7 +169,6 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
                 }
             }, 200);
         } else {
-            Toast.makeText(this,"HAAALOOO", Toast.LENGTH_SHORT).show();
             dlg.dismiss();
         }
     }
@@ -298,7 +297,6 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case WifiP2pDevice.AVAILABLE:
                     if(ApplicationSingleton.getInstance().getDevices().containsKey(wpd.deviceAddress)){
-                        System.out.println("PIS: Found known device   -  " + wpd.deviceName);
                         //ApplicationSingleton.getInstance().WifiP2P.connectToDevice(wpd);
                             PeerChosen(wpd, true);
                     }
@@ -315,16 +313,13 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void DeviceDisconnected() {
-        System.out.println("PIS: Device Disconnected");
         ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
     }
 
     @Override
     public void MessageReceived(byte[] msg) {
         CommunicationObject CO = SerializationUtils.deserialize(msg);
-        //Toast.makeText(this, "PIS: Besked Modtaget", Toast.LENGTH_SHORT).show();
         if(CO.getSenderMacAddress().equals(receiverAddress) && CO.getRecipientMacAddress().equals(ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress())) {
-            Toast.makeText(this, "PIS: Besked Behandlet", Toast.LENGTH_SHORT).show();
             msgResponseRecieved = true;
         }
     }
@@ -332,7 +327,6 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void GroupInfoUpdate(WifiP2pGroup WPG, long time) {
         if (WPG != null) {
-            System.out.println("PIS: GroupInfoUpdate  -  " + WPG.getClientList());
             rvaTablets.updateLEDs(ApplicationSingleton.getInstance().connectedDevices);
         }
     }

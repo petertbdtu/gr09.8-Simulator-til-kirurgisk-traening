@@ -144,7 +144,6 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
     @Override
     public void redigerScenarie(String scenarieNavn) {
         ApplicationSingleton.getInstance().activeScenario = ApplicationSingleton.getInstance().hentScenarie(scenarieNavn);
-        System.out.println(ApplicationSingleton.getInstance().activeScenario.isOverPressureLED());
         this.scenarieNavn = scenarieNavn;
         skiftTilInsufflator();
     }

@@ -126,7 +126,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     @Override
     public void DeviceConnected() {
         // TODO Display built-in default scenario immediately or wait until receiving? Currently Waiting
-        Toast.makeText(this,"connected",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"connected",Toast.LENGTH_SHORT).show();
         ApplicationSingleton.getInstance().WifiP2P.disableDiscovery();
     }
 
