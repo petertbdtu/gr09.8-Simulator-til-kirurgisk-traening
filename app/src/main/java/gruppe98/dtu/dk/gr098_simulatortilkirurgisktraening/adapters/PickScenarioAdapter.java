@@ -2,7 +2,6 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
 import android.content.Context;
 import android.media.MediaScannerConnection;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IRecycleViewAdapterListener;
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 
 public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapter.ViewHolder> {
 
@@ -29,8 +27,7 @@ public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapte
     }
 
     private void hentScenarier() {
-        ArrayList<String> tmpList = new ArrayList<>(ApplicationSingleton.getInstance().hentAlleScenarier().keySet());
-        list_scenarie_navne = tmpList;
+        list_scenarie_navne = new ArrayList<>(ApplicationSingleton.getInstance().hentAlleScenarier().keySet());
     }
 
     @Override
@@ -56,8 +53,8 @@ public class PickScenarioAdapter extends RecyclerView.Adapter<PickScenarioAdapte
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ((IRecycleViewAdapterListener)context).fjernBrugsscenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
-                       // ApplicationSingleton.getInstance().fjernScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                        String path = ApplicationSingleton.getInstance().fjernScenarie(list_scenarie_navne.get(viewHolder.getAdapterPosition()));
+                        MediaScannerConnection.scanFile(context, new String[]{path}, null, null);
                         hentScenarier();
                         notifyDataSetChanged();
                     }

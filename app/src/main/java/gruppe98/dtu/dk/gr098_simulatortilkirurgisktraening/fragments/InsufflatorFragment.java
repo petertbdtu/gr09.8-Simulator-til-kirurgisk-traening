@@ -51,7 +51,7 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         if(erInstruktor)
         {
             bindInstruktorKnapper();
-            aktivtScenarie = ApplicationSingleton.getInstance().aktivtScenarie;
+            aktivtScenarie = ApplicationSingleton.getInstance().activeScenario;
         }
         else
         {
@@ -133,13 +133,13 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
         if (v.getId() == R.id.clOvertryk)
         {
-            ApplicationSingleton.getInstance().aktivtScenarie.setOverPressureLED(!ApplicationSingleton.getInstance().aktivtScenarie.isOverPressureLED());
-            loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
+            ApplicationSingleton.getInstance().activeScenario.setOverPressureLED(!ApplicationSingleton.getInstance().activeScenario.isOverPressureLED());
+            loadScenarie(ApplicationSingleton.getInstance().activeScenario);
             return;
         }
         if (v.getId() == R.id.clTube) {
-            ApplicationSingleton.getInstance().aktivtScenarie.setTubeBlockedLED(!ApplicationSingleton.getInstance().aktivtScenarie.isTubeBlockedLED());
-            loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
+            ApplicationSingleton.getInstance().activeScenario.setTubeBlockedLED(!ApplicationSingleton.getInstance().activeScenario.isTubeBlockedLED());
+            loadScenarie(ApplicationSingleton.getInstance().activeScenario);
             return;
         }
 
@@ -206,25 +206,25 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
                 switch (ve) {
                     case gasForsyning:
-                        ApplicationSingleton.getInstance().aktivtScenarie.setGasSupply(tmp);
+                        ApplicationSingleton.getInstance().activeScenario.setGasSupply(tmp);
                         break;
                     case trykTarget:
-                        ApplicationSingleton.getInstance().aktivtScenarie.setTargetPressure(tmp);
+                        ApplicationSingleton.getInstance().activeScenario.setTargetPressure(tmp);
                         break;
                     case trykAktuel:
-                        ApplicationSingleton.getInstance().aktivtScenarie.setActualPressure(tmp);
+                        ApplicationSingleton.getInstance().activeScenario.setActualPressure(tmp);
                         break;
                     case flowrateTarget:
-                        ApplicationSingleton.getInstance().aktivtScenarie.setTargetFlowRate(tmp);
+                        ApplicationSingleton.getInstance().activeScenario.setTargetFlowRate(tmp);
                         break;
                     case flowrateAktuel:
-                        ApplicationSingleton.getInstance().aktivtScenarie.setActualFlowRate(tmp);
+                        ApplicationSingleton.getInstance().activeScenario.setActualFlowRate(tmp);
                         break;
                     case volumen:
-                        ApplicationSingleton.getInstance().aktivtScenarie.setVolume(tmp);
+                        ApplicationSingleton.getInstance().activeScenario.setVolume(tmp);
                         break;
                 }
-                loadScenarie(ApplicationSingleton.getInstance().aktivtScenarie);
+                loadScenarie(ApplicationSingleton.getInstance().activeScenario);
                 dialogInterface.dismiss();
             }
         });

@@ -2,12 +2,10 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -42,34 +40,9 @@ public class ShowLogsAdapter extends RecyclerView.Adapter<ShowLogsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        LogEntry logElement = listLogElementer.get(position);
-
-       // Calendar c = Calendar.getInstance();
-        //c.setTimeInMillis(logElement.getStart());
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        holder.startTid.setText(format1.format(logElement.getStart()));
-        holder.scenarie_navn.setText(logElement.getScenarioNavn());
-
-       // c.setTimeInMillis(logElement.getCompleted());
-        holder.slutTid.setText(format1.format(logElement.getStart()));
-        holder.resultat.setText(logElement.getOutcome().name());
-
-
-        holder.comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Åben dialog til redigering af comment.
-            }
-
-        });
-
-        holder.visScenarie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //vis scenarie i fragmentcontainer, går tilbage til liste ved click
-
-            }
-        });
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        holder.startTid.setText(format1.format(listLogElementer.get(position).getStart()));
+        holder.scenarie_navn.setText(listLogElementer.get(position).getScenarioNavn());
     }
 
     @Override
@@ -80,31 +53,12 @@ public class ShowLogsAdapter extends RecyclerView.Adapter<ShowLogsAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView scenarie_navn;
-        TextView resultat;
         TextView startTid;
-        TextView slutTid;
-        Button comment;
-        Button visScenarie;
-        ConstraintLayout liste_layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            //TextViews
             scenarie_navn = itemView.findViewById(R.id.scenarioName);
-            resultat = itemView.findViewById(R.id.outcome);
             startTid = itemView.findViewById(R.id.scenarioStartTime);
-            slutTid = itemView.findViewById(R.id.scenarioCompletionTime);
-
-
-            //Buttons
-            comment = itemView.findViewById(R.id.comment);
-            visScenarie = itemView.findViewById(R.id.showScenarioButton);
-
-            //Layout
-            liste_layout = itemView.findViewById(R.id.logListElement);
-
-
         }
     }
 }

@@ -1,7 +1,6 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -40,7 +39,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insufflator_visning);
 
-        ApplicationSingleton.getInstance().aktivtScenarie = new Scenario();
+        ApplicationSingleton.getInstance().activeScenario = new Scenario();
 
         checkPermissions();
     }
@@ -134,8 +133,13 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     @Override
     public void MessageReceived(byte[] msg) {
         CommunicationObject CO = SerializationUtils.deserialize(msg);
-        Toast.makeText(this,CO.getRecipientMacAddress().toUpperCase() + " == " + ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress().toUpperCase(), Toast.LENGTH_SHORT).show();
         if(CO.getRecipientMacAddress().toUpperCase().equals(ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress().toUpperCase())) {
+            CO.setScenario(null);
+            String recipient = CO.getSenderMacAddress();
+            CO.setSenderMacAddress(CO.getRecipientMacAddress());
+            CO.setRecipientMacAddress(recipient);
+            ApplicationSingleton.getInstance().WifiP2P.sendMessage(SerializationUtils.serialize(CO));
+
             Fragment fragment = new InsufflatorFragment();
             Bundle args = new Bundle();
             args.putBoolean("erInstruktor", false);

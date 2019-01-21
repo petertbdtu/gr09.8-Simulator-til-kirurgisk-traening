@@ -6,77 +6,40 @@
     android:layout_height="wrap_content">
 
 
-    <Button
-        android:id="@+id/showScenarioButton"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Show"
-        app:layout_constraintBottom_toBottomOf="@+id/scenarioName"
-        app:layout_constraintEnd_toStartOf="@+id/scenarioName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/scenarioName" />
-
     <TextView
         android:id="@+id/scenarioName"
         android:layout_width="0dp"
 
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="name"
-        app:layout_constraintBottom_toBottomOf="@+id/scenarioStartTime"
+        android:textAlignment="viewStart"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/scenarioStartTime"
-        app:layout_constraintStart_toEndOf="@+id/showScenarioButton"
-        app:layout_constraintTop_toTopOf="@+id/scenarioStartTime" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/scenarioStartTime"
-        android:layout_width="0dp"
-
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="formatted time"
-        app:layout_constraintBottom_toBottomOf="@+id/scenarioCompletionTime"
-        app:layout_constraintEnd_toStartOf="@+id/scenarioCompletionTime"
-        app:layout_constraintStart_toEndOf="@+id/scenarioName"
-        app:layout_constraintTop_toTopOf="@+id/scenarioCompletionTime" />
-
-    <TextView
-        android:id="@+id/scenarioCompletionTime"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="formatted time"
-        app:layout_constraintBottom_toBottomOf="@+id/outcome"
-        app:layout_constraintEnd_toStartOf="@+id/outcome"
-        app:layout_constraintStart_toEndOf="@+id/scenarioStartTime"
-        app:layout_constraintTop_toTopOf="@+id/outcome" />
-
-    <TextView
-        android:id="@+id/outcome"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="outcome"
-        app:layout_constraintBottom_toBottomOf="@+id/comment"
-        app:layout_constraintEnd_toStartOf="@+id/comment"
-        app:layout_constraintStart_toEndOf="@+id/scenarioCompletionTime"
-        app:layout_constraintTop_toTopOf="@+id/comment" />
-
-    <Button
-        android:id="@+id/comment"
-        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="comment"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="formatted time"
+        android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/outcome"
+        app:layout_constraintStart_toEndOf="@+id/scenarioName"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

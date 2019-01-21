@@ -55,11 +55,11 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
         if (scenarieKnapTilstand == 0) {
-            ApplicationSingleton.getInstance().aktivtScenarie = new Scenario();
+            ApplicationSingleton.getInstance().activeScenario = new Scenario();
             dialogVaelgScenarieNavn();
         }
         else {
-            ApplicationSingleton.getInstance().opretScenarie(ApplicationSingleton.getInstance().aktivtScenarie, scenarieNavn);
+            ApplicationSingleton.getInstance().createScenario(ApplicationSingleton.getInstance().activeScenario, scenarieNavn);
             MediaScannerConnection.scanFile(this, new String[] {Environment.getExternalStorageDirectory().getAbsolutePath()}, null, null);
             skiftTilScenarieListe();
         }
@@ -85,7 +85,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
                 // TODO tjek at navn ikke er brugt.
                 Scenario tmpScenarie = new Scenario();
                 scenarieNavn = input.getText().toString();
-                ApplicationSingleton.getInstance().aktivtScenarie = tmpScenarie;
+                ApplicationSingleton.getInstance().activeScenario = tmpScenarie;
                 skiftTilInsufflator();
             }})
             .setNegativeButton("Annuller", new DialogInterface.OnClickListener() {
@@ -143,7 +143,8 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void redigerScenarie(String scenarieNavn) {
-        ApplicationSingleton.getInstance().aktivtScenarie = ApplicationSingleton.getInstance().hentScenarie(scenarieNavn);
+        ApplicationSingleton.getInstance().activeScenario = ApplicationSingleton.getInstance().hentScenarie(scenarieNavn);
+        System.out.println(ApplicationSingleton.getInstance().activeScenario.isOverPressureLED());
         this.scenarieNavn = scenarieNavn;
         skiftTilInsufflator();
     }

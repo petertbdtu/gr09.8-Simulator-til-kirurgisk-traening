@@ -20,6 +20,10 @@ public class WifiP2PSendReceiveThread extends Thread {
         this.handler = handler;
         this.broadcastAddress = broadcastAddress;
     }
+    
+    public void close() {
+        this.socket = null;
+    }
 
     @Override
     public void run() {

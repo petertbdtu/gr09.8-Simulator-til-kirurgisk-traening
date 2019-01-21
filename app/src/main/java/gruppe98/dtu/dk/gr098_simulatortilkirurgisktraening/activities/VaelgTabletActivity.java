@@ -43,12 +43,12 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
 
 
-    private ArrayList<LogEntry> DeviceLogs;
     private String receiverAddress;
     private int ButtonState = 0;
 
     private ProgressDialog dlg;
     private String targetMacAddress;
+    private boolean msgResponseRecieved;
 
     private long lastUpdate;
 
@@ -62,9 +62,9 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_vaelg_tablet);
 
         //Initialize Adapters
-        rvaTablets = new PickTabletAdapter(ApplicationSingleton.getInstance().getKnownDevices(),this);
+        rvaTablets = new PickTabletAdapter(ApplicationSingleton.getInstance().getDevices(),this);
         rvaPeers = new PeerAdapter(this,new ArrayList<WifiP2pDevice>());
-        rvaLogs = new ShowLogsAdapter(DeviceLogs,this);
+        rvaLogs = new ShowLogsAdapter(new ArrayList<LogEntry>(),this);
         rvaScenarier = new SendScenarioAdapter(ApplicationSingleton.getInstance().hentAlleScenarier(),this);
 
         //Initialize Recycleview
@@ -157,8 +157,24 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         ButtonState = 3;
         btnFunktion.setVisibility(View.GONE);
         tvTitel.setText("Logs");
-        rvaLogs.updateData(DeviceLogs);
+        rvaLogs.updateData(ApplicationSingleton.getInstance().hentLogs(id));
         RV.setAdapter(rvaLogs);
+    }
+
+    private void waitForResponse(final byte[] bMsgToSend) {
+        if(!msgResponseRecieved) {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    if(!msgResponseRecieved) {
+                        ApplicationSingleton.getInstance().WifiP2P.sendMessage(bMsgToSend);
+                        waitForResponse(bMsgToSend);
+                    }
+                }
+            }, 200);
+        } else {
+            Toast.makeText(this,"HAAALOOO", Toast.LENGTH_SHORT).show();
+            dlg.dismiss();
+        }
     }
 
     /////////////////////////////////////////
@@ -196,15 +212,28 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         }
       }, 10000);
 
-        //ChangeToMainView();
     }
 
     @Override
     public void sendBrugsscenarie(Scenario brugsscencarie) {
-        System.out.println("PIS: Sending scenario");
+        msgResponseRecieved = false;
         CommunicationObject CO = new CommunicationObject(receiverAddress,ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress(),brugsscencarie);
-        byte[] tmp = SerializationUtils.serialize(CO);
-        ApplicationSingleton.getInstance().WifiP2P.sendMessage(tmp);
+        final byte[] bMsgToSend = SerializationUtils.serialize(CO);
+
+        ApplicationSingleton.getInstance().WifiP2P.sendMessage(bMsgToSend);
+        waitForResponse(bMsgToSend);
+
+        dlg = new ProgressDialog(this);
+        dlg.setCancelable(false);
+        dlg.setMessage("Waiting for response...");
+        dlg.show();
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                msgResponseRecieved = true;
+                dlg.dismiss();
+            }
+        }, 3000);
     }
 
     @Override
@@ -216,7 +245,9 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     public void redigerScenarie(String scenarieNavn) { }
 
     @Override
-    public void deleteDevice(String deviceAddress) { }
+    public void deleteDevice(String deviceAddress) {
+
+    }
 
     /////////////////////////////////////////
     //// WifiP2P overrides //////////////////
@@ -235,8 +266,8 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
                 if(wpd.deviceAddress.equals(targetMacAddress)) {
                     targetMacAddress = null;
                     dlg.dismiss();
-                    ApplicationSingleton.getInstance().addKnownDevice(wpd.deviceAddress, wpd.deviceName);
-                    rvaTablets.updateData(ApplicationSingleton.getInstance().getKnownDevices());
+                    ApplicationSingleton.getInstance().addDevice(wpd.deviceAddress, wpd.deviceName);
+                    rvaTablets.updateData(ApplicationSingleton.getInstance().getDevices());
                     ChangeToMainView();
                 }
                 break;
@@ -249,7 +280,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
               Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
               break;
             case WifiP2pDevice.AVAILABLE:
-                if(ApplicationSingleton.getInstance().getKnownDevices().containsKey(wpd.deviceAddress)){
+                if(ApplicationSingleton.getInstance().getDevices().containsKey(wpd.deviceAddress)){
                     System.out.println("PIS: Found known device   -  " + wpd.deviceName);
                     //ApplicationSingleton.getInstance().WifiP2P.connectToDevice(wpd);
                     PeerChosen(wpd, true);
@@ -269,7 +300,12 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void MessageReceived(byte[] msg) { }
+    public void MessageReceived(byte[] msg) {
+        CommunicationObject CO = SerializationUtils.deserialize(msg);
+        if(CO.getSenderMacAddress().equals(receiverAddress) && CO.getRecipientMacAddress().equals(ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress())) {
+            msgResponseRecieved = true;
+        }
+    }
 
     @Override
     public void GroupInfoUpdate(WifiP2pGroup WPG, long time) {

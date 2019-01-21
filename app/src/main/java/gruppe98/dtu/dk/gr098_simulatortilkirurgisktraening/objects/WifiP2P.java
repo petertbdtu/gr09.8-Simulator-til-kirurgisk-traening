@@ -12,7 +12,6 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -37,6 +36,7 @@ public class WifiP2P {
     private WifiP2PSendReceiveThread sendReceiveThread;
     private InetAddress broadcastAddress;
 
+    private String myMacAddress;
     private boolean isGroupOwner;
     private boolean keepDiscoverEnabled;
     private Context context;
@@ -194,28 +194,31 @@ public class WifiP2P {
     }
 
     public String getMyMacAddress() {
-        try {
-            List<NetworkInterface> nFaces = Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface nFace : nFaces) {
-                if (nFace.getName().equalsIgnoreCase("p2p0")) {
-                    byte[] bm = nFace.getHardwareAddress();
-                    if(bm == null)
-                        return "";
+        if(myMacAddress == null)
+            try {
+                List<NetworkInterface> nFaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+                for (NetworkInterface nFace : nFaces) {
+                    if (nFace.getName().equalsIgnoreCase("p2p0")) {
+                        byte[] bm = nFace.getHardwareAddress();
+                        if (bm == null)
+                            return "";
 
-                    StringBuilder str = new StringBuilder();
-                    for(byte b : bm)
-                        str.append(String.format("%02X:", b));
+                        StringBuilder str = new StringBuilder();
+                        for (byte b : bm)
+                            str.append(String.format("%02X:", b));
 
-                    if (str.length() > 0)
-                        str = str.deleteCharAt(str.length()-1);
+                        if (str.length() > 0)
+                            str = str.deleteCharAt(str.length() - 1);
 
-                    return str.toString();
+                        myMacAddress = str.toString();
+                        return myMacAddress;
+                    }
                 }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) { e.printStackTrace(); }
+        else
+            return myMacAddress;
         return "";
+
     }
 
 
@@ -248,6 +251,7 @@ public class WifiP2P {
     public void close(){
         WPM.cancelConnect(WPMC, null);
         WPM.removeGroup(WPMC,null);
+        sendReceiveThread.close();
         unRegisterReceiver();
     }
 }

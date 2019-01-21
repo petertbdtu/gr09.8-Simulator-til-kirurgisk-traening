@@ -5,77 +5,50 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
+public class DataAccessExternal<E> {
 
-
-public class DataAccess<E> {
-
-    public Map<String, Scenario> loadDataExternalFiles(File dir) {
+    public Map<String, Scenario> loadDataExternalFiles(String dir) {
         Map<String, Scenario> data = new HashMap<>();
         JSONObject jsonObject;
         Scenario tempScenario;
-        for(File file:dir.listFiles()) {
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String json = "";
-                StringBuilder sb = new StringBuilder();
-                String line = reader.readLine();
 
-                while (line != null) {
-                    sb.append(line);
-                    sb.append("\n");
-                    line = reader.readLine();
+        File directory = new File(dir);
+        if(directory.listFiles() != null)
+            for(File file: directory.listFiles()) {
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader(file));
+                    String json = "";
+                    StringBuilder sb = new StringBuilder();
+                    String line = reader.readLine();
+
+                    while (line != null) {
+                        sb.append(line);
+                        sb.append("\n");
+                        line = reader.readLine();
+                    }
+                    json = sb.toString();
+                    reader.close();
+                    jsonObject = new JSONObject(json);
+                    tempScenario = scenarioFromJson(jsonObject);
+                    data.put(file.getName().replace(".txt",""), tempScenario);
+
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
                 }
-                json = sb.toString();
-                reader.close();
-                jsonObject = new JSONObject(json);
-                System.out.println("DEBUG: name="+file.getName().replace(".txt","")+" string: "+jsonObject.toString());
-                tempScenario = scenarioFromJson(jsonObject);
-                System.out.println("DEBUG: "+ tempScenario.getVolume());
-                data.put(file.getName().replace(".txt",""), tempScenario);
-
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
             }
-        }
-        return data;
-    }
-
-    public Map<String,E> loadData(String fileName) {
-
-        Map<String, E> data = new HashMap<>();
-
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(fileName);
-
-        ObjectInputStream is = new ObjectInputStream(fis);
-           data = (HashMap<String,E>) is.readObject();
-           is.close();
-           fis.close();
-        } catch (Exception e) {}
-
         return data;
     }
 
     private Scenario scenarioFromJson(JSONObject jsonObject) throws JSONException {
-
         Scenario scenario = new Scenario();
-                //scenario.setName(jsonObject.getString("name"));
                 scenario.setActualFlowRate(jsonObject.getInt("actualFlowRate"));
                 scenario.setActualPressure(jsonObject.getInt("actualPressure"));
                 scenario.setTargetFlowRate(jsonObject.getInt("targetFlowRate"));
@@ -84,27 +57,13 @@ public class DataAccess<E> {
                 scenario.setGasSupply(jsonObject.getInt("gasSupply"));
                 scenario.setOverPressureLED(jsonObject.getBoolean("overPressureLED"));
                 scenario.setTubeBlockedLED(jsonObject.getBoolean("tubeBlockedLED"));
-        System.out.println("DEBUG: "+scenario.getGasSupply()+" "+scenario.getVolume());
                 return scenario;
     }
 
-    public void saveData(Map<String,E> data, String fileName) {
-        try{
-            FileOutputStream fos = new FileOutputStream(fileName);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(data);
-            os.close();
-            fos.close();
-        }catch (Exception e){}
-    }
-
     public void saveDataExternalFiles(Map<String, E> data, String dir) {
-
         for (Map.Entry<String, E> entry : data.entrySet()) {
             saveScenario(dir+"/"+entry.getKey(),entry.getValue());
         }
-
-
     }
 
     private void saveScenario(String path, E value) {
@@ -139,8 +98,8 @@ public class DataAccess<E> {
         return json;
     }
 
-    public void removeFile(File file) {
-        file.delete();
+    public void removeFile(String path) {
+        new File(path).delete();
     }
 
     public Scenario getScenario(String navn, String path) {

@@ -5,12 +5,12 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaScannerConnection;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pGroup;
-import android.media.MediaScannerConnection;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -68,7 +68,6 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
         init();
         dlg.dismiss();
         MediaScannerConnection.scanFile(this, new String[] {Environment.getExternalStorageDirectory().getAbsolutePath()}, null, null);
-        ApplicationSingleton.getInstance().initExternalStorage();
       } else {
         Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
       }
