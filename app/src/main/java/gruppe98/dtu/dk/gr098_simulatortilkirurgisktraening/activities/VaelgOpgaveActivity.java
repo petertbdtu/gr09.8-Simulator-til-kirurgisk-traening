@@ -95,6 +95,7 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
     //Initialize WifiP2P
     if(ApplicationSingleton.getInstance().WifiP2P == null) {
       ApplicationSingleton.getInstance().WifiP2P = new WifiP2P(this, true);
+      ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
     } else {
       ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
     }

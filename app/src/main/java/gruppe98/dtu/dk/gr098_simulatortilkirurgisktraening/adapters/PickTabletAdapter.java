@@ -120,15 +120,15 @@ public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.Vi
         }
     }
 
-    public void updateLEDs(List<WifiP2pDevice> list){
+    public void updateLEDs(List<String> list){
 
         for(String str : listAddresses) {
             mapLEDStatus.put(str,false);
         }
 
-        for(WifiP2pDevice wif : list){
-            if(mapLEDStatus.containsKey(wif.deviceAddress)){
-                mapLEDStatus.put(wif.deviceAddress,wif.status == WifiP2pDevice.CONNECTED);
+        for(String str : list){
+            if(mapLEDStatus.containsKey(str)){
+                mapLEDStatus.put(str,true);
             }
         }
 

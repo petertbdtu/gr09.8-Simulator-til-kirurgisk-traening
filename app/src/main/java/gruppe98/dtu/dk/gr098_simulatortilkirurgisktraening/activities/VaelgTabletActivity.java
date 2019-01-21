@@ -41,17 +41,13 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private TextView tvTitel;
     private RecyclerView RV;
 
-    private List<String> connectedDevices;
-
-
     private String receiverAddress;
     private int ButtonState = 0;
 
     private ProgressDialog dlg;
     private String targetMacAddress;
     private boolean msgResponseRecieved;
-
-    private long lastUpdate;
+    private boolean firstRun;
 
     /////////////////////////////////////////
     //// Activity overrides /////////////////
@@ -134,7 +130,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         btnFunktion.setVisibility(View.VISIBLE);
         tvTitel.setText("Forbundne visninger");
         ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices();
-        ApplicationSingleton.getInstance().WifiP2P.disableDiscovery();
+        ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
         RV.setAdapter(rvaTablets);
     }
 
@@ -173,7 +169,6 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
                 }
             }, 200);
         } else {
-            Toast.makeText(this,"HAAALOOO", Toast.LENGTH_SHORT).show();
             dlg.dismiss();
         }
     }
@@ -204,14 +199,16 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
             dlg.show();
         }
 
-      new Handler().postDelayed(new Runnable() {
-        public void run() {
-            if(!suppressdlg) {
-                dlg.dismiss();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                if(!suppressdlg) {
+                    dlg.dismiss();
+                }
+                if(!ApplicationSingleton.getInstance().connectedDevices.contains(WPD.deviceAddress)) {
+                    ApplicationSingleton.getInstance().WifiP2P.cancelConnection(WPD);
+                }
             }
-          ApplicationSingleton.getInstance().WifiP2P.cancelConnection(WPD);
-        }
-      }, 10000);
+        }, 15000);
 
     }
 
@@ -260,46 +257,63 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) {
         ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices();
+        for(String str : ApplicationSingleton.getInstance().connectedDevices){
+            boolean found = false;
+            for(WifiP2pDevice wpd : listWPD){
+                if(str.equals(wpd.deviceAddress)){
+                    found = true;
+                    if(!(wpd.status == WifiP2pDevice.CONNECTED)){
+                        ApplicationSingleton.getInstance().connectedDevices.remove(str);
+                    }
+                }
+            }
+            if(!found){
+                ApplicationSingleton.getInstance().connectedDevices.remove(str);
+            }
+        }
         rvaPeers.updateAdapterData(listWPD);
         for(WifiP2pDevice wpd : listWPD){
-          switch (wpd.status) {
-            case WifiP2pDevice.CONNECTED:
-                ApplicationSingleton.getInstance().connectedDevices.add(wpd.deviceAddress);
-                if(wpd.deviceAddress.equals(targetMacAddress)) {
-                    targetMacAddress = null;
-                    if(dlg != null)
-                        dlg.dismiss();
-                    ApplicationSingleton.getInstance().addDevice(wpd.deviceAddress, wpd.deviceName);
-                    rvaTablets.updateData(ApplicationSingleton.getInstance().getDevices());
-                    ChangeToMainView();
-                }
-                break;
-            case WifiP2pDevice.FAILED:
-              dlg.dismiss();
-              Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
-              break;
-            case WifiP2pDevice.UNAVAILABLE:
-              dlg.dismiss();
-              Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
-              break;
-            case WifiP2pDevice.AVAILABLE:
-                if(ApplicationSingleton.getInstance().getDevices().containsKey(wpd.deviceAddress)){
-                    System.out.println("PIS: Found known device   -  " + wpd.deviceName);
-                    //ApplicationSingleton.getInstance().WifiP2P.connectToDevice(wpd);
-                    PeerChosen(wpd, true);
-                }
-                break;
+            switch (wpd.status) {
+                case WifiP2pDevice.CONNECTED:
+                    if(!ApplicationSingleton.getInstance().connectedDevices.contains(wpd.deviceAddress)) {
+                        ApplicationSingleton.getInstance().connectedDevices.add(wpd.deviceAddress);
+                    }
+                    if(wpd.deviceAddress.equals(targetMacAddress)) {
+                        targetMacAddress = null;
+                        if(dlg != null)
+                            dlg.dismiss();
+                        ApplicationSingleton.getInstance().addDevice(wpd.deviceAddress, wpd.deviceName);
+                        rvaTablets.updateData(ApplicationSingleton.getInstance().getDevices());
+                        ChangeToMainView();
+                    }
+                    break;
+                case WifiP2pDevice.FAILED:
+                    dlg.dismiss();
+                    Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
+                    break;
+                case WifiP2pDevice.UNAVAILABLE:
+                    dlg.dismiss();
+                    Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
+                    break;
+                case WifiP2pDevice.AVAILABLE:
+                    if(ApplicationSingleton.getInstance().getDevices().containsKey(wpd.deviceAddress)){
+                        //ApplicationSingleton.getInstance().WifiP2P.connectToDevice(wpd);
+                            PeerChosen(wpd, true);
+                    }
+                    break;
+            }
         }
-      }
+
     }
 
     @Override
-    public void DeviceConnected() {  }
+    public void DeviceConnected() {
+        ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
+    }
 
     @Override
     public void DeviceDisconnected() {
-        System.out.println("PIS: Device Disconnected");
-        ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices();
+        ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
     }
 
     @Override
@@ -312,13 +326,8 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void GroupInfoUpdate(WifiP2pGroup WPG, long time) {
-        if(lastUpdate < time) {
-            lastUpdate = time;
-            if (WPG != null) {
-                System.out.println("PIS: GroupInfoUpdate  -  " + WPG.getClientList());
-                ArrayList<WifiP2pDevice> tmpList = new ArrayList<>(WPG.getClientList());
-                rvaTablets.updateLEDs(tmpList);
-            }
+        if (WPG != null) {
+            rvaTablets.updateLEDs(ApplicationSingleton.getInstance().connectedDevices);
         }
     }
 
