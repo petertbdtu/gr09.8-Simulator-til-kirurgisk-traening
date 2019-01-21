@@ -7,8 +7,8 @@
     tools:context=".fragments.InsufflatorFragment">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/clCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -99,9 +98,9 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clCenter"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -111,25 +110,24 @@
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/clGasforsyning"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="@+id/clTryk"
-                app:layout_constraintEnd_toStartOf="@+id/insufflator_linie1_container"
+                app:layout_constraintEnd_toStartOf="@+id/insufflator_linie1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/gasforsyningTitel"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:gravity="center"
+                    android:layout_marginBottom="4dp"
                     android:maxLines="1"
                     android:text="@string/gasforsyningTitel"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     app:layout_constraintBottom_toTopOf="@+id/gasforsyningMeter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +135,7 @@
 
                 <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
                     android:id="@+id/gasforsyningMeter"
-                    android:layout_width="0dp"
+                    android:layout_width="64dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -152,49 +150,40 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/insufflator_linie1_container"
-                android:layout_width="0dp"
+            <View
+                android:id="@+id/insufflator_linie1"
+                android:layout_width="2dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="#3366cc"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/clTryk"
                 app:layout_constraintEnd_toStartOf="@id/clTryk"
                 app:layout_constraintStart_toEndOf="@id/clGasforsyning"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <View
-                    android:id="@+id/insufflator_linie1"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
-                    android:background="#3366cc"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
-
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/clTryk"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/insufflator_linie2_container"
-                app:layout_constraintStart_toEndOf="@+id/insufflator_linie1_container"
+                app:layout_constraintEnd_toStartOf="@+id/insufflator_linie2"
+                app:layout_constraintStart_toEndOf="@+id/insufflator_linie1"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/trykTitel"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="4dp"
-                    android:gravity="center"
                     android:maxLines="1"
                     android:text="@string/trykTitel"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     app:layout_constraintBottom_toTopOf="@+id/clTrykIndhold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -203,31 +192,29 @@
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/clTrykIndhold"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/trykTitel">
 
                     <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
                         android:id="@+id/trykMeter"
-                        android:layout_width="0dp"
+                        android:layout_width="64dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="4dp"
                         android:elevation="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/clTrykDisplays"
                         app:layout_constraintEnd_toStartOf="@+id/clTrykDisplays"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/clTrykDisplays" />
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/clTrykDisplays"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
@@ -238,19 +225,21 @@
 
                         <TextView
                             android:id="@+id/trykDisplay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:layout_marginBottom="4dp"
                             android:background="@color/colorDisplayBackground"
                             android:elevation="4dp"
+                            android:maxLines="1"
                             android:paddingStart="@dimen/displayPadding"
                             android:paddingEnd="@dimen/displayPadding"
-                            android:text="00"
+                            android:text="@string/displays00Placeholder"
                             android:textColor="@color/colorDisplayRed"
-                            android:textSize="16sp"
+                            android:gravity="center"
+                            app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toTopOf="@+id/trykEnhedTekst"
+                            app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
-
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -258,30 +247,31 @@
                             android:id="@+id/trykEnhedTekst"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="4dp"
                             android:text="@string/trykEnhed"
-                            android:textSize="12sp"
                             app:layout_constraintBottom_toTopOf="@+id/trykMaalDisplay"
-                            app:layout_constraintEnd_toEndOf="@+id/trykDisplay"
-                            app:layout_constraintStart_toStartOf="@+id/trykDisplay"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/trykDisplay" />
 
                         <TextView
                             android:id="@+id/trykMaalDisplay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:layout_marginTop="4dp"
                             android:background="@color/colorDisplayBackground"
                             android:elevation="4dp"
+                            android:maxLines="1"
                             android:paddingStart="@dimen/displayPadding"
                             android:paddingEnd="@dimen/displayPadding"
                             android:text="@string/displays00Placeholder"
+                            android:textAlignment="center"
                             android:textColor="@color/colorDisplayGreen"
-                            android:textSize="16sp"
+                            android:gravity="center"
+                            app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/trykEnhedTekst" />
@@ -292,39 +282,32 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/insufflator_linie2_container"
-                android:layout_width="0dp"
+            <View
+                android:id="@+id/insufflator_linie2"
+                android:layout_width="2dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="#3366cc"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/clFlowrate"
                 app:layout_constraintEnd_toStartOf="@id/clFlowrate"
                 app:layout_constraintStart_toEndOf="@id/clTryk"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <View
-                    android:id="@+id/insufflator_linie2"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
-                    android:background="#3366cc"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/clFlowrate"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/insufflator_linie3_container"
-                app:layout_constraintStart_toEndOf="@+id/insufflator_linie2_container"
+                app:layout_constraintEnd_toStartOf="@+id/insufflator_linie3"
+                app:layout_constraintStart_toEndOf="@+id/insufflator_linie2"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/flowrateTitel"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -332,7 +315,7 @@
                     android:layout_marginBottom="4dp"
                     android:maxLines="1"
                     android:text="@string/flowrateTitel"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     app:layout_constraintBottom_toTopOf="@+id/clFlowrateIndhold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -341,20 +324,19 @@
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/clFlowrateIndhold"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/flowrateTitel">
 
                     <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.MeterView
                         android:id="@+id/flowrateMeter"
-                        android:layout_width="0dp"
+                        android:layout_width="64dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_marginBottom="8dp"
                         android:elevation="4dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -364,8 +346,9 @@
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/clFlowrateDisplays"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
@@ -376,50 +359,52 @@
 
                         <TextView
                             android:id="@+id/flowrateDisplay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:layout_marginBottom="4dp"
                             android:background="@color/colorDisplayBackground"
                             android:elevation="4dp"
+                            android:maxLines="1"
                             android:paddingStart="@dimen/displayPadding"
                             android:paddingEnd="@dimen/displayPadding"
-                            android:text="00"
+                            android:text="@string/displays00Placeholder"
                             android:textColor="@color/colorDisplayRed"
-                            android:textSize="16sp"
+                            android:gravity="center"
+                            app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toTopOf="@+id/flowrateEnhedTekst"
+                            app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toBottomOf="parent" />
 
                         <TextView
                             android:id="@+id/flowrateEnhedTekst"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="4dp"
                             android:text="@string/flowEnhed"
-                            android:textSize="12sp"
                             app:layout_constraintBottom_toTopOf="@+id/flowrateMaalDisplay"
-                            app:layout_constraintEnd_toEndOf="@+id/flowrateDisplay"
-                            app:layout_constraintStart_toStartOf="@+id/flowrateDisplay"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/flowrateDisplay" />
 
                         <TextView
                             android:id="@+id/flowrateMaalDisplay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:layout_marginTop="4dp"
                             android:background="@color/colorDisplayBackground"
                             android:elevation="4dp"
+                            android:maxLines="1"
                             android:paddingStart="@dimen/displayPadding"
                             android:paddingEnd="@dimen/displayPadding"
                             android:text="@string/displays00Placeholder"
                             android:textColor="@color/colorDisplayGreen"
-                            android:textSize="16sp"
+                            android:gravity="center"
+                            app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/flowrateEnhedTekst" />
@@ -429,89 +414,74 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/insufflator_linie3_container"
-                android:layout_width="0dp"
+            <View
+                android:id="@+id/insufflator_linie3"
+                android:layout_width="2dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="#3366cc"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/clFlowrate"
                 app:layout_constraintEnd_toStartOf="@id/clVolumen"
                 app:layout_constraintStart_toEndOf="@id/clFlowrate"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <View
-                    android:id="@+id/insufflator_linie3"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
-                    android:background="#3366cc"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/clVolumen"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/insufflator_linie3_container"
+                app:layout_constraintStart_toEndOf="@+id/insufflator_linie3"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/volumenTitel"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp"
                     android:maxLines="1"
                     android:text="@string/volumenTitel"
-                    android:textSize="20sp"
-                    android:gravity="center"
+                    android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
                 <TextView
                     android:id="@+id/volumenDisplay"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@color/colorDisplayBackground"
                     android:elevation="4dp"
+                    android:maxLines="1"
                     android:paddingStart="@dimen/displayPadding"
                     android:paddingEnd="@dimen/displayPadding"
                     android:text="@string/displays00Placeholder"
                     android:textAlignment="center"
                     android:textColor="@color/colorDisplayRed"
-                    android:textSize="40sp"
+                    android:gravity="center"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toTopOf="@+id/volumenEnhedTekst"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/volumenTitel"
-                    app:layout_constraintBottom_toTopOf="@+id/volumenEnhedTekst"/>
+                    app:layout_constraintTop_toBottomOf="@+id/volumenTitel" />
 
                 <TextView
                     android:id="@+id/volumenEnhedTekst"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp"
                     android:text="@string/volumenEnhed"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    app:layout_constraintStart_toStartOf="@+id/volumenDisplay"
-                    app:layout_constraintEnd_toEndOf="@+id/volumenDisplay"
-                    app:layout_constraintTop_toBottomOf="@+id/volumenDisplay"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/volumenDisplay" />
 
 
             </android.support.constraint.ConstraintLayout>

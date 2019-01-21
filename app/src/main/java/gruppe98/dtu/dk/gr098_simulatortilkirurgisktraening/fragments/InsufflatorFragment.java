@@ -41,7 +41,7 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        view = inflater.inflate(R.layout.fragment_insufflator_mobil_visning, container, false);
+        view = inflater.inflate(R.layout.fragment_insufflator, container, false);
         erInstruktor = this.getArguments().getBoolean("erInstruktor");
 
         initialiserViews();
@@ -169,10 +169,12 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         final NumberPicker numPick1 = new NumberPicker(getActivity());
         numPick1.setMaxValue(9);
         numPick1.setMinValue(0);
+        numPick1.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         final NumberPicker numPick2 = new NumberPicker(getActivity());
         numPick2.setMaxValue(9);
         numPick2.setMinValue(0);
+        numPick2.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(50, 50);
         params.gravity = Gravity.CENTER;
