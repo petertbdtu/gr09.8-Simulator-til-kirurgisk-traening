@@ -23,6 +23,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
 
 public class VaelgRolleActivity extends AppCompatActivity implements View.OnClickListener {
 
+    ProgressDialog dlg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +36,24 @@ public class VaelgRolleActivity extends AppCompatActivity implements View.OnClic
         clTemp = findViewById(R.id.clInstruktor);
         clTemp.setOnClickListener(this);
 
-        //closeConnections();
+        closeConnections();
     }
 
     private void closeConnections() {
-        Toast.makeText(this,"CLOSING WIFI CONNECTIONS", Toast.LENGTH_SHORT).show();
+        dlg = new ProgressDialog(this);
+        dlg.setCancelable(false);
+        dlg.setMessage("Rebooting WiFi...");
+        dlg.show();
 
-        ApplicationSingleton.getInstance().WifiP2P.disableDiscovery();
-        ApplicationSingleton.getInstance().WifiP2P.close();
+        final WifiManager wf = (WifiManager) this.getApplicationContext().getSystemService(this.WIFI_SERVICE);
 
-        if(false){
-            ApplicationSingleton.getInstance().WifiP2P.killWifi();
-        }
+        wf.setWifiEnabled(false);
 
-        ApplicationSingleton.getInstance().WifiP2P = null;
+        new Handler().postDelayed(new Runnable() {public void run() {
+            wf.setWifiEnabled(true);
+            dlg.dismiss();
+        }}, 5000);
+
     }
 
     public void onClick(View v) {

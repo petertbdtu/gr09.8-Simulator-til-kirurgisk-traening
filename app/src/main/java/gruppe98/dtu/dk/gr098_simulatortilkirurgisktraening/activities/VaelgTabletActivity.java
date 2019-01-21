@@ -177,17 +177,21 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void PeerChosen(final WifiP2pDevice WPD) {
+    public void PeerChosen(final WifiP2pDevice WPD, final boolean suppressdlg) {
         ApplicationSingleton.getInstance().WifiP2P.connectToDevice(WPD);
         targetMacAddress = WPD.deviceAddress;
-        dlg = new ProgressDialog(this);
-        dlg.setCancelable(false);
-        dlg.setMessage("Waiting for response...");
-        dlg.show();
+        if(!suppressdlg) {
+            dlg = new ProgressDialog(this);
+            dlg.setCancelable(false);
+            dlg.setMessage("Waiting for response...");
+            dlg.show();
+        }
 
       new Handler().postDelayed(new Runnable() {
         public void run() {
-          dlg.dismiss();
+            if(!suppressdlg) {
+                dlg.dismiss();
+            }
           ApplicationSingleton.getInstance().WifiP2P.cancelConnection(WPD);
         }
       }, 10000);
@@ -247,7 +251,8 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
             case WifiP2pDevice.AVAILABLE:
                 if(ApplicationSingleton.getInstance().getKnownDevices().containsKey(wpd.deviceAddress)){
                     System.out.println("PIS: Found known device   -  " + wpd.deviceName);
-                    ApplicationSingleton.getInstance().WifiP2P.connectToDevice(wpd);
+                    //ApplicationSingleton.getInstance().WifiP2P.connectToDevice(wpd);
+                    PeerChosen(wpd, true);
                 }
                 break;
         }

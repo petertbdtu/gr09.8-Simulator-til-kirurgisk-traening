@@ -45,7 +45,7 @@ public class PeerAdapter extends RecyclerView.Adapter {
         PVH.btnForbind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((IRecycleViewAdapterListener)context).PeerChosen(listWPD.get(viewHolder.getAdapterPosition()));
+                ((IRecycleViewAdapterListener)context).PeerChosen(listWPD.get(viewHolder.getAdapterPosition()), false);
             }
         });
         PVH.tvName.setText(listWPD.get(i).deviceName);
