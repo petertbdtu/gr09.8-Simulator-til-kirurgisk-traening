@@ -46,6 +46,8 @@ public class WifiP2PBroadcastReceiver extends android.content.BroadcastReceiver 
                 return;
 
             NetworkInfo networkInfo = intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
+            System.out.println("PIS: networkinfo = " + networkInfo.getExtraInfo() + " | " + networkInfo.getDetailedState().name() + " | " + networkInfo.getSubtypeName() + " | " + networkInfo.toString());
+
             if(networkInfo.isConnected()) {
                 WPM.requestConnectionInfo(WPMC,CIL);
             } else {

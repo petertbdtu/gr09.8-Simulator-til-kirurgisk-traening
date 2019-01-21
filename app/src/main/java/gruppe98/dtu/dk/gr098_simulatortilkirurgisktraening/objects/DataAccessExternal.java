@@ -62,7 +62,7 @@ public class DataAccessExternal<E> {
 
     public void saveDataExternalFiles(Map<String, E> data, String dir) {
         for (Map.Entry<String, E> entry : data.entrySet()) {
-            saveScenario(dir+"/"+entry.getKey(),entry.getValue());
+            saveScenario(dir+entry.getKey(),entry.getValue());
         }
     }
 

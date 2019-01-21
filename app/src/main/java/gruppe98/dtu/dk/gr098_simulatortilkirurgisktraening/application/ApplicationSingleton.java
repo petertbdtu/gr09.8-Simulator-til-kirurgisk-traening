@@ -22,6 +22,7 @@ public class ApplicationSingleton {
     private DataAccessInternal<ArrayList<LogEntry>> daoLogs;
     private DataAccessExternal<Scenario> daoScenarier;
     private DataAccessInternal<String> daoDevices;
+    public ArrayList<String> connectedDevices;
     public Scenario activeScenario;
     private String scenarioDir;
     private String deviceDir;
@@ -38,6 +39,7 @@ public class ApplicationSingleton {
         daoScenarier = new DataAccessExternal<>();
         daoLogs = new DataAccessInternal<>();
         daoDevices = new DataAccessInternal<>();
+        connectedDevices = new ArrayList<>();
     }
 
     public void init(String internalFilePath, String externalFilePath) {

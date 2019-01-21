@@ -41,6 +41,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private TextView tvTitel;
     private RecyclerView RV;
 
+    private List<String> connectedDevices;
 
 
     private String receiverAddress;
@@ -263,9 +264,11 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         for(WifiP2pDevice wpd : listWPD){
           switch (wpd.status) {
             case WifiP2pDevice.CONNECTED:
+                ApplicationSingleton.getInstance().connectedDevices.add(wpd.deviceAddress);
                 if(wpd.deviceAddress.equals(targetMacAddress)) {
                     targetMacAddress = null;
-                    dlg.dismiss();
+                    if(dlg != null)
+                        dlg.dismiss();
                     ApplicationSingleton.getInstance().addDevice(wpd.deviceAddress, wpd.deviceName);
                     rvaTablets.updateData(ApplicationSingleton.getInstance().getDevices());
                     ChangeToMainView();
