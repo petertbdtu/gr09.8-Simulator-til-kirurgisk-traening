@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import org.apache.commons.lang3.SerializationUtils;
 
+import java.text.DecimalFormat;
+
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.CommunicationObject;
@@ -88,13 +90,15 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
     }
 
     public void loadScenarie(Scenario sc) {
+
         overtrykLed.setErTaendt(sc.isOverPressureLED());
         tubeblokeretLed.setErTaendt(sc.isTubeBlockedLED());
 
         gasforsyningMeter.setAktuelVaerdi(sc.getGasSupply());
 
-        flowrateMaalDisplay.setText(String.format("%02d", sc.getTargetFlowRate()));
-        flowrateDisplay.setText(String.format("%02d", sc.getActualFlowRate()));
+        DecimalFormat df = new DecimalFormat("0.0");
+        flowrateMaalDisplay.setText(df.format(sc.getTargetFlowRate()/10f));
+        flowrateDisplay.setText(df.format(sc.getActualFlowRate()/10f));
         flowrateMeter.setAktuelVaerdi(sc.getActualFlowRate());
         flowrateMeter.setForventetVaerdi(sc.getTargetFlowRate());
 
