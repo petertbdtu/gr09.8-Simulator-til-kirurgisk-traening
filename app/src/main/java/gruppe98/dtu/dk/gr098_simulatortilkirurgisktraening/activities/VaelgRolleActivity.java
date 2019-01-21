@@ -47,10 +47,14 @@ public class VaelgRolleActivity extends AppCompatActivity implements View.OnClic
 
         final WifiManager wf = (WifiManager) this.getApplicationContext().getSystemService(this.WIFI_SERVICE);
 
-        wf.setWifiEnabled(false);
+        if(wf != null) {
+            wf.setWifiEnabled(false);
+        }
 
         new Handler().postDelayed(new Runnable() {public void run() {
-            wf.setWifiEnabled(true);
+            if(wf != null) {
+                wf.setWifiEnabled(true);
+            }
             dlg.dismiss();
         }}, 5000);
 
