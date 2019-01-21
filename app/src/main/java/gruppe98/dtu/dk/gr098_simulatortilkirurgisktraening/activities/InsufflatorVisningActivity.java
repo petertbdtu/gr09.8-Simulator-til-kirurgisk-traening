@@ -3,6 +3,7 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pGroup;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.Insufflator
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.VisningAfventerFragment;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.CommunicationObject;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.LoopMediaPlayer;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
 
@@ -29,6 +31,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     private static final int MY_PERMISSIONS_REQUEST = 1;
     private String deviceName;
+    LoopMediaPlayer noiseSound;
 
     /////////////////////////////////////////
     //// Activity overrides /////////////////
@@ -40,6 +43,8 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         setContentView(R.layout.activity_insufflator_visning);
 
         ApplicationSingleton.getInstance().activeScenario = new Scenario();
+
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         checkPermissions();
     }
@@ -92,6 +97,8 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     protected void onStop() {
         super.onStop();
         //ApplicationSingleton.getInstance().WifiP2P.unRegisterReceiver();
+        if (noiseSound != null)
+            noiseSound.release();
     }
 
     /////////////////////////////////////////
@@ -150,6 +157,12 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
                     .beginTransaction()
                     .replace(R.id.fragmentContainer, fragment)
                     .commit();
+
+
+            // Start støj ved første brugsscenarie
+            if (noiseSound == null) {
+                noiseSound = LoopMediaPlayer.create(this, R.raw.noise);
+            }
         }
     }
 
