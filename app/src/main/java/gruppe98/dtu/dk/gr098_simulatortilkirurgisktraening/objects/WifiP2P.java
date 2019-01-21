@@ -169,8 +169,6 @@ public class WifiP2P {
                     }
                     sendReceiveThread = new WifiP2PSendReceiveThread(handler, broadcastAddress);
                     sendReceiveThread.start();
-                    if (keepDiscoverEnabled)
-                        enableDiscovery();
                     ((IWifiListener) context).DeviceConnected();
                 }
             }
@@ -253,5 +251,10 @@ public class WifiP2P {
         WPM.removeGroup(WPMC,null);
         sendReceiveThread.close();
         unRegisterReceiver();
+    }
+
+    public void forceRequestPeers() {
+        enableDiscovery();
+        WPM.requestPeers(WPMC,PLL);
     }
 }

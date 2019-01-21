@@ -47,8 +47,10 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     @Override
     protected void onResume() {
         super.onResume();
-        if(ApplicationSingleton.getInstance().WifiP2P != null)
+        if(ApplicationSingleton.getInstance().WifiP2P != null) {
             ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
+            ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
+        }
     }
 
     @Override
@@ -60,6 +62,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
                 } else {
                     ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
                 }
+                ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
             } else {
                 Toast.makeText(this,"Please restart app, and accept permissions",Toast.LENGTH_SHORT).show();
             }
