@@ -1,5 +1,7 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +13,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -18,8 +22,10 @@ import android.widget.TextView;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities.VaelgScenarieActivity;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.CommunicationObject;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
@@ -62,6 +68,9 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
         loadScenarie(aktivtScenarie);
 
+        if(getActivity() instanceof VaelgScenarieActivity) {
+            invokeAnimations();
+        }
         return view;
     }
 
@@ -237,5 +246,55 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         builder.show();
 
     }
+    private void invokeAnimations(){
 
+        new ValueAnimator();
+        final ValueAnimator anim = ValueAnimator.ofFloat(0.6f,1f);
+       anim.setDuration(500);
+       anim.setRepeatMode(ValueAnimator.REVERSE);
+       anim.setRepeatCount(1);
+       anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+           @Override
+           public void onAnimationUpdate(ValueAnimator valueAnimator) {
+               System.out.println("DEBUG: "+valueAnimator.getAnimatedValue());
+               trykDisplay.setAlpha((Float) valueAnimator.getAnimatedValue());
+               overtrykLed.setAlpha((Float) valueAnimator.getAnimatedValue());
+               tubeblokeretLed.setAlpha((Float) valueAnimator.getAnimatedValue());
+               trykMaalDisplay.setAlpha((Float) valueAnimator.getAnimatedValue());
+               flowrateDisplay.setAlpha((Float) valueAnimator.getAnimatedValue());
+               flowrateMaalDisplay.setAlpha((Float) valueAnimator.getAnimatedValue());
+               volumenDisplay.setAlpha((Float) valueAnimator.getAnimatedValue());
+               gasforsyningMeter.setAlpha((Float) valueAnimator.getAnimatedValue());
+               if(!(getActivity() instanceof VaelgScenarieActivity)) {
+
+                   anim.removeAllUpdateListeners();
+                   anim.removeAllListeners();
+               }
+
+           }
+       });
+       anim.addListener(new Animator.AnimatorListener() {
+           @Override
+           public void onAnimationStart(Animator animator) {
+
+           }
+
+           @Override
+           public void onAnimationEnd(Animator animator) {
+               anim.start();
+           }
+
+           @Override
+           public void onAnimationCancel(Animator animator) {
+
+           }
+
+           @Override
+           public void onAnimationRepeat(Animator animator) {
+
+           }
+       });
+
+        anim.start();
+    }
 }

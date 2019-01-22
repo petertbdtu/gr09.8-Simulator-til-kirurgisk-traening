@@ -28,7 +28,6 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.WifiP2P;
 
 public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnClickListener, IWifiListener {
 
-  private static final int EXTERNAL_STORAGE_PERMISSION_CODE = 42;
   ConstraintLayout clBrugssc;
   ConstraintLayout clForbindTablet;
 
