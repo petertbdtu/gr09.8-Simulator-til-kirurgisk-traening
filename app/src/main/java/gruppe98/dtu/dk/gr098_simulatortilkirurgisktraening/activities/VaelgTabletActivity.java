@@ -128,7 +128,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private void ChangeToMainView(){
         ButtonState = 0;
         btnFunktion.setVisibility(View.VISIBLE);
-        tvTitel.setText("Forbundne visninger");
+        tvTitel.setText("Forbundne enheder");
         ApplicationSingleton.getInstance().WifiP2P.getConnectedDevices();
         ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
         RV.setAdapter(rvaTablets);
@@ -137,7 +137,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private void ChangeToConnectTablet() {
         ButtonState = 1;
         btnFunktion.setVisibility(View.GONE);
-        tvTitel.setText("Forbind til visning");
+        tvTitel.setText("Forbind til enhed");
         ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
         RV.setAdapter(rvaPeers);
     }
@@ -145,7 +145,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private void ChangeToSendBrugsscenarie() {
         ButtonState = 2;
         btnFunktion.setVisibility(View.GONE);
-        tvTitel.setText("Send brugsscenarie");
+        tvTitel.setText("Send scenarie");
         rvaScenarier.updateData(ApplicationSingleton.getInstance().hentAlleScenarier());
         RV.setAdapter(rvaScenarier);
     }

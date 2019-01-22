@@ -12,7 +12,13 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="#0d47a1"
+        app:layout_constraintBottom_toTopOf="@+id/linie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvVaelgTabletTitel"
@@ -21,10 +27,12 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:text="@string/Tablets"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#FFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnFunction2"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +51,7 @@
             android:backgroundTintMode="src_atop"
             android:elevation="4dp"
             android:text="@string/btnFunctionValue"
+            android:textColor="#FFFF"
             android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="visible"
@@ -63,12 +72,13 @@
             android:backgroundTintMode="src_atop"
             android:elevation="4dp"
             android:text="@string/VaelgTablet_SendTilAlle"
+            android:textColor="#FFFF"
             android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="visible"
-            app:layout_constraintStart_toEndOf="@id/tvVaelgTabletTitel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnFunction"
+            app:layout_constraintStart_toEndOf="@id/tvVaelgTabletTitel"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
     </android.support.constraint.ConstraintLayout>
