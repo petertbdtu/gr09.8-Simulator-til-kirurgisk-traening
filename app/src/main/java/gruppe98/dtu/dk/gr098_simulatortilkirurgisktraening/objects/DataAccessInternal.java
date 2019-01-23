@@ -1,6 +1,9 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 
+import android.util.Log;
+
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,9 +18,11 @@ public class DataAccessInternal<E> {
         try {
             FileInputStream fis = new FileInputStream(fileName);
             ObjectInputStream is = new ObjectInputStream(fis);
-            data = (HashMap<String,E>) is.readObject();
+            data = (HashMap<String, E>) is.readObject();
             is.close();
             fis.close();
+        } catch (FileNotFoundException e) {
+            Log.d("DataAccess", "No such file " + e);
         } catch (Exception e) {
             e.printStackTrace();
         }

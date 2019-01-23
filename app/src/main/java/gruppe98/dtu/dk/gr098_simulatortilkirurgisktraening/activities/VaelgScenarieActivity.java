@@ -10,9 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,9 +41,11 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         scenarieKnap = findViewById(R.id.scenarieKnap);
         scenarieKnap.setOnClickListener(this);
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentScenarieContainer, new ScenarieListFragment())
-                .commit();
+        if(savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentScenarieContainer, new ScenarieListFragment())
+                    .commit();
+        }
 
         scenarieKnapTilstand = 0;
     }

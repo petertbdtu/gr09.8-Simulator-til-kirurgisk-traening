@@ -12,8 +12,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/CL2"
-        android:layout_width="732dp"
-        android:layout_height="59dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
@@ -26,8 +26,9 @@
 
         <TextView
             android:id="@+id/scenarie_navn"
-            android:layout_width="573dp"
+            android:layout_width="0dp"
             android:layout_height="54dp"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical|start"
             android:text="@string/scenarie_dummy_navn"
             android:textAllCaps="true"
@@ -53,7 +54,7 @@
             <ImageView
                 android:id="@+id/knap_rediger_scenarie"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="match_parent"
                 android:background="#64b5f6"
                 android:src="@drawable/rediger"
                 android:tint="@android:color/white"
@@ -75,7 +76,7 @@
             <ImageView
                 android:id="@+id/knap_slet_scenarie"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="match_parent"
                 android:background="#64b5f6"
                 android:src="@drawable/delete"
                 android:tint="@android:color/white"

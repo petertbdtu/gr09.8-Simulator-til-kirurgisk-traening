@@ -2,6 +2,7 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -22,6 +23,7 @@ public class WifiP2PSendReceiveThread extends Thread {
     }
     
     public void close() {
+        socket.close();
         this.socket = null;
     }
 
@@ -45,11 +47,16 @@ public class WifiP2PSendReceiveThread extends Thread {
             byte[] buffer = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
+            Log.d("SendReceiveThread", "Finished Reading: " + buffer.length);
             if(buffer.length > 0) {
                 handler.obtainMessage(WifiP2P.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            if(socket == null) {
+                Log.d("SendReceiveThread", "Socket closed");
+            } else {
+                e.printStackTrace();
+            }
         }
     }
 

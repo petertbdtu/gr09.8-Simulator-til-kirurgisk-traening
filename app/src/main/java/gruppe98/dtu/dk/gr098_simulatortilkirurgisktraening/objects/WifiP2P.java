@@ -12,6 +12,7 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -116,7 +117,7 @@ public class WifiP2P {
         try {
             context.unregisterReceiver(BR);
         } catch (IllegalArgumentException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -130,6 +131,7 @@ public class WifiP2P {
 
             @Override
             public void onFailure(int reason) {
+                new Exception("Connect to device - OnFailure").printStackTrace();
             }
         });
     }
@@ -162,6 +164,7 @@ public class WifiP2P {
             @Override
             public void onConnectionInfoAvailable(WifiP2pInfo info) {
                 if (info.groupFormed && sendReceiveThread == null) {
+
                     try {
                         byte[] ba = info.groupOwnerAddress.getAddress();
                         ba[3] = (byte) 255;
@@ -172,6 +175,8 @@ public class WifiP2P {
                     sendReceiveThread = new WifiP2PSendReceiveThread(handler, broadcastAddress);
                     sendReceiveThread.start();
                     ((IWifiListener) context).DeviceConnected();
+                } else {
+                    Log.d("ConnectionListener","Thread: " + sendReceiveThread + " " + info.toString());
                 }
             }
         };
@@ -251,8 +256,8 @@ public class WifiP2P {
     public void close(){
         WPM.cancelConnect(WPMC, null);
         WPM.removeGroup(WPMC,null);
-        sendReceiveThread.close();
         unRegisterReceiver();
+        sendReceiveThread.close();
     }
 
     public void forceRequestPeers() {

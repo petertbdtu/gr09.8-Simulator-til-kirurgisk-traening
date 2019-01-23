@@ -4,16 +4,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tablet_liste_CL"
-    android:background="#64b5f6"
-    android:layout_width="732dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
     android:layout_marginStart="2dp"
     android:layout_marginTop="2dp"
     android:layout_marginEnd="2dp"
     android:layout_marginBottom="2dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true">
-
+    android:background="#64b5f6">
 
 
     <gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.views.LEDView
@@ -73,8 +72,8 @@
         android:layout_marginBottom="8dp"
         android:background="#64b5f6"
         android:text="@string/tablet_liste_element_selog"
-        android:textColor="#FFFF"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="#FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/clslet"
         app:layout_constraintStart_toEndOf="@+id/tablet_liste_element_valgBrugs"
@@ -90,18 +89,18 @@
         app:layout_constraintStart_toEndOf="@+id/tablet_liste_element_selog"
         app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/tablet_liste_element_slet"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#64b5f6"
-        android:src="@drawable/delete"
-        android:tint="@android:color/white"
+        <ImageView
+            android:id="@+id/tablet_liste_element_slet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#64b5f6"
+            android:src="@drawable/delete"
+            android:tint="@android:color/white"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"    />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

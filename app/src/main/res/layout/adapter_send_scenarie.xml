@@ -3,7 +3,6 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/listeelementtabletCL"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -11,8 +10,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/sendCL2"
-        android:layout_width="732dp"
-        android:layout_height="53dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
@@ -43,8 +42,11 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clsend"
-            android:layout_width="79dp"
+            android:layout_width="50dp"
             android:layout_height="42dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/navnSenarie"

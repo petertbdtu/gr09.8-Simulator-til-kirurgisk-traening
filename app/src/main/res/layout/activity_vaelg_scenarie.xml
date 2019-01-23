@@ -10,10 +10,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="wrap_content"
         android:background="#bbdefb"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentScenarieContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -70,7 +68,7 @@
     <FrameLayout
         android:id="@+id/fragmentScenarieContainer"
         android:layout_width="0dp"
-        android:layout_height="309dp"
+        android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/baggrund"

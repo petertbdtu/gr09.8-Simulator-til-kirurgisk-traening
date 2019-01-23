@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.util.Log;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
 
@@ -29,7 +30,7 @@ public class WifiP2PBroadcastReceiver extends android.content.BroadcastReceiver 
     public void onReceive(Context context, Intent intent) {
         //Get Action
         String action = intent.getAction();
-
+        Log.d("P2PBroadcastReceiver", "OnReceive: " + intent.toString());
         if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
             int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
             if(state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
@@ -46,9 +47,11 @@ public class WifiP2PBroadcastReceiver extends android.content.BroadcastReceiver 
                 return;
 
             NetworkInfo networkInfo = intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
+            Log.d("P2PBroadcastReceiver2","WIFI_P2P_CONNECTION_CHANGED_ACTION: " + networkInfo.toString());
             if(networkInfo.isConnected()) {
                 WPM.requestConnectionInfo(WPMC,CIL);
             } else {
+                //TODO set IWifiListener as attribute and don't use context parameter
                 ((IWifiListener)context).DeviceDisconnected();
             }
 
@@ -56,6 +59,8 @@ public class WifiP2PBroadcastReceiver extends android.content.BroadcastReceiver 
             WifiP2pDevice device = intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
             ((IWifiListener)context).SetDeviceName(device.deviceName);
             WPM.discoverPeers(WPMC,AL);
+        } else {
+            Log.d("BroadcastReceiverElse", "Else? Unknown action");
         }
     }
 
