@@ -31,7 +31,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
     private static final int MY_PERMISSIONS_REQUEST = 1;
     private String deviceName;
-    LoopMediaPlayer noiseSound;
+    private LoopMediaPlayer noiseSound;
 
     /////////////////////////////////////////
     //// Activity overrides /////////////////
@@ -44,6 +44,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
         ApplicationSingleton.getInstance().activeScenario = new Scenario();
 
+        noiseSound = LoopMediaPlayer.create(this, R.raw.noise);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         checkPermissions();
@@ -100,8 +101,10 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     protected void onStop() {
         super.onStop();
         //ApplicationSingleton.getInstance().WifiP2P.unRegisterReceiver();
-        if (noiseSound != null)
+        if (noiseSound != null) {
             noiseSound.release();
+            noiseSound = null;
+        }
     }
 
     /////////////////////////////////////////

@@ -49,6 +49,8 @@
     <string name="volumenEnhed">L</string>
     <string name="adapter_peer_send">SEND</string>
     <string name="adapter_peer_forbind">FORBIND</string>
+    <string name="creditsTitel">Udviklet af Gruppe 98</string>
+    <string name="creditsTekst">s175210 Peter T. Blendstrup\ns175179 Joachim S. Mortensen\ns143780 Nicolai Kammersgård\ns175447 Hjalte B. Andersen\ns172840 Mette L. B. Andersen</string>
 
 
 </resources>

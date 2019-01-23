@@ -2,11 +2,13 @@ package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pGroup;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +36,9 @@ public class VaelgRolleActivity extends AppCompatActivity implements View.OnClic
         clTemp.setOnClickListener(this);
 
         clTemp = findViewById(R.id.clInstruktor);
+        clTemp.setOnClickListener(this);
+
+        clTemp = findViewById(R.id.btnCredits);
         clTemp.setOnClickListener(this);
 
         closeConnections();
@@ -73,9 +78,23 @@ public class VaelgRolleActivity extends AppCompatActivity implements View.OnClic
                 Intent intentInstruktorVisning = new Intent(getApplicationContext(), VaelgOpgaveActivity.class);
                 startActivity(intentInstruktorVisning);
                 break;
+            case R.id.btnCredits: showCredits();
+                break;
             default:
                 break;
         }
 
+    }
+
+    private void showCredits() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.creditsTitel);
+        builder.setMessage(R.string.creditsTekst);
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 }
