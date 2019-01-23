@@ -10,8 +10,13 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="4dp"
         android:background="#0d47a1"
-        android:layout_height="wrap_content">
+        app:layout_constraintBottom_toTopOf="@+id/linie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvVaelgTabletTitel"
@@ -30,22 +35,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageButton
             android:id="@+id/scenarieKnap"
             style="@android:style/Widget.DeviceDefault.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="134dp"
+            android:layout_height="66dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:background="@drawable/knap_kanter"
+            android:background="@color/colorAccent"
             android:backgroundTintMode="src_atop"
             android:elevation="4dp"
-            android:text="@string/btnFunctionValue"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="visible"
-            android:textColor="#FFFF"
+            android:src="@drawable/plus"
+            android:tint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

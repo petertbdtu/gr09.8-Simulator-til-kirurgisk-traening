@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
@@ -23,7 +24,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 
 public class VaelgScenarieActivity extends AppCompatActivity implements View.OnClickListener, IRecycleViewAdapterListener {
 
-    Button scenarieKnap;
+    ImageButton scenarieKnap;
     TextView overskrift;
     int scenarieKnapTilstand;
     String scenarieNavn;
@@ -101,7 +102,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentScenarieContainer, new ScenarieListFragment())
                 .commit();
-        scenarieKnap.setText(getString(R.string.vaelg_scenarie_knap_nyt_scenarie));
+        scenarieKnap.setImageDrawable(getResources().getDrawable(R.drawable.plus));
         scenarieKnapTilstand = 0;
     }
 
@@ -115,7 +116,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
                 .replace(R.id.fragmentScenarieContainer, fragment)
                 .commit();
 
-        scenarieKnap.setText("gem scenarie");
+        scenarieKnap.setImageDrawable(getResources().getDrawable(R.drawable.save));
         scenarieKnapTilstand = 1;
     }
 
