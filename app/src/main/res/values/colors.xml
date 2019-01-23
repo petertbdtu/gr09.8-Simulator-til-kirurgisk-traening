@@ -5,8 +5,11 @@
     <color name="colorLightGray">#0D47A1</color>
     <color name="colorRed">#F15050</color>
     <color name="colorPrimaryDark">#330022</color>
-    <color name="colorAccent">#0D47A1</color>
+    <color name="colorAccent">#0066CC</color>
     <color name="colorDisplayBackground">#303030</color>
     <color name="colorDisplayGreen">#11DD11</color>
     <color name="colorDisplayRed">#DD1111</color>
+    <color name="element">#1976D2</color>
+    <color name="plusfg">#64B5F6</color>
+    <color name="plusfg2">#2196F3</color>
 </resources>

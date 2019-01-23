@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.Vi
         TextView tablet_liste_element_ID;
         Button tablet_liste_element_valgBrugs;
         Button tablet_liste_element_selog;
-        Button tablet_liste_element_slet;
+        ImageView tablet_liste_element_slet;
 
         public ViewHolder(View itemView) {
             super(itemView);

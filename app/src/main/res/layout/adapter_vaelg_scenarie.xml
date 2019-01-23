@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/listeElement"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:id="@+id/CL2"
+        android:layout_width="732dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="2dp"
-        android:background="@drawable/knap_kanter"
+        android:background="#64b5f6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,56 +22,67 @@
 
         <TextView
             android:id="@+id/scenarie_navn"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="573dp"
+            android:layout_height="54dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="8dp"
+            android:gravity="center_vertical|start"
             android:text="@string/scenarie_dummy_navn"
-            android:textSize="26sp"
-            android:gravity = "center_vertical|start"
-
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textSize="20sp"
+            android:textColor="#FFF"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/knap_rediger_scenarie"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout6"
+            app:layout_constraintStart_toStartOf="@+id/CL2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
-        <Button
-            android:id="@+id/knap_rediger_scenarie"
-            style="@android:style/Widget.DeviceDefault.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/knap_kanter"
-            android:elevation="4dp"
-            android:text="@string/rediger"
-            android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout6"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/knap_slet_scenarie"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout7"
             app:layout_constraintStart_toEndOf="@+id/scenarie_navn"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/knap_slet_scenarie"
-            style="@android:style/Widget.DeviceDefault.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/knap_kanter"
-            android:elevation="4dp"
-            android:text="@string/slet"
-            android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+            <ImageView
+                android:id="@+id/knap_rediger_scenarie"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#64b5f6"
+                android:src="@drawable/rediger"
+                android:tint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout7"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/knap_rediger_scenarie"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout6"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/knap_slet_scenarie"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#64b5f6"
+                android:src="@drawable/delete"
+                android:tint="@android:color/white"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

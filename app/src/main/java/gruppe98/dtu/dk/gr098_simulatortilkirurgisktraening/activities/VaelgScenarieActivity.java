@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
@@ -24,7 +25,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
 
 public class VaelgScenarieActivity extends AppCompatActivity implements View.OnClickListener, IRecycleViewAdapterListener {
 
-    ImageButton scenarieKnap;
+    ImageView scenarieKnap;
     TextView overskrift;
     int scenarieKnapTilstand;
     String scenarieNavn;
