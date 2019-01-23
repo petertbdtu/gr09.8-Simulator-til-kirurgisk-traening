@@ -55,6 +55,9 @@ public class VaelgRolleActivity extends AppCompatActivity implements View.OnClic
             if(wf != null) {
                 wf.setWifiEnabled(true);
             }
+        }}, 3000);
+
+        new Handler().postDelayed(new Runnable() {public void run() {
             dlg.dismiss();
         }}, 5000);
 
