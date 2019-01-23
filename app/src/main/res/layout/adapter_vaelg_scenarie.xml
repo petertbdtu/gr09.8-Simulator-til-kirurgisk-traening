@@ -28,6 +28,8 @@
             android:layout_marginBottom="8dp"
             android:text="@string/scenarie_dummy_navn"
             android:textSize="26sp"
+            android:gravity = "center_vertical|start"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/knap_rediger_scenarie"
             app:layout_constraintStart_toStartOf="parent"

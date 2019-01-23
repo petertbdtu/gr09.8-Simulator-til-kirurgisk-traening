@@ -58,6 +58,8 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
         {
             bindInstruktorKnapper();
             aktivtScenarie = ApplicationSingleton.getInstance().activeScenario;
+
+            invokeAnimations();
         }
         else
         {
@@ -68,9 +70,6 @@ public class InsufflatorFragment extends Fragment implements View.OnClickListene
 
         loadScenarie(aktivtScenarie);
 
-        if(getActivity() instanceof VaelgScenarieActivity) {
-            invokeAnimations();
-        }
         return view;
     }
 
