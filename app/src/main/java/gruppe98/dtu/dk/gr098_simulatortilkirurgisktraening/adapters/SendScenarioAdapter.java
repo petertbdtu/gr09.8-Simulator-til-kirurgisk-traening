@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class SendScenarioAdapter extends RecyclerView.Adapter<SendScenarioAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        Button addBrugs;
+        ImageView addBrugs;
         TextView navnSenarie;
 
         public ViewHolder(View itemView) {
