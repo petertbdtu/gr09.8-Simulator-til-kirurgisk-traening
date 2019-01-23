@@ -47,18 +47,16 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:background="@drawable/knapper_hvid"
-            android:backgroundTintMode="src_atop"
-            android:elevation="4dp"
-            android:text="@string/btnFunctionValue"
-            android:textColor="#FFFF"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:scaleType="center"
+            android:src="@drawable/plus"
+            android:tint="@android:color/white"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvVaelgTabletTitel"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:tint="@android:color/white" />
 
 
     </android.support.constraint.ConstraintLayout>

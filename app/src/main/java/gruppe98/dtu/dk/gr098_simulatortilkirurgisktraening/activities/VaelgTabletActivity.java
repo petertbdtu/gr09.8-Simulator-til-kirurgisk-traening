@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private PickTabletAdapter rvaTablets;
     private ShowLogsAdapter rvaLogs;
     private PeerAdapter rvaPeers;
-    private Button btnFunktion;
+    private ImageButton btnFunktion;
     private TextView tvTitel;
     private RecyclerView RV;
 
