@@ -32,7 +32,7 @@
             android:text="@string/Tablets"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="#1e88e5"
+            android:textColor="#64b5f6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnFunction"
             app:layout_constraintStart_toStartOf="parent"

@@ -56,7 +56,7 @@
                 android:background="#bbdefb"
                 android:scaleType="center"
                 android:src="@drawable/plus"
-                android:tint="@color/plusfg2"
+                android:tint="@color/element"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
