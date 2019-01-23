@@ -65,6 +65,8 @@ public class WifiP2P {
         IF.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         IF.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 
+        WPM.removeGroup(WPMC, null);
+
         if(isGroupOwner) {
             WPM.createGroup(WPMC, new WifiP2pManager.ActionListener() {
                 @Override
