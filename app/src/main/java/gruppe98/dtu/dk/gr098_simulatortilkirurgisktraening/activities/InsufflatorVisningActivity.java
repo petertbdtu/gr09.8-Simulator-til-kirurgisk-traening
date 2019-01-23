@@ -44,7 +44,6 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
 
         ApplicationSingleton.getInstance().activeScenario = new Scenario();
 
-        noiseSound = LoopMediaPlayer.create(this, R.raw.noise);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         checkPermissions();
