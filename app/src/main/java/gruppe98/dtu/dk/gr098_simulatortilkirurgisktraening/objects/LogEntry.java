@@ -1,6 +1,8 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects;
 
-public class LogEntry {
+import java.io.Serializable;
+
+public class LogEntry implements Serializable {
 
     public LogEntry(String deviceId, String scenarioNavn, long start){
         this.deviceId = deviceId;

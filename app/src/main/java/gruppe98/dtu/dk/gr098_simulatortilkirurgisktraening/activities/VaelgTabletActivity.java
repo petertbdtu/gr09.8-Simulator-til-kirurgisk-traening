@@ -76,7 +76,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         btnFunktion.setOnClickListener(this);
 
         threadHandler = createThreadHandler();
-
+        ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
         //Set start adapter
         ChangeToMainView();
     }
@@ -86,6 +86,13 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         super.onResume();
         if(ApplicationSingleton.getInstance().WifiP2P != null)
             ApplicationSingleton.getInstance().WifiP2P.registerReceiver(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(ApplicationSingleton.getInstance().WifiP2P != null)
+            ApplicationSingleton.getInstance().WifiP2P.unRegisterReceiver();
     }
 
     @Override
@@ -138,6 +145,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
         ButtonState = 3;
         btnFunktion.setVisibility(View.GONE);
         tvTitel.setText("Logs");
+        System.out.println("KIGHER | ChangeToLogs | " + ApplicationSingleton.getInstance().hentLogs(id));
         rvaLogs.updateData(ApplicationSingleton.getInstance().hentLogs(id));
         RV.setAdapter(rvaLogs);
     }
@@ -215,9 +223,12 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void sendBrugsscenarie(Scenario brugsscencarie) {
+    public void sendBrugsscenarie(String scenarioName, Scenario scencario) {
+        System.out.println("KIGHER | SendScenario1 | " + ApplicationSingleton.getInstance().hentLogs(receiverAddress));
         msgResponseRecieved = false;
-        CommunicationObject CO = new CommunicationObject(receiverAddress,ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress(),brugsscencarie);
+        CommunicationObject CO = new CommunicationObject(receiverAddress,ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress(),scencario);
+        ApplicationSingleton.getInstance().addLog(receiverAddress,scenarioName);
+        System.out.println("KIGHER | SendScenario1 | " + ApplicationSingleton.getInstance().hentLogs(receiverAddress));
         final byte[] bMsgToSend = SerializationUtils.serialize(CO);
 
         ApplicationSingleton.getInstance().broadcastThread.write(bMsgToSend);

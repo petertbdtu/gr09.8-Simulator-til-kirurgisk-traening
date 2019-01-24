@@ -68,7 +68,6 @@ public class WifiP2P {
                 }
             });
         }
-        context.registerReceiver(BR,IF);
     }
 
 
@@ -112,9 +111,12 @@ public class WifiP2P {
     }
 
     public void registerReceiver(Context context) {
-        this.context.unregisterReceiver(BR);
         this.context = context;
         this.context.registerReceiver(BR,IF);
+    }
+
+    public void unRegisterReceiver() {
+        this.context.unregisterReceiver(BR);
     }
 
     public void connectToDevice(final WifiP2pDevice WPD) {

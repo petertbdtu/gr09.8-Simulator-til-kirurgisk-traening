@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +44,7 @@ public class SendScenarioAdapter extends RecyclerView.Adapter<SendScenarioAdapte
         vh.addBrugs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((IRecycleViewAdapterListener)context).sendBrugsscenarie(sendScenarier.get(holder.getAdapterPosition()));
+                ((IRecycleViewAdapterListener)context).sendBrugsscenarie(sendScenarierNavne.get(holder.getAdapterPosition()),sendScenarier.get(holder.getAdapterPosition()));
             }
         });
         vh.navnSenarie.setText(sendScenarierNavne.get(position));

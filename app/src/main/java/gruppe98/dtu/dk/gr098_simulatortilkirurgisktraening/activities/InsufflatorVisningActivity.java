@@ -63,6 +63,14 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if(ApplicationSingleton.getInstance().WifiP2P != null) {
+            ApplicationSingleton.getInstance().WifiP2P.unRegisterReceiver();
+        }
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if(requestCode == MY_PERMISSIONS_REQUEST) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

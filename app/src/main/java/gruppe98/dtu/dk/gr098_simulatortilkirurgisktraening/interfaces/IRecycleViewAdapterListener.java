@@ -8,7 +8,7 @@ public interface IRecycleViewAdapterListener {
     void VaelgBrugsscenarie(String Id);
     void SeLog(String Id);
     void PeerChosen(WifiP2pDevice WPD, boolean suppressdlg);
-    void sendBrugsscenarie(Scenario brugsscencarie);
+    void sendBrugsscenarie(String scenarioName, Scenario scenario);
     void fjernBrugsscenarie(String scenarieNavn);
     void redigerScenarie(String scenarieNavn);
     void deleteDevice(String deviceAddress);

@@ -135,7 +135,7 @@ public class VaelgScenarieActivity extends AppCompatActivity implements View.OnC
     public void PeerChosen(WifiP2pDevice WPD, boolean suppressdlg) { }
 
     @Override
-    public void sendBrugsscenarie(Scenario brugsscencarie) { }
+    public void sendBrugsscenarie(String scenarioName, Scenario scenario) { }
 
     @Override
     public void fjernBrugsscenarie(String scenarieNavn) {
