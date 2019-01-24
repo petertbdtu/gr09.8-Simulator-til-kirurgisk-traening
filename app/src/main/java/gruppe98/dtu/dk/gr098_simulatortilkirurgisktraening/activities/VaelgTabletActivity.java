@@ -120,7 +120,7 @@ public class VaelgTabletActivity extends AppCompatActivity implements View.OnCli
     private void ChangeToMainView(){
         ButtonState = 0;
         btnFunktion.setVisibility(View.VISIBLE);
-        tvTitel.setText("Forbundne enheder");
+        tvTitel.setText("Kendte enheder");
         ApplicationSingleton.getInstance().WifiP2P.enableDiscovery();
         RV.setAdapter(rvaTablets);
     }
