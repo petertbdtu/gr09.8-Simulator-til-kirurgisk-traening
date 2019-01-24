@@ -9,7 +9,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class WifiP2PSendReceiveThread extends Thread {
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.ApplicationSingleton;
+
+public class BroadcastSendReceiveThread extends Thread {
 
     private DatagramSocket socket;
     private Handler handler;
@@ -17,7 +19,7 @@ public class WifiP2PSendReceiveThread extends Thread {
     private final int PORT = 6666;
 
 
-    public WifiP2PSendReceiveThread(Handler handler, InetAddress broadcastAddress) {
+    public BroadcastSendReceiveThread(Handler handler, InetAddress broadcastAddress) {
         this.handler = handler;
         this.broadcastAddress = broadcastAddress;
     }
@@ -25,6 +27,10 @@ public class WifiP2PSendReceiveThread extends Thread {
     public void close() {
         socket.close();
         this.socket = null;
+    }
+
+    public void updateBroadcastAddress(InetAddress broadcastAddress) {
+        this.broadcastAddress = broadcastAddress;
     }
 
     @Override
@@ -47,9 +53,8 @@ public class WifiP2PSendReceiveThread extends Thread {
             byte[] buffer = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
-            Log.d("SendReceiveThread", "Finished Reading: " + buffer.length);
             if(buffer.length > 0) {
-                handler.obtainMessage(WifiP2P.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
+                handler.obtainMessage(ApplicationSingleton.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
             }
         } catch (IOException e) {
             if(socket == null) {

@@ -7,12 +7,8 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
-import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -31,22 +27,16 @@ public class WifiP2P {
     private BroadcastReceiver BR;
     private IntentFilter IF;
     private WifiP2pManager.PeerListListener PLL;
-    private WifiP2pManager.ActionListener AL;
     private WifiP2pManager.ConnectionInfoListener CIL;
-    private Handler handler;
-    private WifiP2PSendReceiveThread sendReceiveThread;
-    private InetAddress broadcastAddress;
 
+    private InetAddress broadcastAddress;
     private String myMacAddress;
     private boolean isGroupOwner;
-    private boolean keepDiscoverEnabled;
     private Context context;
 
     public WifiP2P(Context context, boolean isGroupOwner){
         this.context = context;
         this.isGroupOwner = isGroupOwner;
-        keepDiscoverEnabled = false;
-
         checkWifi();
         init();
     }
@@ -54,14 +44,11 @@ public class WifiP2P {
     private void init(){
         WPM = (WifiP2pManager) context.getSystemService(context.WIFI_P2P_SERVICE);
         WPMC = WPM.initialize(context,context.getMainLooper(),null);
-        AL = createActionListener();
         PLL = createPeerListListener();
         CIL = createConnectionInfoListener();
-        BR = new WifiP2PBroadcastReceiver(WPM,WPMC,AL,PLL,CIL);
-        handler = createHandler();
+        BR = new WifiP2PBroadcastReceiver(WPM,WPMC,PLL,CIL);
 
         IF = new IntentFilter();
-        IF.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         IF.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
         IF.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         IF.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
@@ -85,69 +72,10 @@ public class WifiP2P {
     }
 
 
-    public void checkWifi(){
+    private void checkWifi(){
         WM = (WifiManager) context.getApplicationContext().getSystemService(context.WIFI_SERVICE);
         if(!WM.isWifiEnabled())
             WM.setWifiEnabled(true);
-    }
-
-    public void killWifi(){
-        if(WM==null) {WM = (WifiManager) context.getApplicationContext().getSystemService(context.WIFI_SERVICE);}
-        if(WM.isWifiEnabled())
-            WM.setWifiEnabled(false);
-    }
-
-    public void enableDiscovery() {
-        keepDiscoverEnabled = true;
-        WPM.discoverPeers(WPMC,AL);
-    }
-
-    public void disableDiscovery() {
-        keepDiscoverEnabled = false;
-        WPM.stopPeerDiscovery(WPMC,AL);
-    }
-
-    public void registerReceiver(Context context) {
-        unRegisterReceiver();
-        this.context = context;
-        this.context.registerReceiver(BR,IF);
-    }
-
-    public void unRegisterReceiver() {
-        try {
-            context.unregisterReceiver(BR);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void connectToDevice(final WifiP2pDevice WPD) {
-        WifiP2pConfig WPC = new WifiP2pConfig();
-        WPC.deviceAddress = WPD.deviceAddress;
-        WPM.connect(WPMC, WPC, new WifiP2pManager.ActionListener() {
-            @Override
-            public void onSuccess() {
-            }
-
-            @Override
-            public void onFailure(int reason) {
-                new Exception("Connect to device - OnFailure").printStackTrace();
-            }
-        });
-    }
-
-    private WifiP2pManager.ActionListener createActionListener(){
-        return new WifiP2pManager.ActionListener() {
-            @Override
-            public void onSuccess() {
-                ((IWifiListener)context).DiscoveryEnabled(true);
-            }
-
-            @Override
-            public void onFailure(int reason) {
-                ((IWifiListener)context).DiscoveryEnabled(false);
-            }
-        };
     }
 
     private WifiP2pManager.PeerListListener createPeerListListener() {
@@ -163,7 +91,7 @@ public class WifiP2P {
         return new WifiP2pManager.ConnectionInfoListener() {
             @Override
             public void onConnectionInfoAvailable(WifiP2pInfo info) {
-                if (info.groupFormed && sendReceiveThread == null) {
+                if (info.groupFormed) {
 
                     try {
                         byte[] ba = info.groupOwnerAddress.getAddress();
@@ -172,30 +100,27 @@ public class WifiP2P {
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     }
-                    sendReceiveThread = new WifiP2PSendReceiveThread(handler, broadcastAddress);
-                    sendReceiveThread.start();
-                    ((IWifiListener) context).DeviceConnected();
-                } else {
-                    Log.d("ConnectionListener","Thread: " + sendReceiveThread + " " + info.toString());
+
+                    ((IWifiListener) context).groupFormed(broadcastAddress);
                 }
             }
         };
     }
 
-    static final int MESSAGE_READ = 1;
-    private android.os.Handler createHandler() {
-        return new android.os.Handler(new android.os.Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                switch(msg.what) {
-                    case MESSAGE_READ:
-                        byte[] readBuffer = (byte[]) msg.obj;
-                        ((IWifiListener)context).MessageReceived(readBuffer);
-                        break;
-                }
-                return true;
-            }
-        });
+    public void enableDiscovery() {
+        WPM.discoverPeers(WPMC,null);
+    }
+
+    public void registerReceiver(Context context) {
+        this.context.unregisterReceiver(BR);
+        this.context = context;
+        this.context.registerReceiver(BR,IF);
+    }
+
+    public void connectToDevice(final WifiP2pDevice WPD) {
+        WifiP2pConfig WPC = new WifiP2pConfig();
+        WPC.deviceAddress = WPD.deviceAddress;
+        WPM.connect(WPMC, WPC, null);
     }
 
     public String getMyMacAddress() {
@@ -226,29 +151,6 @@ public class WifiP2P {
 
     }
 
-
-    public void sendMessage(byte[] msg) {
-        if(sendReceiveThread != null)
-            sendReceiveThread.write(msg);
-    }
-
-    public List<WifiP2pDevice> getConnectedDevices() {
-        final long time = System.currentTimeMillis();
-
-        WPM.requestGroupInfo(WPMC, new WifiP2pManager.GroupInfoListener() {
-            @Override
-            public void onGroupInfoAvailable(WifiP2pGroup group) {
-                ((IWifiListener)context).GroupInfoUpdate(group, time);
-            }
-        });
-
-        if(keepDiscoverEnabled){
-            WPM.discoverPeers(WPMC, AL);
-        }
-
-        return null;
-    }
-
     public void cancelConnection(WifiP2pDevice wpd) {
         WPM.cancelConnect(WPMC,null);
     }
@@ -256,12 +158,6 @@ public class WifiP2P {
     public void close(){
         WPM.cancelConnect(WPMC, null);
         WPM.removeGroup(WPMC,null);
-        unRegisterReceiver();
-        sendReceiveThread.close();
     }
 
-    public void forceRequestPeers() {
-        enableDiscovery();
-        WPM.requestPeers(WPMC,PLL);
-    }
 }

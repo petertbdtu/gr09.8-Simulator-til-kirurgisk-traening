@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.BroadcastSendReceiveThread;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.DataAccessExternal;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.DataAccessInternal;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.LogEntry;
@@ -16,6 +17,8 @@ public class ApplicationSingleton {
     private static final String DEVICES_FILENAME = "Devices.data";
     private static final String LOG_FILENAME = "LogFile.data";
     private static final String SCENARIOS_DIR = "/InsufflatorSimApp/scenarios/";
+    public static final int MESSAGE_READ = 1;
+
 
     private static ApplicationSingleton instance;
 
@@ -23,6 +26,7 @@ public class ApplicationSingleton {
     private DataAccessExternal<Scenario> daoScenarier;
     private DataAccessInternal<String> daoDevices;
     public ArrayList<String> connectedDevices;
+    public BroadcastSendReceiveThread broadcastThread;
     public Scenario activeScenario;
     private String scenarioDir;
     private String deviceDir;

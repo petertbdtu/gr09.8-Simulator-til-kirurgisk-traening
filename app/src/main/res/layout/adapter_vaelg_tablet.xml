@@ -68,39 +68,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#64b5f6"
         android:text="@string/tablet_liste_element_selog"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textColor="#FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/clslet"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tablet_liste_element_valgBrugs"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clslet"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tablet_liste_element_selog"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/tablet_liste_element_slet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#64b5f6"
-            android:src="@drawable/delete"
-            android:tint="@android:color/white"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

@@ -1,16 +1,13 @@
 package gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.net.wifi.p2p.WifiP2pDevice;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -78,17 +75,6 @@ public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.Vi
                 ((IRecycleViewAdapterListener)context).SeLog(listAddresses.get(viewHolder.getAdapterPosition()));
             }
         });
-        viewHolder.tablet_liste_element_slet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((IRecycleViewAdapterListener)context).deleteDevice(listAddresses.get(viewHolder.getAdapterPosition()));
-
-                listAddresses.remove(viewHolder.getAdapterPosition());
-                mapDevices.remove(listAddresses.get(viewHolder.getAdapterPosition()));
-
-                notifyDataSetChanged();
-            }
-        });
     }
 
     @Override
@@ -103,7 +89,6 @@ public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.Vi
         TextView tablet_liste_element_ID;
         Button tablet_liste_element_valgBrugs;
         Button tablet_liste_element_selog;
-        ImageView tablet_liste_element_slet;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -116,8 +101,6 @@ public class PickTabletAdapter extends RecyclerView.Adapter<PickTabletAdapter.Vi
             tablet_liste_element_ID = itemView.findViewById(R.id.tablet_liste_element_ID);
             tablet_liste_element_valgBrugs = itemView.findViewById(R.id.tablet_liste_element_valgBrugs);
             tablet_liste_element_selog = itemView.findViewById(R.id.tablet_liste_element_selog);
-            tablet_liste_element_slet = itemView.findViewById(R.id.tablet_liste_element_slet);
-
         }
     }
 

@@ -5,8 +5,9 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.net.wifi.p2p.WifiP2pGroup;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import org.apache.commons.lang3.SerializationUtils;
 
+import java.net.InetAddress;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
@@ -22,6 +24,7 @@ import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.application.Applicati
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.InsufflatorFragment;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.fragments.VisningAfventerFragment;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.interfaces.IWifiListener;
+import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.BroadcastSendReceiveThread;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.CommunicationObject;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.LoopMediaPlayer;
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.objects.Scenario;
@@ -32,6 +35,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
     private static final int MY_PERMISSIONS_REQUEST = 1;
     private String deviceName;
     private LoopMediaPlayer noiseSound;
+    private Handler threadHandler;
 
     /////////////////////////////////////////
     //// Activity overrides /////////////////
@@ -43,7 +47,7 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         setContentView(R.layout.activity_insufflator_visning);
 
         ApplicationSingleton.getInstance().activeScenario = new Scenario();
-
+        threadHandler = createThreadHandler();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         checkPermissions();
@@ -122,57 +126,65 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         ActivityCompat.requestPermissions(this, permissions, MY_PERMISSIONS_REQUEST);
     }
 
+    private android.os.Handler createThreadHandler() {
+        return new android.os.Handler(new android.os.Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                switch(msg.what) {
+                    case ApplicationSingleton.MESSAGE_READ:
+                        byte[] readBuffer = (byte[]) msg.obj;
+                        CommunicationObject CO = SerializationUtils.deserialize(readBuffer);
+                        if(CO.getRecipientMacAddress().toUpperCase().equals(ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress().toUpperCase())) {
+                            CO.setScenario(null);
+                            String recipient = CO.getSenderMacAddress();
+                            CO.setSenderMacAddress(CO.getRecipientMacAddress());
+                            CO.setRecipientMacAddress(recipient);
+                            ApplicationSingleton.getInstance().broadcastThread.write(SerializationUtils.serialize(CO));
+                            changeToInsufflatorFragment(readBuffer);
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void changeToInsufflatorFragment(byte[] msg) {
+        Fragment fragment = new InsufflatorFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("erInstruktor", false);
+        args.putByteArray("scenarieByteArray", msg);
+        fragment.setArguments(args);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .commit();
+
+
+        // Start støj ved første brugsscenarie
+        if (noiseSound == null) {
+            noiseSound = LoopMediaPlayer.create(this, R.raw.noise);
+        }
+    }
+
+
     /////////////////////////////////////////
     //// WifiP2P overrides //////////////////
     /////////////////////////////////////////
 
     @Override
-    public void DiscoveryEnabled(boolean b) { }
-
-    @Override
     public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) { }
 
     @Override
-    public void DeviceConnected() {
-        // TODO Display built-in default scenario immediately or wait until receiving? Currently Waiting
-        //Toast.makeText(this,"connected",Toast.LENGTH_SHORT).show();
-        ApplicationSingleton.getInstance().WifiP2P.disableDiscovery();
-    }
-
-    @Override
-    public void DeviceDisconnected() { }
-
-    @Override
-    public void MessageReceived(byte[] msg) {
-        CommunicationObject CO = SerializationUtils.deserialize(msg);
-        if(CO.getRecipientMacAddress().toUpperCase().equals(ApplicationSingleton.getInstance().WifiP2P.getMyMacAddress().toUpperCase())) {
-            CO.setScenario(null);
-            String recipient = CO.getSenderMacAddress();
-            CO.setSenderMacAddress(CO.getRecipientMacAddress());
-            CO.setRecipientMacAddress(recipient);
-            ApplicationSingleton.getInstance().WifiP2P.sendMessage(SerializationUtils.serialize(CO));
-
-            Fragment fragment = new InsufflatorFragment();
-            Bundle args = new Bundle();
-            args.putBoolean("erInstruktor", false);
-            args.putByteArray("scenarieByteArray", msg);
-            fragment.setArguments(args);
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, fragment)
-                    .commit();
-
-
-            // Start støj ved første brugsscenarie
-            if (noiseSound == null) {
-                noiseSound = LoopMediaPlayer.create(this, R.raw.noise);
-            }
+    public void groupFormed(InetAddress broadcastAddress) {
+        if(ApplicationSingleton.getInstance().broadcastThread == null) {
+            ApplicationSingleton.getInstance().broadcastThread = new BroadcastSendReceiveThread(threadHandler, broadcastAddress);
+            ApplicationSingleton.getInstance().broadcastThread.start();
+        } else {
+            ApplicationSingleton.getInstance().broadcastThread.updateBroadcastAddress(broadcastAddress);
         }
     }
-
-    @Override
-    public void GroupInfoUpdate(WifiP2pGroup WPG, long time) { }
 
     @Override
     public void SetDeviceName(String name) {
@@ -189,9 +201,8 @@ public class InsufflatorVisningActivity extends AppCompatActivity implements IWi
         }
     }
 
-  @Override
-  public void OnGroupCreated(boolean b) {
+    @Override
+    public void OnGroupCreated(boolean b) {
 
-  }
-
+    }
 }

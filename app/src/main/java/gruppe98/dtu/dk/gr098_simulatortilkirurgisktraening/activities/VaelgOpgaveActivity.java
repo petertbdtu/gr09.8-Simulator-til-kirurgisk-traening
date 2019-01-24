@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.net.wifi.p2p.WifiP2pGroup;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -18,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import java.net.InetAddress;
 import java.util.List;
 
 import gruppe98.dtu.dk.gr098_simulatortilkirurgisktraening.R;
@@ -115,32 +115,12 @@ public class VaelgOpgaveActivity extends AppCompatActivity implements View.OnCli
   }
 
   @Override
-  public void DiscoveryEnabled(boolean b) {
-
-  }
-
-  @Override
   public void ChangesInPeersAvailable(List<WifiP2pDevice> listWPD) {
 
   }
 
   @Override
-  public void DeviceConnected() {
-
-  }
-
-  @Override
-  public void DeviceDisconnected() {
-
-  }
-
-  @Override
-  public void MessageReceived(byte[] msg) {
-
-  }
-
-  @Override
-  public void GroupInfoUpdate(WifiP2pGroup WPG, long time) {
+  public void groupFormed(InetAddress broadcastAddress) {
 
   }
 
